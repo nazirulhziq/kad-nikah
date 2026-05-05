@@ -1,59 +1,58 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="color-scheme" content="light">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#7156b4">
     
     <title>Walimatulurus | Carlo & Fulan</title>
     
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/plasticine/100/wedding-rings.png">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-primary: #7156b4;
-            --color-secondary: #93723f;
-            --color-text: #333;
-            --bg-color: #ffffff;
-            --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+            --primary: #7156b4;
+            --primary-light: #af99db;
+            --secondary: #93723f;
+            --bg: #ffffff;
+            --text: #333333;
+            --gray: #666666;
+            --light-gray: #f5f5f5;
+            --gold: #c9a970;
+            --font-arabic: 'Scheherazade New', serif;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Poppins', sans-serif;
+            --safe-bottom: env(safe-area-inset-bottom, 15px);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--color-text);
-            line-height: 1.8;
-            background-color: var(--bg-color);
+            font-family: var(--font-body);
+            color: var(--text);
+            background: var(--bg);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
         }
 
-        .main_text, .section-title, .feature-title {
-            color: var(--color-primary) !important;
-        }
-
-        .info-title {
-            color: var(--color-secondary);
-        }
-
-        /* === COVER === */
         .cover {
             position: fixed;
             top: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            height: 100%;
+            max-width: 480px;
+            height: 100vh;
             height: 100dvh;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1519741497674-611481863552?w=800');
+            background: linear-gradient(180deg, rgba(113,86,180,0.15) 0%, rgba(255,255,255,0.95) 40%, rgba(255,255,255,1) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800"><defs><pattern id="floral" patternUnits="userSpaceOnUse" width="100" height="100"><path d="M50 10 Q55 30 50 50 Q45 30 50 10Z M30 20 Q40 40 30 60 Q20 40 30 20Z M70 20 Q80 40 70 60 Q60 40 70 20Z" fill="none" stroke="%23af99db" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="400" height="800" fill="url(%23floral)"/></svg>');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -61,1053 +60,959 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: white;
-            z-index: 100;
-            transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1), opacity 1s;
-            padding: 20px;
+            z-index: 1000;
+            transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1), opacity 0.8s;
+            padding: 30px 25px;
+            overflow-y: auto;
         }
 
         .cover.hidden {
-            transform: translateY(-100%);
+            transform: translateX(-50%) translateY(-110%);
             opacity: 0;
             pointer-events: none;
         }
 
-        .cover h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .cover p {
-            font-size: clamp(0.9rem, 3.5vw, 1.3rem);
-            margin-bottom: 1rem;
-        }
-
-        .cover .guest-name {
-            font-size: clamp(0.8rem, 3vw, 1rem);
-            margin-top: 2rem;
-            font-weight: 300;
-        }
-
-        .cover .guest-name b {
-            font-weight: 600;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .open-button {
-            background-color: var(--color-primary);
-            color: white;
-            border: none;
-            padding: 14px 35px;
+        .cover-label {
+            font-family: var(--font-heading);
             font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-            font-family: 'Poppins', sans-serif;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            -webkit-tap-highlight-color: transparent;
-            margin-top: 20px;
+            color: var(--secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        .open-button:active {
-            background-color: #5849b0;
-            transform: scale(0.95);
+        .cover-bismillah {
+            font-family: var(--font-arabic);
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            color: var(--primary);
+            margin-bottom: 8px;
+            line-height: 1.6;
         }
 
-        /* === MAIN CONTENT === */
-        .main-content {
-            display: none;
+        .cover-doa {
+            font-family: var(--font-arabic);
+            font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+            color: var(--secondary);
+            margin-bottom: 25px;
+            line-height: 1.6;
         }
 
-        .section {
-            padding: clamp(40px, 10vw, 80px) clamp(15px, 5vw, 20px);
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
+        .cover-decoration {
+            width: 80px;
+            height: 2px;
+            background: var(--secondary);
+            margin: 0 auto 25px;
+            position: relative;
         }
 
-        .wrapper {
-            margin: 0 auto;
-            width: 85%;
+        .cover-decoration::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 0 10px;
+            color: var(--secondary);
+            font-size: 0.5rem;
         }
 
-        /* === HOME CARD === */
-        .main-card {
-            background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=800');
-            background-size: cover;
-            background-position: center;
-            padding: 60px 20px;
-        }
-
-        .card-date {
-            font-size: 1.2rem;
-            margin: 15px 0;
-        }
-
-        .card-date span {
-            display: inline;
-        }
-
-        .card-verse {
-            font-style: italic;
-            font-size: 0.9rem;
-            margin-top: 20px;
-        }
-
-        .divider {
-            fill: var(--color-secondary);
-            margin: 15px 0;
-        }
-
-        /* === COUPLE === */
-        .couple-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .couple-profile {
-            flex: 1;
-            min-width: 250px;
-            max-width: 300px;
-        }
-
-        .couple-profile img {
-            width: clamp(120px, 30vw, 150px);
-            height: clamp(120px, 30vw, 150px);
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--color-secondary);
+        .cover-title {
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            color: var(--secondary);
+            letter-spacing: 2px;
             margin-bottom: 15px;
         }
 
-        .couple-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--color-primary);
+        .cover-names {
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            color: var(--primary);
+            margin-bottom: 5px;
+            line-height: 1.4;
         }
 
-        .couple-details {
-            font-size: 0.9rem;
-            color: #555;
-        }
-
-        /* === EVENT CARD === */
-        .event-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .event-card h3 {
-            color: var(--color-secondary);
-            font-size: 1.3rem;
+        .cover-amp {
+            font-family: var(--font-heading);
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            color: var(--secondary);
             margin-bottom: 10px;
-            font-family: 'Playfair Display', serif;
         }
 
-        .event-card p {
-            line-height: 1.9;
-            font-size: 0.9rem;
-        }
-
-        .event-card i {
-            color: var(--color-primary);
-            margin-right: 8px;
-            width: 18px;
-        }
-
-        /* === COUNTDOWN === */
-        .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        .cover-guest {
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            color: var(--gray);
             margin-top: 20px;
-            flex-wrap: wrap;
+        }
+
+        .cover-guest b {
+            display: block;
+            margin-top: 5px;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .open-btn {
+            background: linear-gradient(135deg, var(--primary), #8b6fc7);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            font-family: var(--font-body);
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(113,86,180,0.3);
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .open-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 15px rgba(113,86,180,0.3);
+        }
+
+        .open-btn i { margin-left: 8px; font-size: 0.9em; }
+
+        .main-content { display: none; }
+        .main-content.show { display: block; }
+
+        .section { padding: 50px 20px; text-align: center; position: relative; }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+            margin: 8px auto 0;
+        }
+
+        .main-card {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(175,153,219,0.1) 0%, rgba(255,255,255,1) 50%);
+            padding: 40px 20px;
+        }
+
+        .main-card .label {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .main-card .arabic-names {
+            font-family: var(--font-arabic);
+            font-size: clamp(2rem, 8vw, 3rem);
+            color: var(--primary);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .main-card .date {
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            color: var(--text);
+            margin-top: 15px;
+        }
+
+        .main-card .location {
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        .main-card .verse {
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            color: var(--secondary);
+            margin-top: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .divider-svg {
+            width: 80%;
+            max-width: 300px;
+            margin: 15px auto;
+            opacity: 0.6;
+        }
+
+        .music-bar {
+            position: fixed;
+            bottom: calc(80px + var(--safe-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99;
+            background: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            max-width: 90vw;
+            font-size: 0.8rem;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .music-bar.show { display: flex; }
+
+        .music-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .music-btn.playing {
+            background: var(--primary);
+            color: white;
+        }
+
+        .music-visualizer {
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+            height: 20px;
+        }
+
+        .music-visualizer span {
+            width: 3px;
+            background: var(--primary-light);
+            border-radius: 3px;
+            transition: height 0.3s;
+        }
+
+        .music-visualizer.paused span {
+            animation: none !important;
+            height: 3px !important;
+        }
+
+        .music-visualizer span:nth-child(1) { animation: viz 1s ease-in-out infinite 0s; }
+        .music-visualizer span:nth-child(2) { animation: viz 1s ease-in-out infinite 0.2s; }
+        .music-visualizer span:nth-child(3) { animation: viz 1s ease-in-out infinite 0.4s; }
+        .music-visualizer span:nth-child(4) { animation: viz 1s ease-in-out infinite 0.6s; }
+
+        @keyframes viz {
+            0%, 100% { height: 5px; }
+            50% { height: 18px; }
+        }
+
+        .info-section { text-align: center; padding: 40px 25px; }
+
+        .info-greeting {
+            font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+            color: var(--text);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .info-parents {
+            font-family: var(--font-heading);
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            color: var(--primary);
+            line-height: 2;
+            margin-bottom: 15px;
+        }
+
+        .info-couple {
+            font-family: var(--font-heading);
+            font-size: clamp(1.3rem, 5vw, 1.6rem);
+            color: var(--primary);
+            line-height: 1.8;
+            margin: 20px 0;
+            padding: 20px 0;
+            border-top: 1px solid var(--primary-light);
+            border-bottom: 1px solid var(--primary-light);
+        }
+
+        .info-details { margin: 20px 0; line-height: 2; }
+        .info-details .label { color: var(--secondary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+        .info-details .value { color: var(--text); font-size: clamp(0.9rem, 3.5vw, 1rem); }
+
+        .schedule-table { width: 100%; max-width: 350px; margin: 20px auto; border-collapse: collapse; }
+        .schedule-table td { padding: 8px 5px; font-size: clamp(0.8rem, 3vw, 0.9rem); }
+        .schedule-table .time { color: var(--secondary); font-weight: 600; white-space: nowrap; text-align: right; }
+        .schedule-table .separator { width: 20px; text-align: center; color: var(--primary-light); }
+        .schedule-table .event { text-align: left; color: var(--text); }
+
+        .countdown-section {
+            background: linear-gradient(180deg, var(--light-gray), white);
+            padding: 40px 20px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 350px;
+            margin: 20px auto 0;
         }
 
         .countdown-item {
-            background: var(--color-primary);
-            color: white;
-            width: clamp(60px, 18vw, 80px);
-            height: clamp(60px, 18vw, 80px);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            background: white;
+            border-radius: 12px;
+            padding: 15px 5px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid rgba(113,86,180,0.1);
         }
 
-        .countdown-item span {
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            font-weight: 600;
+        .countdown-item .number {
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            color: var(--primary);
+            font-weight: 700;
             line-height: 1;
         }
 
-        .countdown-item p {
-            font-size: clamp(0.6rem, 2.5vw, 0.8rem);
-            margin-top: 3px;
-        }
-
-        /* === BUTTONS === */
-        .btn, .wish-btn, .rsvp-btn {
-            display: inline-block;
-            background-color: var(--color-primary);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn:active, .wish-btn:active, .rsvp-btn:active {
-            background-color: #5849b0;
-            transform: scale(0.95);
-        }
-
-        .close-btn {
-            background-color: #ccc;
-            color: #333;
-        }
-
-        .close-btn:active {
-            background-color: #aaa;
-        }
-
-        /* === GUESTBOOK === */
-        .guestbook-item {
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .guestbook-comment {
-            font-style: italic;
-            color: #555;
-        }
-
-        .guestbook-name {
-            text-align: right;
-            color: var(--color-primary);
-            font-weight: 600;
+        .countdown-item .label {
+            font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+            color: var(--gray);
             margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* === FOOTER === */
-        footer {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            padding-bottom: calc(100px + var(--safe-area-bottom));
+        .gallery-section { padding: 40px 15px; overflow: hidden; }
+
+        .gallery-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px 5px 20px;
+            scrollbar-width: none;
         }
 
-        footer .hashtag {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+        .gallery-scroll::-webkit-scrollbar { display: none; }
+
+        .gallery-item {
+            flex: 0 0 85%;
+            scroll-snap-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            aspect-ratio: 4/3;
         }
 
-        footer p {
-            font-size: 0.9rem;
-        }
-
-        /* === BOTTOM NAVIGATION === */
-        .nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
+        .gallery-item img {
             width: 100%;
-            z-index: 100;
-            background: white;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            padding-bottom: env(safe-area-inset-bottom, 10px);
+            height: 100%;
+            object-fit: cover;
         }
 
-        .nav__menu {
-            max-width: 500px;
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .gallery-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gallery-dots span.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 10px;
+        }
+
+        .guestbook-section { padding: 40px 20px; background: var(--light-gray); }
+
+        .guestbook-messages { max-width: 400px; margin: 20px auto; text-align: center; }
+
+        .guestbook-msg {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .guestbook-msg.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .guestbook-msg .comment { font-size: 0.9rem; color: var(--text); font-style: italic; line-height: 1.6; }
+        .guestbook-msg .name { font-size: 0.85rem; color: var(--primary); margin-top: 10px; font-weight: 600; }
+
+        .prayer-section {
+            padding: 50px 25px;
+            text-align: center;
+            background: linear-gradient(180deg, white, rgba(175,153,219,0.08));
+        }
+
+        .prayer-text {
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            color: var(--text);
+            line-height: 2;
+            font-style: italic;
+            border: 2px solid rgba(113,86,180,0.2);
+            border-radius: 15px;
+            padding: 25px 20px;
+            max-width: 400px;
             margin: 0 auto;
         }
 
-        .nav__list {
-            display: flex;
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            box-shadow: 0 -4px 25px rgba(0,0,0,0.1);
+            display: none;
             justify-content: space-around;
-            list-style: none;
-            padding: 10px 5px;
+            align-items: center;
+            padding: 8px 5px calc(8px + var(--safe-bottom));
+            z-index: 100;
+            border-radius: 20px 20px 0 0;
         }
 
-        .nav__item {
-            flex: 1;
-        }
+        .bottom-nav.show { display: flex; }
 
-        .nav__link {
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-decoration: none;
-            color: #777;
-            background: none;
-            border: none;
+            gap: 3px;
             cursor: pointer;
-            font-family: 'Poppins', sans-serif;
+            padding: 5px 8px;
+            border-radius: 10px;
             transition: all 0.3s;
-            padding: 5px;
+            color: #999;
+            font-size: 0.65rem;
+            text-decoration: none;
+            border: none;
+            background: none;
+            font-family: var(--font-body);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
-        .nav__link:active {
-            transform: scale(0.9);
+        .nav-item i { font-size: 1.2rem; transition: all 0.3s; }
+        .nav-item.active { color: var(--primary); }
+
+        .nav-item.center-btn {
+            position: relative;
+            top: -20px;
         }
 
-        .nav__link.active, .nav__link:focus {
-            color: var(--color-primary);
-        }
-
-        .nav__icon {
+        .nav-item.center-btn .icon-circle {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), #8b6fc7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-size: 1.3rem;
-            margin-bottom: 2px;
+            box-shadow: 0 6px 20px rgba(113,86,180,0.4);
         }
 
-        .nav__name {
-            font-size: 0.6rem;
-            font-weight: 400;
-        }
-
-        @media (min-width: 480px) {
-            .nav__icon {
-                font-size: 1.4rem;
-            }
-            .nav__name {
-                font-size: 0.7rem;
-            }
-        }
-
-        /* === MODAL OVERLAY === */
-        .overlay {
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.5);
-            z-index: 150;
+            z-index: 200;
             display: none;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
+            align-items: flex-end;
         }
 
-        .overlay.active {
-            display: flex;
-        }
+        .modal-overlay.show { display: flex; }
 
-        .feature-card {
+        .modal-sheet {
             background: white;
             width: 100%;
-            max-width: 400px;
-            max-height: 80vh;
+            max-width: 480px;
+            max-height: 85vh;
+            border-radius: 25px 25px 0 0;
+            padding: 25px 20px calc(25px + var(--safe-bottom));
             overflow-y: auto;
-            border-radius: 12px;
-            padding: 25px;
-            position: relative;
-            display: none;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-handle {
+            width: 40px;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--primary);
             text-align: center;
-        }
-
-        .feature-card.active {
-            display: block;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .feature-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
             margin-bottom: 20px;
         }
 
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #777;
-            padding: 5px 10px;
-        }
-
-        /* === FORM STYLES === */
-        .form-input {
-            border: 1px solid #ccc;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--color-primary);
-        }
-
-        .form-select {
-            border: 1px solid #ccc;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            background: white;
-        }
-
-        textarea.form-input {
-            resize: none;
-        }
-
-        /* === BANK INFO === */
-        .bank-info {
-            background-color: #f4f4f4;
+        .bank-detail {
+            background: var(--light-gray);
             padding: 15px;
-            border-radius: 8px;
-            margin: 12px auto;
-            max-width: 300px;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .bank-info p {
-            margin: 5px 0;
-        }
+        .bank-detail .bank-name { font-weight: 600; color: var(--text); }
+        .bank-detail .account { font-size: 1.1rem; color: var(--primary); letter-spacing: 1px; margin: 5px 0; }
 
         .copy-btn {
-            background: none;
+            background: var(--primary);
+            color: white;
             border: none;
-            cursor: pointer;
-            color: var(--color-primary);
-            margin-left: 8px;
-        }
-
-        /* === CONTACT LIST === */
-        .contact-list {
-            list-style: none;
-            text-align: center;
-        }
-
-        .contact-list li {
-            margin-bottom: 20px;
-        }
-
-        .contact-list .name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .contact-list .number {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            font-size: 1.2rem;
-        }
-
-        .contact-list a {
-            color: var(--color-primary);
-            text-decoration: none;
-        }
-
-        /* === LOCATION === */
-        .location-info {
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-        }
-
-        .location-map {
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .location-map iframe {
-            width: 100%;
-            height: 200px;
-            border: none;
-        }
-
-        .location-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .location-links a {
-            color: var(--color-primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        /* === CALENDAR === */
-        .calendar-date {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
-        .calendar-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .calendar-links a {
-            color: var(--color-primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 10px 15px;
-            border: 1px solid var(--color-primary);
+            padding: 8px 20px;
             border-radius: 20px;
-            transition: all 0.3s;
-        }
-
-        .calendar-links a:hover {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        /* === WISHLIST === */
-        .wishlist-item {
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            margin: 10px 0;
-            text-align: left;
-        }
-
-        .wishlist-item p {
-            margin: 0;
-        }
-
-        .wishlist-item .item-name {
-            font-weight: 600;
-        }
-
-        .wishlist-item .item-desc {
-            font-size: 0.8rem;
-            color: #777;
-        }
-
-        /* === MUSIC BUTTON === */
-        .music-btn {
-            position: fixed;
-            bottom: calc(85px + var(--safe-area-bottom));
-            left: 20px;
-            background-color: var(--color-primary);
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 25px;
             cursor: pointer;
-            z-index: 99;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .wishlist-item {
             display: flex;
+            gap: 15px;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            margin-bottom: 12px;
         }
 
-        .music-player {
-            display: flex;
-            gap: 2px;
-            align-items: flex-end;
-            height: 15px;
+        .wishlist-item img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
         }
 
-        .music-player span {
-            width: 3px;
-            background: white;
-            animation: musicWave 1s infinite;
+        .wishlist-item .info { flex: 1; }
+        .wishlist-item .name { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px calc(90px + var(--safe-bottom));
+            font-size: 0.8rem;
+            color: var(--gray);
         }
 
-        .music-player.paused span {
-            animation: none;
-            height: 3px !important;
+        footer .hashtag {
+            font-family: var(--font-heading);
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            color: var(--primary);
+            margin-bottom: 15px;
         }
 
-        .music-player span:nth-child(1) { height: 8px; animation-delay: 0s; }
-        .music-player span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
-        .music-player span:nth-child(3) { height: 6px; animation-delay: 0.4s; }
-
-        @keyframes musicWave {
-            0%, 100% { height: 5px; }
-            50% { height: 15px; }
+        @media (min-width: 481px) {
+            body { border-left: 1px solid #eee; border-right: 1px solid #eee; }
         }
-
-        /* === FLEX UTILITIES === */
-        .flex { display: flex; }
-        .justify-center { justify-content: center; }
-        .gap-2 { gap: 8px; }
-        .gap-3 { gap: 12px; }
-        .mt-2 { margin-top: 8px; }
-        .mt-3 { margin-top: 12px; }
-        .mb-2 { margin-bottom: 8px; }
-        .pt-3 { padding-top: 12px; }
-        .pt-5 { padding-top: 20px; }
-        .hidden { display: none !important; }
     </style>
 </head>
 <body>
-    <audio id="background-music" loop>
-        <source src="music/Cristina_Perri_-_A_Thousand_years_(mp3.pm).mp3" type="audio/mpeg">
-    </audio>
 
-    <!-- === COVER === -->
+    <!-- COVER -->
     <div class="cover" id="cover">
-        <p>Walimatulurus</p>
-        <h1>Carlo & Fulan</h1>
-        <p>Jumaat, 21 May 2027</p>
-
-        <div class="guest-name">
+        <p class="cover-label">Walimatulurus</p>
+        <p class="cover-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        <p class="cover-doa">دُعَايَةٌ</p>
+        <div class="cover-decoration"></div>
+        <p class="cover-title">The Wedding Of</p>
+        <p class="cover-names">Carlo & Fulan</p>
+        <p class="cover-amp">&</p>
+        <div class="cover-guest">
             <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
             <b>Nama Tamu Undangan</b>
         </div>
-        
-        <button class="open-button" id="open-invitation">
-            <i class="fas fa-envelope-open"></i> Buka Undangan
+        <button class="open-btn" id="openBtn">
+            BUKA <i class="fas fa-envelope-open"></i>
         </button>
     </div>
 
-    <!-- === MODAL OVERLAY === -->
-    <div class="overlay" id="modal-overlay">
-        <!-- RSVP Modal -->
-        <div class="feature-card" id="rsvpModal">
-            <button class="close-modal" onclick="closeModal('rsvpModal')">&times;</button>
-            <h2 class="feature-title">RSVP</h2>
-            <div>
-                <div class="flex justify-center gap-2">
-                    <button class="rsvp-btn" id="rsvp-btn-1" onclick="showRsvpForm('hadir')">
-                        <i class="fas fa-check"></i> Hadir
-                    </button>
-                    <button class="rsvp-btn" id="rsvp-btn-2" onclick="showRsvpForm('tidak')">
-                        <i class="fas fa-times"></i> Tidak Hadir
-                    </button>
-                </div>
-            </div>
-            <form id="rsvp-form" class="hidden" style="margin-top: 15px; text-align: left;">
-                <input type="text" class="form-input" placeholder="Nama Anda" required>
-                <input type="tel" class="form-input" placeholder="Nombor Telefon">
-                <select class="form-select">
-                    <option value="">Pilih Slot Masa</option>
-                    <option value="1">09:00 - 10:00 | Keluarga</option>
-                    <option value="2">10:00 - 11:00 | Tetangga</option>
-                    <option value="3">11:00 - 12:00 | Kawan-kawan</option>
-                </select>
-                <p style="font-size: 0.85rem; margin-bottom: 8px;">Bil. Dewasa</p>
-                <select class="form-select">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <div class="flex justify-center gap-2 pt-3">
-                    <button class="wish-btn" type="submit">
-                        <i class="fas fa-paper-plane"></i> Hantar
-                    </button>
-                    <button class="close-btn" type="button" onclick="closeModal('rsvpModal')">
-                        <i class="fas fa-times"></i> Batal
-                    </button>
-                </div>
-            </form>
-        </div>
+    <!-- MAIN CONTENT -->
+    <div class="main-content" id="mainContent">
 
-        <!-- Money Gift Modal -->
-        <div class="feature-card" id="moneygiftModal">
-            <button class="close-modal" onclick="closeModal('moneygiftModal')">&times;</button>
-            <h2 class="feature-title">Money Gift</h2>
-            <div class="bank-info">
-                <p><strong>Bank BCA</strong></p>
-                <p>1234567890 <button class="copy-btn" onclick="copyText('1234567890')"><i class="far fa-clone"></i></button></p>
-                <p>a.n. Carlo</p>
-            </div>
-            <div class="bank-info">
-                <p><strong>DANA</strong></p>
-                <p>081234567890 <button class="copy-btn" onclick="copyText('081234567890')"><i class="far fa-clone"></i></button></p>
-                <p>a.n. Carlo</p>
-            </div>
-        </div>
+        <!-- Main Card -->
+        <section class="main-card">
+            <p class="label">Walimatulurus</p>
+            <p class="arabic-names">كارلو & فولان</p>
+            <svg class="divider-svg" viewBox="0 0 835 48">
+                <g transform="translate(0,48) scale(0.1,-0.1)" fill="#7156b4">
+                    <path d="M4075 320 l-80 -80 81 -81 81 -81 82 83 82 82 -78 79 c-42 43 -80 78 -83 78 -3 0 -41 -36 -85 -80z m101 -71 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5 16 -11z"/>
+                    <path d="M3475 310 c-217 -41 -246 -44 -329 -31 -44 8 -113 16 -153 18 -63 4 -77 2 -109 -17 -35 -23 -40 -23 -193 -14 -161 9 -639 7 -701 -3 -19 -3 -468 -7 -997 -10 -774 -4 -963 -8 -963 -18 0 -10 64 -12 323 -8 302 5 1338 -10 1852 -26 152 -5 291 -3 410 5 198 13 237 10 277 -17 32 -23 94 -24 201 -4 105 20 166 19 283 -6 143 -29 228 -29 359 3 61 15 134 30 162 33 51 7 73 18 55 29 -5 3 -40 10 -78 16 -38 6 -114 22 -169 35 -101 25 -157 29 -230 15z"/>
+                </g>
+            </svg>
+            <p class="date"><strong>Jumaat, 21 May 2027</strong></p>
+            <p class="location">Masjid Agung Al-Akbar, Surabaya</p>
+            <p class="verse">
+                "Dan Kami menciptakan kamu berpasang-pasangan"<br>
+                Surah An-Naba (78:8)
+            </p>
+        </section>
 
-        <!-- Wishlist Modal -->
-        <div class="feature-card" id="wishlistModal">
-            <button class="close-modal" onclick="closeModal('wishlistModal')">&times;</button>
-            <h2 class="feature-title">Wishlist</h2>
-            <div>
-                <div class="wishlist-item">
-                    <p class="item-name">Microwave Oven</p>
-                    <p class="item-desc">LG NeoChef 25L</p>
+        <!-- Info Section -->
+        <section class="info-section">
+            <p class="info-greeting">ASSALAMUALAIKUM WBT & SALAM SEJAHTERA</p>
+            <p class="info-parents">Bapak fulan<br>&amp;<br>Ibu fulan</p>
+            <p class="info-greeting" style="font-size: 0.85rem;">
+                Dengan penuh kesyukuran kehadrat Illahi, kami mempersilakan Dato'/Datin/Tuan/Puan ke walimatulurus anakanda kami
+            </p>
+            <div class="info-couple">Fulana<br>&amp;<br>Carlo</div>
+            <div class="info-details">
+                <p><span class="label">Tarikh</span></p>
+                <p class="value">Jumaat, 21 May 2027</p><br>
+                <p><span class="label">Masa</span></p>
+                <p class="value">09:00 Pagi - 2:00 Petang</p><br>
+                <p><span class="label">Tempat</span></p>
+                <p class="value">Masjid Agung Al-Akbar<br>Surabaya</p>
+            </div>
+            <p style="color: var(--secondary); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">Aturcara Majlis</p>
+            <table class="schedule-table">
+                <tr><td class="time">09:00 AM</td><td class="separator">•</td><td class="event">Akad Nikah</td></tr>
+                <tr><td class="time">11:00 AM</td><td class="separator">•</td><td class="event">Resepsi Bermula</td></tr>
+                <tr><td class="time">02:00 PM</td><td class="separator">•</td><td class="event">Majlis Berakhir</td></tr>
+            </table>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section">
+            <h3 class="section-title">Menanti Hari</h3>
+            <div class="countdown-grid" id="countdown">
+                <div class="countdown-item"><div class="number" id="days">00</div><div class="label">Hari</div></div>
+                <div class="countdown-item"><div class="number" id="hours">00</div><div class="label">Jam</div></div>
+                <div class="countdown-item"><div class="number" id="minutes">00</div><div class="label">Minit</div></div>
+                <div class="countdown-item"><div class="number" id="seconds">00</div><div class="label">Saat</div></div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section">
+            <h3 class="section-title">Galeri</h3>
+            <div class="gallery-scroll" id="galleryScroll">
+                <div class="gallery-item"><img src="images/pria.jpeg" alt="Wedding 1"></div>
+                <div class="gallery-item"><img src="images/cewek.jpeg" alt="Wedding 2"></div>
+                <div class="gallery-item"><img src="images/pria.jpeg" alt="Wedding 3"></div>
+            </div>
+            <div class="gallery-dots" id="galleryDots"><span class="active"></span><span></span><span></span></div>
+        </section>
+
+        <!-- Guestbook Section -->
+        <section class="guestbook-section">
+            <h3 class="section-title">Guestbook</h3>
+            <div class="guestbook-messages" id="guestbookMessages">
+                <div class="guestbook-msg active">
+                    <p class="comment">"Selamat melayari bahtera rumahtangga. Tahniah!"</p>
+                    <p class="name">- Teman -</p>
                 </div>
-                <div class="wishlist-item">
-                    <p class="item-name">Blender</p>
-                    <p class="item-desc">Philips Daily Collection</p>
+                <div class="guestbook-msg">
+                    <p class="comment">"Selamat pengantin baru! Moga bahagia."</p>
+                    <p class="name">- Kekeluarga -</p>
                 </div>
-                <div class="wishlist-item">
-                    <p class="item-name">Air Fryer</p>
-                    <p class="item-desc">Cosori 5.8L</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contact Modal -->
-        <div class="feature-card" id="contactModal">
-            <button class="close-modal" onclick="closeModal('contactModal')">&times;</button>
-            <h2 class="feature-title">Contact</h2>
-            <ul class="contact-list">
-                <li>
-                    <span class="name">Fulana</span>
-                    <div class="number">
-                        <a href="tel:6282145525681"><i class="fas fa-phone"></i></a>
-                        <a href="https://wa.me/6282145525681"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </li>
-                <li>
-                    <span class="name">Carlo</span>
-                    <div class="number">
-                        <a href="tel:6282145525681"><i class="fas fa-phone"></i></a>
-                        <a href="https://wa.me/6282145525681"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Location Modal -->
-        <div class="feature-card" id="locationModal">
-            <button class="close-modal" onclick="closeModal('locationModal')">&times;</button>
-            <h2 class="feature-title">Location</h2>
-            <div class="location-info">
-                <p>Masjid Agung Al-Akbar</p>
-                <p>Surabaya, Jawa Timur</p>
-            </div>
-            <div class="location-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.814187817579!2d112.72792931457497!3d8.499538293897073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2ddabc8d057d4e39%3A0xc5d0c6879e4da85e!2sMasjid%20Agung%20Al-Akbar!5e0!3m2!1sen!2sid!4v1682385156078!5m2!1sen!2sid" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-            <div class="location-links">
-                <a href="https://maps.google.com" target="_blank">
-                    <i class="fas fa-map-marked-alt"></i> Google Maps
-                </a>
-            </div>
-        </div>
-
-        <!-- Calendar Modal -->
-        <div class="feature-card" id="calendarModal">
-            <button class="close-modal" onclick="closeModal('calendarModal')">&times;</button>
-            <h2 class="feature-title">Calendar</h2>
-            <p class="calendar-date">Jumaat, 21 May 2027</p>
-            <div class="calendar-links">
-                <a href="https://calendar.apple.com" target="_blank">
-                    <i class="fab fa-apple"></i> Apple
-                </a>
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Walimatulurus+Carlo+%26+Fulan&dates=20270521T020000Z/20270521T070000Z" target="_blank">
-                    <i class="fab fa-google"></i> Google
-                </a>
-            </div>
-        </div>
-
-        <!-- Guestbook Modal -->
-        <div class="feature-card" id="guestbookModal">
-            <button class="close-modal" onclick="closeModal('guestbookModal')">&times;</button>
-            <h2 class="feature-title">Ucapan</h2>
-            <form style="text-align: left;">
-                <input type="text" class="form-input" placeholder="Nama Anda" required>
-                <textarea class="form-input" placeholder="Ucapan/doa anda..." rows="4" maxlength="250" required></textarea>
-                <div class="flex justify-center gap-2 pt-3">
-                    <button class="wish-btn" type="submit">
-                        <i class="fas fa-paper-plane"></i> Hantar
-                    </button>
-                    <button class="close-btn" type="button" onclick="closeModal('guestbookModal')">
-                        <i class="fas fa-times"></i> Tutup
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- === MAIN CONTENT === -->
-    <main class="main-content" id="main-content">
-        
-        <!-- === HOME CARD === -->
-        <section class="section main-card" id="home">
-            <div class="wrapper">
-                <p style="font-size: 1.8rem;">Walimatulurus</p>
-                <div class="flex justify-center gap-2" style="margin: 20px 0;">
-                    <img src="images/pria.jpeg" alt="Mempelai Pria" style="width: 100px; border-radius: 50%; border: 3px solid var(--color-secondary);">
-                    <img src="images/cewek.jpeg" alt="Mempelai Wanita" style="width: 100px; border-radius: 50%; border: 3px solid var(--color-secondary);">
-                </div>
-                <p class="card-date main_text">
-                    <span>Jumaat,</span>
-                    <span>21</span>
-                    <span>May</span>
-                    <span>2027</span>
-                </p>
-                <svg class="divider" viewBox="0 0 200 20">
-                    <path d="M0,10 Q50,0 100,10 T200,10" fill="none" stroke="var(--color-secondary)" stroke-width="2"/>
-                </svg>
-                <p style="font-size: 0.9rem;">Masjid Agung Al-Akbar, Surabaya</p>
-                <div class="card-verse main_text">
-                    <p>"Dan Kami menciptakan kamu berpasang-pasangan"</p>
-                    <p style="font-size: 0.8rem;">Surah An-Naba (78:8)</p>
+                <div class="guestbook-msg">
+                    <p class="comment">"Semoga menjadi keluarga yang bahagia."</p>
+                    <p class="name">- Sahabat -</p>
                 </div>
             </div>
         </section>
 
-        <!-- === INFO SECTION === -->
-        <section class="section" id="info">
-            <div class="wrapper">
-                <p class="main_text" style="font-size: 1.1rem;">
-                    ASSALAMUALAIKUM WBT & SALAM SEJAHTERA
-                </p>
-                <div class="couple-container">
-                    <div class="couple-profile">
-                        <img src="images/cewek.jpeg" alt="Mempelai Wanita">
-                        <h2 class="couple-name">Fulana</h2>
-                        <p class="couple-details">Putri dari Bapak fulan & Ibu fulan</p>
-                    </div>
-                    <div class="couple-profile">
-                        <img src="images/pria.jpeg" alt="Mempelai Pria">
-                        <h2 class="couple-name">Carlo</h2>
-                        <p class="couple-details">Putra dari Bapak fulan & Ibu Catur</p>
-                    </div>
-                </div>
-                <p class="main_text mt-3">
-                    Dengan penuh kesyukuran kehadrat Illahi, kami mempersilakan<br>
-                    Dato'/Datin/Tuan/Puan ke walimatulurus anakanda kami
-                </p>
-                <div class="event-card">
-                    <h3><i class="fas fa-calendar-alt"></i> Akad Nikah</h3>
-                    <p><strong>Tarikh:</strong> Jumaat, 21 May 2027</p>
-                    <p><strong>Masa:</strong> 09:00 - 10:00 WIB</p>
-                    <p><strong>Tempat:</strong> Masjid Agung Al-Akbar, Surabaya</p>
-                </div>
-                <div class="event-card">
-                    <h3><i class="fas fa-glass-cheers"></i> Resepsi</h3>
-                    <p><strong>Tarikh:</strong> Jumaat, 21 May 2027</p>
-                    <p><strong>Masa:</strong> 11:00 - 14:00 WIB</p>
-                    <p><strong>Tempat:</strong> Dyandra Convention Center, Surabaya</p>
-                </div>
-            </div>
+        <!-- Prayer Section -->
+        <section class="prayer-section">
+            <h3 class="section-title">Doa</h3>
+            <p class="prayer-text">
+                Ya Allah, berkatilah majlis perkahwinan ini, limpahkan baraqah dan rahmat kepada kedua mempelai ini, Kurniakanlah mereka zuriat yang soleh dan solehah. Kekalkanlah jodoh mereka di dunia dan di akhirat dan sampurnakanlah agama mereka dengan berkat ikatan ini.
+            </p>
         </section>
 
-        <!-- === COUNTDOWN === -->
-        <section class="section" id="countdown">
-            <div class="wrapper">
-                <h3 class="section-title">Menanti Hari</h3>
-                <div class="countdown-container">
-                    <div class="countdown-item"><span id="days">00</span><p>Hari</p></div>
-                    <div class="countdown-item"><span id="hours">00</span><p>Jam</p></div>
-                    <div class="countdown-item"><span id="minutes">00</span><p>Minit</p></div>
-                    <div class="countdown-item"><span id="seconds">00</span><p>Saat</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === GUESTBOOK === -->
-        <section class="section" id="guestbook">
-            <div class="wrapper">
-                <h3 class="section-title">Guestbook</h3>
-                <div>
-                    <div class="guestbook-item">
-                        <p class="guestbook-comment">Selamat melayari bahtera rumahtangga. Tahniah!</p>
-                        <p class="guestbook-name">-Teman-</p>
-                    </div>
-                    <div class="guestbook-item">
-                        <p class="guestbook-comment">Selamat pengantin baru! Moga bahagia sampai akhir hayat.</p>
-                        <p class="guestbook-name">-Keluarga-</p>
-                    </div>
-                </div>
-                <button class="wish-btn mt-3" onclick="openModal('guestbookModal')">
-                    <i class="fas fa-pen-nib"></i> Ucapan
-                </button>
-            </div>
-        </section>
-
-        <!-- === MUSIC BUTTON === -->
-        <button class="music-btn" onclick="toggleMusic()">
-            <div class="music-player paused" id="music-player">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <span>Music</span>
-        </button>
-
-        <!-- === FOOTER === -->
+        <!-- Footer -->
         <footer>
             <p class="hashtag">#CarloXFulan</p>
-            <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami<br>apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
-            <br>
-            <p>Created with <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
-
-            <!-- === BOTTOM NAVIGATION === -->
-            <nav class="nav container">
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('rsvpModal')">
-                                <i class="fas fa-clipboard-list nav__icon"></i>
-                                <span class="nav__name">RSVP</span>
-                            </button>
-                        </li>
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('moneygiftModal')">
-                                <i class="fas fa-money-bill-wave nav__icon"></i>
-                                <span class="nav__name">Money Gift</span>
-                            </button>
-                        </li>
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('wishlistModal')">
-                                <i class="fas fa-gift nav__icon"></i>
-                                <span class="nav__name">Wishlist</span>
-                            </button>
-                        </li>
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('contactModal')">
-                                <i class="fas fa-phone nav__icon"></i>
-                                <span class="nav__name">Contact</span>
-                            </button>
-                        </li>
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('locationModal')">
-                                <i class="fas fa-map-marker-alt nav__icon"></i>
-                                <span class="nav__name">Location</span>
-                            </button>
-                        </li>
-                        <li class="nav__item">
-                            <button type="button" class="nav__link" onclick="openModal('calendarModal')">
-                                <i class="fas fa-calendar nav__icon"></i>
-                                <span class="nav__name">Calendar</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            <p>Created with <span style="color:#e74c3c">❤️</span></p>
         </footer>
-    </main>
+    </div>
+
+    <!-- MUSIC BAR -->
+    <div class="music-bar" id="musicBar">
+        <button class="music-btn paused" id="musicBtn"><i class="fas fa-play"></i></button>
+        <div class="music-visualizer paused" id="visualizer"><span></span><span></span><span></span><span></span></div>
+        <span style="font-size: 0.75rem; color: #666;">A Thousand Years</span>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item" data-modal="rsvp"><i class="fas fa-receipt"></i> RSVP</button>
+        <button class="nav-item" data-modal="moneygift"><i class="fas fa-money-bill-wave"></i> Gift</button>
+        <button class="nav-item center-btn" data-modal="wishlist"><div class="icon-circle"><i class="fas fa-gift"></i></div></button>
+        <button class="nav-item" data-modal="contact"><i class="fas fa-phone"></i> Contact</button>
+        <button class="nav-item" data-modal="location"><i class="fas fa-map-pin"></i> Maps</button>
+    </nav>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bgMusic" loop>
+        <source src="music/Cristina_Perri_-_A_Thousand_years_(mp3.pm).mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const openButton = document.getElementById('open-invitation');
             const cover = document.getElementById('cover');
-            const mainContent = document.getElementById('main-content');
-            const audio = document.getElementById('background-music');
-            
-            openButton.addEventListener('click', function() {
-                cover.classList.add('hidden');
-                mainContent.style.display = 'block';
-                
-                audio.play().catch(function() {
-                    console.log("Browser prevents autoplay");
-                });
-                
-                startCountdown();
-            });
-        });
+            const mainContent = document.getElementById('mainContent');
+            const openBtn = document.getElementById('openBtn');
+            const musicBar = document.getElementById('musicBar');
+            const musicBtn = document.getElementById('musicBtn');
+            const visualizer = document.getElementById('visualizer');
+            const bottomNav = document.getElementById('bottomNav');
+            const bgMusic = document.getElementById('bgMusic');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContent = document.getElementById('modalContent');
 
-        function startCountdown() {
+            // OPEN INVITATION
+            openBtn.addEventListener('click', function() {
+                cover.classList.add('hidden');
+                mainContent.classList.add('show');
+                musicBar.classList.add('show');
+                bottomNav.classList.add('show');
+                
+                // Autoplay music
+                bgMusic.play().catch(() => {});
+                playMusic();
+            });
+
+            function playMusic() {
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+                musicBtn.classList.remove('paused');
+                musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                visualizer.classList.remove('paused');
+            }
+
+            function pauseMusic() {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.classList.add('paused');
+                musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                visualizer.classList.add('paused');
+            }
+
+            // MUSIC TOGGLE
+            musicBtn.addEventListener('click', function() {
+                if (bgMusic.paused) {
+                    playMusic();
+                } else {
+                    pauseMusic();
+                }
+            });
+
+            // COUNTDOWN
             const weddingDate = new Date(2027, 4, 21, 9, 0, 0).getTime();
-            
-            setInterval(function() {
+
+            function updateCountdown() {
                 const now = new Date().getTime();
                 const distance = weddingDate - now;
-                
+
+                if (distance < 0) {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                    return;
+                }
+
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
-                
-                if (distance < 0) {
-                    clearInterval(this);
-                    document.getElementById('days').innerText = '00';
-                    document.getElementById('hours').innerText = '00';
-                    document.getElementById('minutes').innerText = '00';
-                    document.getElementById('seconds').innerText = '00';
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // GALLERY
+            const galleryScroll = document.getElementById('galleryScroll');
+            const galleryDots = document.getElementById('galleryDots').querySelectorAll('span');
+
+            galleryScroll.addEventListener('scroll', function() {
+                const index = Math.round(galleryScroll.scrollLeft / galleryScroll.offsetWidth);
+                galleryDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            });
+
+            // GUESTBOOK
+            const messages = document.querySelectorAll('.guestbook-msg');
+            let currentMsg = 0;
+
+            setInterval(() => {
+                messages[currentMsg].classList.remove('active');
+                currentMsg = (currentMsg + 1) % messages.length;
+                messages[currentMsg].classList.add('active');
+            }, 5000);
+
+            // MODAL CONTENT
+            const modalData = {
+                rsvp: `
+                    <h2 class="modal-title">RSVP</h2>
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button style="flex:1; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">
+                            <i class="fas fa-check"></i> Hadir
+                        </button>
+                        <button style="flex:1; padding:12px; border-radius:25px; border:2px solid #ddd; background:white; color:#666; cursor:pointer;">
+                            <i class="fas fa-times"></i> Tidak Hadir
+                        </button>
+                    </div>
+                    <input type="text" placeholder="Nama Anda" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <input type="tel" placeholder="Nombor Telefon" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:15px;">
+                    <button style="width:100%; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">Hantar</button>
+                `,
+                moneygift: `
+                    <h2 class="modal-title">Money Gift</h2>
+                    <div class="bank-detail">
+                        <p class="bank-name">Bank BCA</p>
+                        <p class="account">1234567890</p>
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText('1234567890');this.textContent='Disalin!'">
+                            <i class="far fa-copy"></i> Salin
+                        </button>
+                    </div>
+                    <div class="bank-detail">
+                        <p class="bank-name">DANA</p>
+                        <p class="account">081234567890</p>
+                        <button class="copy-btn" onclick="navigator.clipboard.writeText('081234567890');this.textContent='Disalin!'">
+                            <i class="far fa-copy"></i> Salin
+                        </button>
+                    </div>
+                `,
+                wishlist: `
+                    <h2 class="modal-title">Wishlist</h2>
+                    <div class="wishlist-item">
+                        <img src="images/pria.jpeg" alt="Item">
+                        <div class="info"><p class="name">Microwave Oven</p></div>
+                    </div>
+                    <div class="wishlist-item">
+                        <img src="images/cewek.jpeg" alt="Item">
+                        <div class="info"><p class="name">Blender</p></div>
+                    </div>
+                `,
+                contact: `
+                    <h2 class="modal-title">Contact</h2>
+                    <div style="display: flex; justify-content: space-around; align-items: center; padding: 20px;">
+                        <div style="text-align:center;">
+                            <p style="font-weight:600;">Fulana</p>
+                            <a href="tel:6282145525681" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
+                            <a href="https://wa.me/6282145525681" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                        <div style="width:1px; height:60px; background:#ddd;"></div>
+                        <div style="text-align:center;">
+                            <p style="font-weight:600;">Carlo</p>
+                            <a href="tel:6282145525681" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
+                            <a href="https://wa.me/6282145525681" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        </div>
+                    </div>
+                `,
+                location: `
+                    <h2 class="modal-title">Location</h2>
+                    <p style="text-align:center; margin-bottom:15px; color:var(--gray);">Masjid Agung Al-Akbar<br>Surabaya</p>
+                    <div style="border-radius:12px; overflow:hidden; margin-bottom:15px;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.814187817579!2d112.72792931457497!3d8.499538293897073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2ddabc8d057d4e39%3A0xc5d0c6879e4da85e!2sMasjid%20Agung%20Al-Akbar!5e0!3m2!1sen!2sid" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" style="display:block; text-align:center; padding:12px; background:var(--primary); color:white; border-radius:25px; text-decoration:none;">
+                        <i class="fas fa-map-marked-alt"></i> Google Maps
+                    </a>
+                `
+            };
+
+            // BOTTOM NAV CLICKS
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const modal = this.dataset.modal;
+                    if (modal && modalData[modal]) {
+                        modalContent.innerHTML = modalData[modal];
+                        modalOverlay.classList.add('show');
+                    }
+                });
+            });
+
+            // CLOSE MODAL
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('show');
                 }
-            }, 1000);
-        }
+            });
 
-        function toggleMusic() {
-            const audio = document.getElementById('background-music');
-            const musicPlayer = document.getElementById('music-player');
-            
-            if (audio.paused) {
-                audio.play();
-                musicPlayer.classList.remove('paused');
-            } else {
-                audio.pause();
-                musicPlayer.classList.add('paused');
-            }
-        }
+            // SWIPE TO CLOSE MODAL
+            let touchStartY = 0;
+            const modalSheet = document.querySelector('.modal-sheet');
 
-        function openModal(modalId) {
-            document.getElementById('modal-overlay').classList.add('active');
-            document.getElementById(modalId).classList.add('active');
-        }
+            modalSheet.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            });
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.getElementById('modal-overlay').classList.remove('active');
-        }
-
-        document.getElementById('modal-overlay').addEventListener('click', function(e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.querySelectorAll('.feature-card').forEach(function(card) {
-                    card.classList.remove('active');
-                });
-            }
+            modalSheet.addEventListener('touchmove', function(e) {
+                const touchY = e.touches[0].clientY;
+                const diff = touchY - touchStartY;
+                if (diff > 100 && modalSheet.scrollTop <= 0) {
+                    modalOverlay.classList.remove('show');
+                }
+            });
         });
-
-        function showRsvpForm(status) {
-            document.getElementById('rsvp-form').classList.remove('hidden');
-            document.getElementById('rsvp-form').style.display = 'block';
-        }
-
-        function copyText(text) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(function() {
-                    alert('Disalin: ' + text);
-                });
-            }
-        }
     </script>
 </body>
 </html>
