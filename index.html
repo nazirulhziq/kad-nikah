@@ -383,7 +383,7 @@
             color: white;
             padding: clamp(30px, 8vw, 50px) clamp(15px, 5vw, 20px);
             text-align: center;
-            padding-bottom: calc(80px + var(--safe-area-bottom));
+            padding-bottom: calc(100px + var(--safe-area-bottom));
         }
 
         footer h2 {
@@ -394,6 +394,70 @@
 
         footer p {
             font-size: clamp(0.85rem, 3vw, 1rem);
+        }
+
+        /* === BOTTOM NAVIGATION === */
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding-bottom: env(safe-area-inset-bottom, 10px);
+        }
+
+        .nav__menu {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav__list {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 10px 5px;
+        }
+
+        .nav__item {
+            flex: 1;
+        }
+
+        .nav__link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #777;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.3s;
+        }
+
+        .nav__link:active {
+            transform: scale(0.9);
+        }
+
+        .nav__icon {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+
+        .nav__name {
+            font-size: 0.65rem;
+            font-weight: 400;
+        }
+
+        @media (min-width: 480px) {
+            .nav__icon {
+                font-size: 1.5rem;
+            }
+            .nav__name {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
@@ -508,6 +572,53 @@
             <br>
             <p>Kami yang berbahagia,</p>
             <h2 style="font-size: 1.8rem; margin-top: 1rem;">Fulan & Carlo</h2>
+            
+            <nav class="nav container">
+                <div class="nav__menu animated fadeInUp" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <button type="button" id="rsvp" class="nav__link">
+                                <i class="fas fa-clipboard-list nav__icon"></i>
+                                <span class="nav__name">RSVP</span>
+                            </button>
+                        </li>            
+                                <li class="nav__item">
+                            <button type="button" id="moneygift" class="nav__link">
+                                <i class="fas fa-money-bill-wave nav__icon"></i>
+                                <span class="nav__name">Money Gift</span>
+                            </button>
+                        </li>
+                        
+                        <li class="nav__item">
+                            <button type="button" id="wishlist" class="nav__link">
+                                <i class="fas fa-gift nav__icon"></i>
+                                <span class="nav__name">Wishlist</span>
+                            </button>
+                        </li>
+
+                        <li class="nav__item">
+                            <button type="button" id="contact" class="nav__link">
+                                <i class="fas fa-phone nav__icon"></i>
+                                <span class="nav__name">Contact</span>
+                            </button>
+                        </li>
+
+                        <li class="nav__item">
+                            <button type="button" id="location" class="nav__link">
+                                <i class="fas fa-map-marker-alt nav__icon"></i>
+                                <span class="nav__name">Location</span>
+                            </button>
+                        </li>
+
+                        <li class="nav__item">
+                            <button type="button" id="calendar" class="nav__link">
+                                <i class="fas fa-calendar nav__icon"></i>
+                                <span class="nav__name">Calendar</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </footer>
         
     </main>
