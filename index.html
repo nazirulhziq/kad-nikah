@@ -17,12 +17,13 @@
     <style>
         /* === PENGATURAN DASAR === */
         :root {
-            --color-primary: #6a5acd; /* Warna utama (ungu lembut) */
-            --color-secondary: #f4f4f4; /* Warna latar belakang section */
+            --color-primary: #6a5acd;
+            --color-secondary: #f4f4f4;
             --color-text: #333;
             --color-gold: #c9a970;
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Poppins', sans-serif;
+            --safe-area-bottom: env(safe-area-inset-bottom, 20px);
         }
 
         * {
@@ -37,6 +38,7 @@
             line-height: 1.8;
             background-color: #fff;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* === HALAMAN PEMBUKA (COVER) === */
@@ -46,7 +48,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1523438943997-ac2163b216de?q=80&w=1887&auto=format&fit=crop'); /* Ganti URL gambar cover */
+            height: 100dvh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1523438943997-ac2163b216de?q=80&w=1887&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -57,8 +60,9 @@
             color: white;
             z-index: 100;
             transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1), opacity 1s;
+            padding: 20px;
         }
-        
+
         .cover.hidden {
             transform: translateY(-100%);
             opacity: 0;
@@ -66,21 +70,22 @@
 
         .cover h1 {
             font-family: var(--font-heading);
-            font-size: 3rem;
+            font-size: clamp(2rem, 8vw, 3.5rem);
             margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
 
         .cover p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+            font-size: clamp(0.9rem, 3.5vw, 1.3rem);
+            margin-bottom: 1rem;
         }
-        
+
         .cover .guest-name {
-            font-size: 1rem;
-            margin-top: 3rem;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            margin-top: 2rem;
             font-weight: 300;
         }
-        
+
         .cover .guest-name b {
             font-weight: 600;
         }
@@ -89,26 +94,28 @@
             background-color: var(--color-primary);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 14px 35px;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
             font-family: var(--font-body);
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
-        .open-button:hover {
+        .open-button:active {
             background-color: #5849b0;
-            transform: scale(1.05);
+            transform: scale(0.95);
         }
-        
+
         /* === KONTEN UTAMA === */
         .main-content {
-            display: none; /* Awalnya disembunyikan */
+            display: none;
         }
-        
+
         .section {
-            padding: 80px 20px;
+            padding: clamp(40px, 10vw, 80px) clamp(15px, 5vw, 20px);
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
@@ -128,18 +135,20 @@
 
         .section-title {
             font-family: var(--font-heading);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             color: var(--color-primary);
             margin-bottom: 1rem;
+            line-height: 1.3;
         }
 
         .section-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
             color: #777;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 10px;
         }
 
         /* === BAGIAN MEMPELAI (COUPLE) === */
@@ -147,31 +156,32 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 40px;
+            gap: clamp(20px, 5vw, 40px);
         }
 
         .couple-profile {
             flex: 1;
-            min-width: 280px;
+            min-width: min(280px, 90vw);
+            padding: 0 10px;
         }
-        
+
         .couple-profile img {
-            width: 180px;
-            height: 180px;
+            width: clamp(140px, 40vw, 200px);
+            height: clamp(140px, 40vw, 200px);
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid var(--color-gold);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        
+
         .couple-name {
             font-family: var(--font-heading);
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
             color: var(--color-primary);
         }
 
         .couple-details {
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 3vw, 1rem);
             color: #555;
         }
 
@@ -179,64 +189,72 @@
         .event-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: clamp(15px, 4vw, 30px);
             justify-content: center;
+            padding: 0 10px;
         }
-        
+
         .event-card {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
+            padding: clamp(20px, 5vw, 30px);
+            border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             width: 100%;
-            max-width: 400px;
+            max-width: min(400px, 95vw);
         }
 
         .event-card h3 {
             font-family: var(--font-heading);
             color: var(--color-gold);
-            font-size: 2rem;
-            margin-bottom: 15px;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            margin-bottom: 12px;
         }
-        
+
         .event-card i {
             color: var(--color-primary);
-            margin-right: 10px;
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
         }
-        
+
         .event-card p {
             line-height: 1.9;
-            font-size: 1rem;
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
         }
 
         .btn {
             display: inline-block;
             background-color: var(--color-primary);
             color: white;
-            padding: 10px 25px;
+            padding: clamp(10px, 2.5vw, 12px) clamp(20px, 5vw, 30px);
             border-radius: 25px;
             text-decoration: none;
-            margin-top: 20px;
+            margin-top: 15px;
             transition: all 0.3s ease;
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
-        .btn:hover {
+        .btn:active {
             background-color: #5849b0;
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         /* === HITUNG MUNDUR (COUNTDOWN) === */
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            gap: clamp(8px, 2.5vw, 20px);
+            margin-top: 20px;
+            flex-wrap: wrap;
+            padding: 0 5px;
         }
 
         .countdown-item {
             background: var(--color-primary);
             color: white;
-            width: 100px;
-            height: 100px;
+            width: clamp(65px, 20vw, 100px);
+            height: clamp(65px, 20vw, 100px);
             border-radius: 10px;
             display: flex;
             flex-direction: column;
@@ -246,40 +264,44 @@
         }
 
         .countdown-item span {
-            font-size: 2.5rem;
+            font-size: clamp(1.6rem, 5vw, 2.8rem);
             font-weight: 600;
+            line-height: 1;
         }
+
         .countdown-item p {
-            font-size: 0.9rem;
+            font-size: clamp(0.65rem, 2.5vw, 0.9rem);
+            margin-top: 2px;
         }
 
         /* === KADO (GIFT) & UCAPAN === */
         .gift-icon {
-            font-size: 3rem;
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
             color: var(--color-gold);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        
+
         .bank-info {
             background-color: var(--color-secondary);
             border: 1px solid #ddd;
-            padding: 15px;
+            padding: clamp(12px, 3vw, 18px);
             border-radius: 8px;
-            margin: 15px auto;
-            max-width: 350px;
-        }
-        
-        .bank-info p {
-            margin: 5px 0;
+            margin: 12px auto;
+            max-width: min(350px, 90vw);
+            font-size: clamp(0.85rem, 3vw, 1rem);
         }
 
-        /* === TOMBOL MUSIK === */
+        .bank-info p {
+            margin: 4px 0;
+        }
+
+        /* === TOMBOL MUSIK (FLOAT BOTTOM LEFT) === */
         #music-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
+            bottom: calc(25px + var(--safe-area-bottom));
+            left: 20px;
+            width: clamp(45px, 12vw, 55px);
+            height: clamp(45px, 12vw, 55px);
             background-color: var(--color-primary);
             color: white;
             border-radius: 50%;
@@ -289,43 +311,90 @@
             align-items: center;
             cursor: pointer;
             z-index: 99;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             animation: spin 8s linear infinite;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            transition: transform 0.3s;
         }
-        
+
+        #music-toggle:active {
+            transform: scale(0.9);
+        }
+
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        
+
         #music-toggle.paused {
-             animation-play-state: paused;
+            animation-play-state: paused;
+        }
+
+        /* === FLOATING BUTTON GROUP (BOTTOM RIGHT) === */
+        .floating-buttons {
+            position: fixed;
+            bottom: calc(25px + var(--safe-area-bottom));
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 99;
+        }
+
+        .float-btn {
+            width: clamp(45px, 12vw, 55px);
+            height: clamp(45px, 12vw, 55px);
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: white;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            transition: transform 0.3s;
+        }
+
+        .float-btn:active {
+            transform: scale(0.9);
+        }
+
+        .float-btn.whatsapp {
+            background-color: #25D366;
+        }
+
+        .float-btn.gift {
+            background-color: var(--color-gold);
+        }
+
+        .float-btn.gallery {
+            background-color: #e74c3c;
         }
 
         /* === FOOTER === */
         footer {
             background-color: var(--color-primary);
             color: white;
-            padding: 40px 20px;
+            padding: clamp(30px, 8vw, 50px) clamp(15px, 5vw, 20px);
             text-align: center;
+            padding-bottom: calc(80px + var(--safe-area-bottom));
         }
-        
+
         footer h2 {
             font-family: var(--font-heading);
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 0.8rem;
         }
 
-        /* === RESPONSIVE DESIGN === */
-        @media (max-width: 768px) {
-            .cover h1 { font-size: 2.5rem; }
-            .section-title { font-size: 2rem; }
-            .countdown-container { gap: 10px; }
-            .countdown-item { width: 70px; height: 70px; }
-            .countdown-item span { font-size: 1.8rem; }
-            .countdown-item p { font-size: 0.7rem; }
+        footer p {
+            font-size: clamp(0.85rem, 3vw, 1rem);
         }
-
     </style>
 </head>
 <body>
@@ -337,6 +406,15 @@
     <button id="music-toggle" class="paused">
       <i class="fas fa-music"></i>
     </button>
+    
+    <div class="floating-buttons">
+        <a href="https://wa.me/6282145525681?text=Selamat%20menikah%20Sarah%20%26%20Budi!%20Semoga%20menjadi%20keluarga%20sakinah,%20mawaddah,%20warahmah.%20Aamiin." target="_blank" class="float-btn whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="#gift" class="float-btn gift">
+            <i class="fas fa-gift"></i>
+        </a>
+    </div>
     
     <div class="cover" id="cover">
         <p>The Wedding Of</p>
