@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#7156b4">
     
-    <title>Walimatulurus | Carlo & Fulan</title>
+    <title>Walimatulurus | Haziq & Jaynina</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,48 @@
             max-width: 480px;
             margin: 0 auto;
             position: relative;
+        }
+
+        /* === ANIMATIONS ON SCROLL === */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-on-scroll.fade-in {
+            transition: opacity 0.6s ease-out;
+        }
+
+        .animate-on-scroll.fade-in.visible {
+            opacity: 1;
+        }
+
+        .animate-on-slide-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-on-slide-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .cover {
@@ -419,6 +461,8 @@
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             aspect-ratio: 4/3;
+            cursor: pointer;
+            position: relative;
         }
 
         .gallery-item img {
@@ -426,6 +470,32 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .gallery-item .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .nav-arrow, .gallery-item.show-nav .nav-arrow {
+            opacity: 1;
+        }
+
+        .gallery-item .nav-prev { left: 10px; }
+        .gallery-item .nav-next { right: 10px; }
 
         .gallery-dots {
             display: flex;
@@ -450,6 +520,46 @@
         }
 
         .guestbook-section { padding: 40px 20px; background: var(--light-gray); }
+
+        .guestbook-form {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .guestbook-form input,
+        .guestbook-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+        }
+
+        .guestbook-form textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .guestbook-form button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guestbook-form button:active {
+            transform: scale(0.95);
+        }
 
         .guestbook-messages { max-width: 400px; margin: 20px auto; text-align: center; }
 
@@ -666,7 +776,7 @@
         <p class="cover-doa">دُعَايَةٌ</p>
         <div class="cover-decoration"></div>
         <p class="cover-title">The Wedding Of</p>
-        <p class="cover-names">Carlo & Fulan</p>
+        <p class="cover-names">Haziq & Jaynina</p>
         <p class="cover-amp">&</p>
         <div class="cover-guest">
             <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
@@ -681,17 +791,17 @@
     <div class="main-content" id="mainContent">
 
         <!-- Main Card -->
-        <section class="main-card">
+        <section class="main-card animate-on-scroll">
             <p class="label">Walimatulurus</p>
-            <p class="arabic-names">كارلو & فولان</p>
+            <p class="arabic-names">حازيق & جينينا</p>
             <svg class="divider-svg" viewBox="0 0 835 48">
                 <g transform="translate(0,48) scale(0.1,-0.1)" fill="#7156b4">
                     <path d="M4075 320 l-80 -80 81 -81 81 -81 82 83 82 82 -78 79 c-42 43 -80 78 -83 78 -3 0 -41 -36 -85 -80z m101 -71 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5 16 -11z"/>
                     <path d="M3475 310 c-217 -41 -246 -44 -329 -31 -44 8 -113 16 -153 18 -63 4 -77 2 -109 -17 -35 -23 -40 -23 -193 -14 -161 9 -639 7 -701 -3 -19 -3 -468 -7 -997 -10 -774 -4 -963 -8 -963 -18 0 -10 64 -12 323 -8 302 5 1338 -10 1852 -26 152 -5 291 -3 410 5 198 13 237 10 277 -17 32 -23 94 -24 201 -4 105 20 166 19 283 -6 143 -29 228 -29 359 3 61 15 134 30 162 33 51 7 73 18 55 29 -5 3 -40 10 -78 16 -38 6 -114 22 -169 35 -101 25 -157 29 -230 15z"/>
                 </g>
             </svg>
-            <p class="date"><strong>Jumaat, 21 May 2027</strong></p>
-            <p class="location">Masjid Agung Al-Akbar, Surabaya</p>
+            <p class="date"><strong>Sabtu, 21 Jun 2025</strong></p>
+            <p class="location">Kuantan, Pahang</p>
             <p class="verse">
                 "Dan Kami menciptakan kamu berpasang-pasangan"<br>
                 Surah An-Naba (78:8)
@@ -699,31 +809,31 @@
         </section>
 
         <!-- Info Section -->
-        <section class="info-section">
+        <section class="info-section animate-on-scroll">
             <p class="info-greeting">ASSALAMUALAIKUM WBT & SALAM SEJAHTERA</p>
-            <p class="info-parents">Bapak fulan<br>&amp;<br>Ibu fulan</p>
+            <p class="info-parents">Bapak Haziq<br>&amp;<br>Ibu Jaynina</p>
             <p class="info-greeting" style="font-size: 0.85rem;">
                 Dengan penuh kesyukuran kehadrat Illahi, kami mempersilakan Dato'/Datin/Tuan/Puan ke walimatulurus anakanda kami
             </p>
-            <div class="info-couple">Fulana<br>&amp;<br>Carlo</div>
+            <div class="info-couple">Jaynina<br>&amp;<br>Haziq</div>
             <div class="info-details">
                 <p><span class="label">Tarikh</span></p>
-                <p class="value">Jumaat, 21 May 2027</p><br>
+                <p class="value">Sabtu, 21 Jun 2025</p><br>
                 <p><span class="label">Masa</span></p>
-                <p class="value">09:00 Pagi - 2:00 Petang</p><br>
+                <p class="value">10:00 Pagi - 4:00 Petang</p><br>
                 <p><span class="label">Tempat</span></p>
-                <p class="value">Masjid Agung Al-Akbar<br>Surabaya</p>
+                <p class="value">D'Village Hall<br>Kuantan, Pahang</p>
             </div>
             <p style="color: var(--secondary); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">Aturcara Majlis</p>
             <table class="schedule-table">
-                <tr><td class="time">09:00 AM</td><td class="separator">•</td><td class="event">Akad Nikah</td></tr>
-                <tr><td class="time">11:00 AM</td><td class="separator">•</td><td class="event">Resepsi Bermula</td></tr>
-                <tr><td class="time">02:00 PM</td><td class="separator">•</td><td class="event">Majlis Berakhir</td></tr>
+                <tr><td class="time">10:00 AM</td><td class="separator">•</td><td class="event">Akad Nikah</td></tr>
+                <tr><td class="time">12:00 PM</td><td class="separator">•</td><td class="event">Ketibaan Pengantin</td></tr>
+                <tr><td class="time">04:00 PM</td><td class="separator">•</td><td class="event">Majlis Berakhir</td></tr>
             </table>
         </section>
 
         <!-- Countdown Section -->
-        <section class="countdown-section">
+        <section class="countdown-section animate-on-scroll">
             <h3 class="section-title">Menanti Hari</h3>
             <div class="countdown-grid" id="countdown">
                 <div class="countdown-item"><div class="number" id="days">00</div><div class="label">Hari</div></div>
@@ -734,19 +844,31 @@
         </section>
 
         <!-- Gallery Section -->
-        <section class="gallery-section">
+        <section class="gallery-section animate-on-scroll">
             <h3 class="section-title">Galeri</h3>
             <div class="gallery-scroll" id="galleryScroll">
                 <div class="gallery-item"><img src="images/pria.jpeg" alt="Wedding 1"></div>
                 <div class="gallery-item"><img src="images/cewek.jpeg" alt="Wedding 2"></div>
                 <div class="gallery-item"><img src="images/pria.jpeg" alt="Wedding 3"></div>
+                <div class="gallery-item"><img src="images/cewek.jpeg" alt="Wedding 4"></div>
             </div>
-            <div class="gallery-dots" id="galleryDots"><span class="active"></span><span></span><span></span></div>
+            <div class="gallery-dots" id="galleryDots"><span class="active"></span><span></span><span></span><span></span></div>
         </section>
 
         <!-- Guestbook Section -->
-        <section class="guestbook-section">
+        <section class="guestbook-section animate-on-scroll">
             <h3 class="section-title">Guestbook</h3>
+            
+            <!-- Guestbook Form -->
+            <div class="guestbook-form">
+                <input type="text" id="guestName" placeholder="Nama Anda" required>
+                <textarea id="guestMessage" placeholder="Tulis ucapan/doa anda..." required></textarea>
+                <button onclick="addGuestbookEntry()">
+                    <i class="fas fa-paper-plane"></i> Hantar
+                </button>
+            </div>
+
+            <!-- Guestbook Messages -->
             <div class="guestbook-messages" id="guestbookMessages">
                 <div class="guestbook-msg active">
                     <p class="comment">"Selamat melayari bahtera rumahtangga. Tahniah!"</p>
@@ -764,7 +886,7 @@
         </section>
 
         <!-- Prayer Section -->
-        <section class="prayer-section">
+        <section class="prayer-section animate-on-scroll">
             <h3 class="section-title">Doa</h3>
             <p class="prayer-text">
                 Ya Allah, berkatilah majlis perkahwinan ini, limpahkan baraqah dan rahmat kepada kedua mempelai ini, Kurniakanlah mereka zuriat yang soleh dan solehah. Kekalkanlah jodoh mereka di dunia dan di akhirat dan sampurnakanlah agama mereka dengan berkat ikatan ini.
@@ -773,7 +895,7 @@
 
         <!-- Footer -->
         <footer>
-            <p class="hashtag">#CarloXFulan</p>
+            <p class="hashtag">#HaziqXJaynina</p>
             <p>Created with <span style="color:#e74c3c">❤️</span></p>
         </footer>
     </div>
@@ -808,6 +930,11 @@
     </audio>
 
     <script>
+        // === GALLERY IMAGES ===
+        const galleryImages = ['images/pria.jpeg', 'images/cewek.jpeg', 'images/pria.jpeg', 'images/cewek.jpeg'];
+        let currentImageIndex = 0;
+        let autoSlideInterval;
+
         document.addEventListener('DOMContentLoaded', function() {
             const cover = document.getElementById('cover');
             const mainContent = document.getElementById('mainContent');
@@ -820,6 +947,19 @@
             const modalOverlay = document.getElementById('modalOverlay');
             const modalContent = document.getElementById('modalContent');
 
+            // === SCROLL ANIMATION ===
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            animateElements.forEach(el => observer.observe(el));
+
             // OPEN INVITATION
             openBtn.addEventListener('click', function() {
                 cover.classList.add('hidden');
@@ -827,9 +967,9 @@
                 musicBar.classList.add('show');
                 bottomNav.classList.add('show');
                 
-                // Autoplay music
                 bgMusic.play().catch(() => {});
                 playMusic();
+                startAutoSlide();
             });
 
             function playMusic() {
@@ -858,7 +998,7 @@
             });
 
             // COUNTDOWN
-            const weddingDate = new Date(2027, 4, 21, 9, 0, 0).getTime();
+            const weddingDate = new Date(2025, 5, 21, 10, 0, 0).getTime();
 
             function updateCountdown() {
                 const now = new Date().getTime();
@@ -886,15 +1026,67 @@
             updateCountdown();
             setInterval(updateCountdown, 1000);
 
-            // GALLERY
-            const galleryScroll = document.getElementById('galleryScroll');
-            const galleryDots = document.getElementById('galleryDots').querySelectorAll('span');
-
-            galleryScroll.addEventListener('scroll', function() {
-                const index = Math.round(galleryScroll.scrollLeft / galleryScroll.offsetWidth);
-                galleryDots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === index);
+            // === GALLERY AUTO SLIDE ===
+            function startAutoSlide() {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                const galleryDots = document.getElementById('galleryDots').querySelectorAll('span');
+                
+                // Add click navigation buttons to each item
+                galleryItems.forEach((item, index) => {
+                    item.classList.add('show-nav');
+                    
+                    const prevBtn = document.createElement('button');
+                    prevBtn.className = 'nav-arrow nav-prev';
+                    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                    prevBtn.onclick = (e) => { e.stopPropagation(); prevImage(); };
+                    item.appendChild(prevBtn);
+                    
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = 'nav-arrow nav-next';
+                    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                    nextBtn.onclick = (e) => { e.stopPropagation(); nextImage(); };
+                    item.appendChild(nextBtn);
                 });
+
+                autoSlideInterval = setInterval(() => {
+                    nextImage();
+                }, 3000); // Auto move every 3 seconds
+            }
+
+            function updateGallery() {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                const galleryDots = document.getElementById('galleryDots').querySelectorAll('span');
+                
+                galleryItems.forEach((item, index) => {
+                    if (index === currentImageIndex) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                galleryDots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentImageIndex);
+                });
+            }
+
+            function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+                updateGallery();
+            }
+
+            function prevImage() {
+                currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+                updateGallery();
+            }
+
+            // Gallery dot click
+            document.getElementById('galleryDots').addEventListener('click', function(e) {
+                if (e.target.tagName === 'SPAN') {
+                    const dots = this.querySelectorAll('span');
+                    currentImageIndex = Array.from(dots).indexOf(e.target);
+                    updateGallery();
+                }
             });
 
             // GUESTBOOK
@@ -907,7 +1099,7 @@
                 messages[currentMsg].classList.add('active');
             }, 5000);
 
-            // MODAL CONTENT
+            // === MODAL CONTENT ===
             const modalData = {
                 rsvp: `
                     <h2 class="modal-title">RSVP</h2>
@@ -926,16 +1118,9 @@
                 moneygift: `
                     <h2 class="modal-title">Money Gift</h2>
                     <div class="bank-detail">
-                        <p class="bank-name">Bank BCA</p>
+                        <p class="bank-name">Bank Rakyat</p>
                         <p class="account">1234567890</p>
                         <button class="copy-btn" onclick="navigator.clipboard.writeText('1234567890');this.textContent='Disalin!'">
-                            <i class="far fa-copy"></i> Salin
-                        </button>
-                    </div>
-                    <div class="bank-detail">
-                        <p class="bank-name">DANA</p>
-                        <p class="account">081234567890</p>
-                        <button class="copy-btn" onclick="navigator.clipboard.writeText('081234567890');this.textContent='Disalin!'">
                             <i class="far fa-copy"></i> Salin
                         </button>
                     </div>
@@ -955,23 +1140,23 @@
                     <h2 class="modal-title">Contact</h2>
                     <div style="display: flex; justify-content: space-around; align-items: center; padding: 20px;">
                         <div style="text-align:center;">
-                            <p style="font-weight:600;">Fulana</p>
-                            <a href="tel:6282145525681" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
-                            <a href="https://wa.me/6282145525681" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <p style="font-weight:600;">Jaynina</p>
+                            <a href="tel:601234567890" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
+                            <a href="https://wa.me/601234567890" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                         <div style="width:1px; height:60px; background:#ddd;"></div>
                         <div style="text-align:center;">
-                            <p style="font-weight:600;">Carlo</p>
-                            <a href="tel:6282145525681" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
-                            <a href="https://wa.me/6282145525681" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            <p style="font-weight:600;">Haziq</p>
+                            <a href="tel:601234567890" style="display:block; padding:10px; color:var(--primary); text-decoration:none;"><i class="fas fa-phone"></i> Call</a>
+                            <a href="https://wa.me/601234567890" target="_blank" style="display:block; padding:10px; color:#25D366; text-decoration:none;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         </div>
                     </div>
                 `,
                 location: `
                     <h2 class="modal-title">Location</h2>
-                    <p style="text-align:center; margin-bottom:15px; color:var(--gray);">Masjid Agung Al-Akbar<br>Surabaya</p>
+                    <p style="text-align:center; margin-bottom:15px; color:var(--gray);">D'Village Hall<br>Kuantan, Pahang</p>
                     <div style="border-radius:12px; overflow:hidden; margin-bottom:15px;">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.814187817579!2d112.72792931457497!3d8.499538293897073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2ddabc8d057d4e39%3A0xc5d0c6879e4da85e!2sMasjid%20Agung%20Al-Akbar!5e0!3m2!1sen!2sid" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39714.80270592756!2d103.33039853892808!3d3.807741072229463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31ecfb16c36e082b%3A0x9310034609355089!2sKuantan%2C%20Pahang!5e0!3m2!1sen!2smy!4v1700000000000" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                     </div>
                     <a href="https://maps.google.com" target="_blank" style="display:block; text-align:center; padding:12px; background:var(--primary); color:white; border-radius:25px; text-decoration:none;">
                         <i class="fas fa-map-marked-alt"></i> Google Maps
@@ -996,23 +1181,37 @@
                     modalOverlay.classList.remove('show');
                 }
             });
-
-            // SWIPE TO CLOSE MODAL
-            let touchStartY = 0;
-            const modalSheet = document.querySelector('.modal-sheet');
-
-            modalSheet.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-            });
-
-            modalSheet.addEventListener('touchmove', function(e) {
-                const touchY = e.touches[0].clientY;
-                const diff = touchY - touchStartY;
-                if (diff > 100 && modalSheet.scrollTop <= 0) {
-                    modalOverlay.classList.remove('show');
-                }
-            });
         });
+
+        // === ADD GUESTBOOK ENTRY ===
+        function addGuestbookEntry() {
+            const name = document.getElementById('guestName').value;
+            const message = document.getElementById('guestMessage').value;
+
+            if (!name || !message) {
+                alert('Sila isi nama dan ucapan');
+                return;
+            }
+
+            const guestbookMessages = document.getElementById('guestbookMessages');
+            
+            // Create new message element
+            const newMsg = document.createElement('div');
+            newMsg.className = 'guestbook-msg active';
+            newMsg.innerHTML = `
+                <p class="comment">"${message}"</p>
+                <p class="name">- ${name} -</p>
+            `;
+            
+            // Add to the beginning
+            guestbookMessages.insertBefore(newMsg, guestbookMessages.firstChild);
+            
+            // Clear form
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestMessage').value = '';
+            
+            alert('Ucapan anda telah dihantar! Terima kasih.');
+        }
     </script>
 </body>
 </html>
