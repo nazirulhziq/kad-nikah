@@ -1726,17 +1726,27 @@ let guestbookInterval;
                     btnTidak.style.background = '';
                     btnTidak.style.color = '';
                     btnTidak.style.border = '';
+                    
+                    // Close modal after reset
+                    setTimeout(() => {
+                        document.getElementById('modalOverlay').classList.remove('show');
+                    }, 1500);
                 } else {
                     alert('Ralat: ' + data.message);
+                    btn.innerHTML = originalHTML;
                 }
             })
             .catch(err => {
                 console.error(err);
                 alert('Ralat sambungan. Sila cuba lagi.');
+                btn.innerHTML = originalHTML;
             })
             .finally(() => {
                 btn.disabled = false;
-                btn.innerHTML = originalHTML;
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = '';
+                }, 2000);
             });
         }
     </script>
