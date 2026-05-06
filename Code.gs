@@ -48,5 +48,27 @@ function doPost(e) {
 }
 
 function doGet() {
-  return ContentService.createTextOutput('Kad Nikah API is running!');
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('Ucapan');
+  
+  if (!sheet) {
+    return ContentService.createTextOutput(JSON.stringify([]))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  const data = sheet.getDataRange().getValues();
+  const messages = [];
+  
+  // Skip header row, reverse to get newest first
+  for (let i = data.length - 1; i > 0; i--) {
+    if (data[i][1]) { // Name
+      messages.push({
+        name: data[i][1],
+        comment: data[i][2]
+      });
+    }
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(messages))
+    .setMimeType(ContentService.MimeType.JSON);
 }

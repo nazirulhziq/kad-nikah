@@ -1101,7 +1101,7 @@
 
     <script>
         // === CONFIG ===
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6M5z0w97GkRhEo7tcw3PGPRpWiDviR0tWD5Cfy3jYUkVVEt5e8I-4mL3WCGe5rxm5/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZgwF8ZvOCAmrw93UH8xrX42aeZa0VWwqT_KlbEUkU7wxddRIeLUqQevdDfGaxI8hO/exec';
         
         // Clean up old stuck bokeh elements
         (function cleanupBokeh() {
@@ -1535,9 +1535,9 @@ function createSnow(targetElement) {
         // === GUESTBOOK ROTATION - FIXED ===
         let guestbookMessages = []; // Store all messages
         let currentMsgIndex = 0;
-        let guestbookInterval;
+let guestbookInterval;
 
-        // Initialize with default messages
+        // Initialize with default messages + fetch from Google Sheets
         function initGuestbook() {
             const defaultMessages = [
                 { comment: "Selamat melayari bahtera rumahtangga. Tahniah!", name: "Teman" },
@@ -1545,9 +1545,24 @@ function createSnow(targetElement) {
                 { comment: "Semoga menjadi keluarga yang bahagia.", name: "Sahabat" }
             ];
             
-            guestbookMessages = [...defaultMessages];
-            renderAllMessages();
-            startGuestbookRotation();
+            // Fetch from Google Sheets
+            fetch(GOOGLE_SCRIPT_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        guestbookMessages = data;
+                    } else {
+                        guestbookMessages = [...defaultMessages];
+                    }
+                    renderAllMessages();
+                    startGuestbookRotation();
+                })
+                .catch(err => {
+                    console.log('Using default messages');
+                    guestbookMessages = [...defaultMessages];
+                    renderAllMessages();
+                    startGuestbookRotation();
+                });
         }
 
         // Render all messages in the container
