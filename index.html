@@ -1364,7 +1364,7 @@ function createSnow(targetElement) {
                 rsvp: `
                     <h2 class="modal-title">RSVP</h2>
                     <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                        <button onclick="setRsvpStatus('hadir')" id="btnHadir" style="flex:1; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">
+                        <button onclick="setRsvpStatus('hadir')" id="btnHadir" style="flex:1; padding:12px; border-radius:25px; border:2px solid #ddd; background:white; color:#666; cursor:pointer;">
                             <i class="fas fa-check"></i> Hadir
                         </button>
                         <button onclick="setRsvpStatus('tidak')" id="btnTidak" style="flex:1; padding:12px; border-radius:25px; border:2px solid #ddd; background:white; color:#666; cursor:pointer;">
@@ -1373,7 +1373,7 @@ function createSnow(targetElement) {
                     </div>
                     <input type="text" id="rsvpName" placeholder="Nama Anda" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
                     <input type="number" id="rsvpCount" placeholder="Bilangan Orang" min="1" max="10" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:15px;">
-                    <button onclick="submitRsvp()" style="width:100%; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">Hantar</button>
+                    <button onclick="submitRsvp()" id="rsvpSubmitBtn" style="width:100%; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">Hantar</button>
                 `,
                 moneygift: `
                     <h2 class="modal-title">Money Gift</h2>
@@ -1664,13 +1664,17 @@ let guestbookInterval;
             if (status === 'hadir') {
                 btnHadir.style.background = 'var(--primary)';
                 btnHadir.style.color = 'white';
+                btnHadir.style.border = 'none';
                 btnTidak.style.background = 'white';
                 btnTidak.style.color = '#666';
+                btnTidak.style.border = '2px solid #ddd';
             } else {
                 btnTidak.style.background = '#e74c3c';
                 btnTidak.style.color = 'white';
+                btnTidak.style.border = 'none';
                 btnHadir.style.background = 'white';
                 btnHadir.style.color = 'var(--primary)';
+                btnHadir.style.border = '2px solid #ddd';
             }
         }
 
@@ -1688,12 +1692,10 @@ let guestbookInterval;
                 return;
             }
             
-            const btn = document.querySelector('#rsvpModal button[onclick="submitRsvp()"]');
-            const originalHTML = btn ? btn.innerHTML : 'Hantar';
-            if (btn) {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghantar...';
-                btn.disabled = true;
-            }
+            const btn = document.getElementById('rsvpSubmitBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghantar...';
+            btn.disabled = true;
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
@@ -1715,8 +1717,10 @@ let guestbookInterval;
                     const btnTidak = document.getElementById('btnTidak');
                     btnHadir.style.background = '';
                     btnHadir.style.color = '';
+                    btnHadir.style.border = '';
                     btnTidak.style.background = '';
                     btnTidak.style.color = '';
+                    btnTidak.style.border = '';
                 } else {
                     alert('Ralat: ' + data.message);
                 }
@@ -1726,10 +1730,8 @@ let guestbookInterval;
                 alert('Ralat sambungan. Sila cuba lagi.');
             })
             .finally(() => {
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = originalHTML;
-                }
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
             });
         }
     </script>
