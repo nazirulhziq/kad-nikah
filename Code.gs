@@ -1,19 +1,22 @@
 // Code.gs - Google Apps Script for Kad Nikah
 
+const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID'; // Replace with your sheet ID or leave empty to auto-create
+
 function doPost(e) {
-  const sheet = getOrCreateSheet();
   const lock = LockService.getScriptLock();
   lock.tryLock(10000);
   
   try {
     const data = JSON.parse(e.postData.contents);
     const timestamp = new Date();
+    const sheet = getOrCreateSheet();
     
     if (data.type === 'guestbook') {
       const rows = [
         timestamp,
         data.name,
         data.comment,
+        '',
         'Guestbook'
       ];
       sheet.appendRow(rows);
@@ -50,14 +53,26 @@ function doGet() {
 }
 
 function getOrCreateSheet() {
-  const spreadsheetId = ScriptProperties.getProperty('SPREADSHEET_ID');
   let ss;
+  let sheetId = SPREADSHEET_ID;
   
-  if (spreadsheetId) {
-    ss = SpreadsheetApp.openById(spreadsheetId);
+  // If no spreadsheet ID, create new one
+  if (!sheetId || sheetId === 'YOUR_SPREADSHEET_ID' || sheetId === '') {
+    try {
+      ss = SpreadsheetApp.create('Kad Nikah - Guestbook & RSVP');
+      sheetId = ss.getId();
+      Logger.log('Created new spreadsheet: ' + sheetId);
+    } catch (e) {
+      Logger.log('Error creating spreadsheet: ' + e.message);
+      throw new Error('Cannot create spreadsheet: ' + e.message);
+    }
   } else {
-    ss = SpreadsheetApp.create('Ked Nikah - Guestbook & RSVP');
-    ScriptProperties.setProperty('SPREADSHEET_ID', ss.getId());
+    try {
+      ss = SpreadsheetApp.openById(sheetId);
+    } catch (e) {
+      Logger.log('Error opening spreadsheet: ' + e.message);
+      throw new Error('Cannot open spreadsheet: ' + e.message);
+    }
   }
   
   const sheet = ss.getSheetByName('Data');
