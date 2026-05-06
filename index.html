@@ -1100,6 +1100,9 @@
     </audio>
 
     <script>
+        // === CONFIG ===
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrlesEPyOL3_x51VMH7m8xm1JQaVGyayp_SOkdmrNkNz7Sh0r7XadiGdrgnxGzD83Q/exec';
+        
         // Clean up old stuck bokeh elements
         (function cleanupBokeh() {
             var cover = document.getElementById('cover');
@@ -1593,30 +1596,46 @@ function createSnow(targetElement) {
                 return;
             }
 
-            // Add new message to the BEGINNING of array
-            guestbookMessages.unshift({
-                comment: message,
-                name: name
-            });
-
-            // Reset index and re-render
-            currentMsgIndex = 0;
-            renderAllMessages();
-            startGuestbookRotation();
-
-            // Clear form
-            nameInput.value = '';
-            messageInput.value = '';
-            
-            // Show success feedback
             const btn = document.querySelector('.guestbook-form button');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Dihantar!';
-            btn.style.background = '#4CAF50';
-            setTimeout(() => {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghantar...';
+            btn.disabled = true;
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ type: 'guestbook', name: name, comment: message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    guestbookMessages.unshift({
+                        comment: message,
+                        name: name
+                    });
+                    currentMsgIndex = 0;
+                    renderAllMessages();
+                    startGuestbookRotation();
+                    nameInput.value = '';
+                    messageInput.value = '';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Dihantar!';
+                    btn.style.background = '#4CAF50';
+                } else {
+                    alert('Ralat: ' + data.message);
+                    btn.innerHTML = originalHTML;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Ralat sambungan. Sila cuba lagi.');
                 btn.innerHTML = originalHTML;
-                btn.style.background = '';
-            }, 1500);
+            })
+            .finally(() => {
+                btn.disabled = false;
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.background = '';
+                }, 2000);
+            });
         }
 
         // === RSVP FUNCTIONS ===
@@ -1654,23 +1673,49 @@ function createSnow(targetElement) {
                 return;
             }
             
-            const statusText = currentRsvpStatus === 'hadir' ? 'AKAN HADIR' : 'TIDAK HADIR';
-            const countText = currentRsvpStatus === 'hadir' && count ? ` (${count} orang)` : '';
-            
-            // Show confirmation
-            alert(`Terima kasih!${countText}\n${name} - ${statusText}`);
-            
-            // Reset form
-            document.getElementById('rsvpName').value = '';
-            document.getElementById('rsvpCount').value = '';
-            currentRsvpStatus = null;
-            
-            const btnHadir = document.getElementById('btnHadir');
-            const btnTidak = document.getElementById('btnTidak');
-            btnHadir.style.background = '';
-            btnHadir.style.color = '';
-            btnTidak.style.background = '';
-            btnTidak.style.color = '';
+            const btn = document.querySelector('#rsvpModal button[onclick="submitRsvp()"]');
+            const originalHTML = btn ? btn.innerHTML : 'Hantar';
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menghantar...';
+                btn.disabled = true;
+            }
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    type: 'rsvp', 
+                    name: name, 
+                    count: count || '1',
+                    status: currentRsvpStatus === 'hadir' ? 'HADIR' : 'TIDAK HADIR'
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Terima kasih!${currentRsvpStatus === 'hadir' && count ? ` (${count} orang)` : ''}\n${name} - ${currentRsvpStatus === 'hadir' ? 'AKAN HADIR' : 'TIDAK HADIR'}`);
+                    document.getElementById('rsvpName').value = '';
+                    document.getElementById('rsvpCount').value = '';
+                    currentRsvpStatus = null;
+                    const btnHadir = document.getElementById('btnHadir');
+                    const btnTidak = document.getElementById('btnTidak');
+                    btnHadir.style.background = '';
+                    btnHadir.style.color = '';
+                    btnTidak.style.background = '';
+                    btnTidak.style.color = '';
+                } else {
+                    alert('Ralat: ' + data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Ralat sambungan. Sila cuba lagi.');
+            })
+            .finally(() => {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                }
+            });
         }
     </script>
 </body>
