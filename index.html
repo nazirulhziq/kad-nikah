@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&family=Scheherazade+New:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -30,23 +30,32 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
+        body::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
 
         body {
             font-family: var(--font-body);
             color: var(--text);
             background: var(--bg);
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
             -webkit-font-smoothing: antialiased;
             max-width: 480px;
             margin: 0 auto;
             position: relative;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
         }
 
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
         }
 
         .animate-on-scroll.visible {
@@ -63,30 +72,46 @@
             max-width: 480px;
             height: 100vh;
             height: 100dvh;
-            background: linear-gradient(180deg, rgba(113,86,180,0.15) 0%, rgba(255,255,255,0.95) 40%, rgba(255,255,255,1) 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 800"><defs><pattern id="floral" patternUnits="userSpaceOnUse" width="100" height="100"><path d="M50 10 Q55 30 50 50 Q45 30 50 10Z M30 20 Q40 40 30 60 Q20 40 30 20Z M70 20 Q80 40 70 60 Q60 40 70 20Z" fill="none" stroke="%23af99db" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="400" height="800" fill="url(%23floral)"/></svg>');
+            background: url('images/frontpage.jpg') no-repeat center center;
             background-size: cover;
-            background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             z-index: 1000;
-            transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1), opacity 0.8s;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-out, visibility 0.6s ease-out;
             padding: 30px 25px;
-            overflow-y: auto;
+            visibility: visible;
         }
 
-        .cover.hidden {
-            transform: translateX(-50%) translateY(-110%);
-            opacity: 0;
-            pointer-events: none;
+        .cover::-webkit-scrollbar {
+            display: none;
         }
+        .cover {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .flower-petal {
+            position: absolute;
+            font-size: 1rem;
+            z-index: 999;
+            pointer-events: none;
+            display: inline-block;
+        }
+
+.cover.hidden {
+    transform: translateX(-50%) translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
 
         .cover-label {
             font-family: var(--font-heading);
             font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-            color: var(--secondary);
+            color: #42567B;
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-bottom: 10px;
@@ -95,23 +120,24 @@
         .cover-bismillah {
             font-family: var(--font-arabic);
             font-size: clamp(1.6rem, 6vw, 2.2rem);
-            color: var(--primary);
+            color: #966737;
             margin-bottom: 8px;
             line-height: 1.6;
         }
 
         .cover-doa {
-            font-family: var(--font-arabic);
-            font-size: clamp(1.2rem, 4.5vw, 1.6rem);
-            color: var(--secondary);
+            font-family: var(--font-heading);
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            color: #42567B;
             margin-bottom: 25px;
-            line-height: 1.6;
+            letter-spacing: 2px;
+        }
         }
 
         .cover-decoration {
-            width: 80px;
+            width: 200px;
             height: 2px;
-            background: var(--secondary);
+            background: #966737;
             margin: 0 auto 25px;
             position: relative;
         }
@@ -122,48 +148,91 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
+            background: transparent;
             padding: 0 10px;
-            color: var(--secondary);
+            color: #966737;
             font-size: 0.5rem;
         }
 
         .cover-title {
             font-size: clamp(0.8rem, 3vw, 0.9rem);
-            color: var(--secondary);
+            color: #42567B;
             letter-spacing: 2px;
             margin-bottom: 15px;
         }
 
         .cover-names {
-            font-family: var(--font-arabic);
-            font-size: clamp(1.6rem, 6vw, 2.2rem);
-            color: var(--primary);
-            margin-bottom: 5px;
-            line-height: 1.4;
+            font-family: var(--font-heading);
+            font-size: clamp(1.4rem, 5.5vw, 2rem);
+            color: #966737;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .cover-names-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0 30px 0;
+        }
+
+        .cover-names-container .cover-names {
+            font-size: clamp(1.8rem, 7vw, 2.6rem);
+            color: #966737;
+            line-height: 1;
         }
 
         .cover-amp {
-            font-family: var(--font-arabic);
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            color: var(--secondary);
-            margin-bottom: 10px;
+            font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+            color: #42567B;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .cover-date-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        
+
+        .cover-date-line {
+            width: 30px;
+            height: 1px;
+            background: #966737;
+        }
+
+        .cover-date {
+            font-size: clamp(0.85rem, 3.5vw, 1rem);
+            color: #42567B;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .cover-place {
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            color: #966737;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
         .cover-guest {
             font-size: clamp(0.75rem, 3vw, 0.85rem);
-            color: var(--gray);
+            color: #42567B;
             margin-top: 20px;
         }
 
         .cover-guest b {
             display: block;
             margin-top: 5px;
-            color: var(--text);
+            color: #966737;
             font-weight: 600;
         }
 
-        .open-btn {
+.open-btn {
             background: linear-gradient(135deg, var(--primary), #8b6fc7);
             color: white;
             border: none;
@@ -179,6 +248,11 @@
             margin-top: 20px;
         }
 
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(113,86,180,0.4);
+        }
+
         .open-btn:active {
             transform: scale(0.95);
             box-shadow: 0 4px 15px rgba(113,86,180,0.3);
@@ -186,27 +260,48 @@
 
         .open-btn i { margin-left: 8px; font-size: 0.9em; }
 
-        .main-content { display: none; }
-        .main-content.show { display: block; }
+.main-content {
+            display: none; 
+            min-height: 100vh;
+            position: relative;
+            width: 100%;
+            background: url('./images/maincontent.jpg') no-repeat center center;
+            background-size: cover;
+        }
+.main-content.show { 
+            display: block; 
+            min-height: 100vh;
+            position: relative;
+            width: 100%;
+            background: url('./images/maincontent.jpg') no-repeat center center;
+            background-size: cover;
+            padding-top: 0;
+            margin-top: 0;
+}
 
-        .section { padding: 50px 20px; text-align: center; position: relative; }
+        .section { padding: 25px 20px; text-align: center; position: relative; }
 
         .section-title {
-            font-family: var(--font-heading);
-            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.8rem, 7vw, 2.5rem);
             color: var(--primary);
             margin-bottom: 15px;
             position: relative;
-            display: inline-block;
+            display: block;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .section-title::after {
-            content: '';
+            content: none;
+            display: none;
+        }
+
+        .section-title-divider {
+            width: 150px;
+            height: 25px;
+            margin: 10px auto;
             display: block;
-            width: 40px;
-            height: 2px;
-            background: var(--secondary);
-            margin: 8px auto 0;
         }
 
         .main-card {
@@ -334,7 +429,12 @@
             50% { height: 18px; }
         }
 
-        .info-section { text-align: center; padding: 40px 25px; }
+.info-section { 
+            text-align: center; 
+            padding: 40px 25px; 
+            scroll-snap-align: start;
+            margin-bottom: 0;
+        }
 
         .info-greeting {
             font-size: clamp(0.85rem, 3.5vw, 0.95rem);
@@ -352,14 +452,13 @@
         }
 
         .info-couple {
-            font-family: var(--font-arabic);
-            font-size: clamp(1.3rem, 5vw, 1.6rem);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(1.8rem, 7vw, 2.5rem);
             color: var(--primary);
             line-height: 1.8;
-            margin: 20px 0;
-            padding: 20px 0;
-            border-top: 1px solid var(--primary-light);
-            border-bottom: 1px solid var(--primary-light);
+            margin: 15px 0;
+            padding: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .info-details { margin: 20px 0; line-height: 2; }
@@ -375,6 +474,20 @@
         .countdown-section {
             background: linear-gradient(180deg, var(--light-gray), white);
             padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start;
+            min-height: auto;
+            margin-top: 0;
+        }
+
+        .prayer-section {
+            padding: 40px 25px;
+            text-align: center;
+            background: linear-gradient(180deg, white, rgba(175,153,219,0.08));
+            scroll-snap-align: start;
         }
 
         .countdown-grid {
@@ -801,23 +914,41 @@
             body { border-left: 1px solid #eee; border-right: 1px solid #eee; }
         }
     </style>
+    
+    <!-- SVG Symbols -->
+    <svg style="display: none;">
+        <symbol id="divider-2" viewBox="0 0 835 48">  
+            <g transform="translate(0.000000,48.000000) scale(0.100000,-0.100000)" fill="#93723f" stroke="none">
+                <path d="M4075 320 l-80 -80 81 -81 81 -81 82 83 82 82 -78 79 c-42 43 -80 78 -83 78 -3 0 -41 -36 -85 -80z m101 -71 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5 16 -11z"></path>
+                <path d="M3475 310 c-217 -41 -246 -44 -329 -31 -44 8 -113 16 -153 18 -63 4 -77 2 -109 -17 -35 -23 -40 -23 -193 -14 -161 9 -639 7 -701 -3 -19 -3 -468 -7 -997 -10 -774 -4 -963 -8 -963 -18 0 -10 64 -12 323 -8 302 5 1338 -10 1852 -26 152 -5 291 -3 410 5 198 13 237 10 277 -17 32 -23 94 -24 201 -4 105 20 166 19 283 -6 143 -29 228 -29 359 3 61 15 134 30 162 33 51 7 73 18 55 29 -5 3 -40 10 -78 16 -38 6 -114 22 -169 35 -101 25 -157 29 -230 15z"></path>
+                <path d="M4600 295 c-52 -13 -128 -29 -167 -35 -94 -15 -98 -35 -10 -45 34 -4 104 -18 155 -31 108 -28 235 -32 327 -9 101 25 229 29 324 11 117 -22 166 -21 204 7 30 21 39 22 157 17 212 -8 668 -5 1310 8 338 8 796 12 1018 10 317 -2 402 0 402 10 0 9 -164 12 -787 12 -434 0 -907 5 -1053 11 -344 14 -656 16 -851 5 -151 -9 -158 -8 -192 12 -42 27 -103 28 -235 6 -101 -18 -131 -16 -327 21 -110 20 -164 18 -275 -10z"></path>
+            </g>
+        </symbol>
+    </svg>
 </head>
 <body>
 
-    <!-- COVER -->
-    <div class="cover" id="cover">
-        <p class="cover-label">Walimatulurus</p>
+<!-- COVER -->
+<div class="cover" id="cover" style="position:relative;">
         <p class="cover-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-        <p class="cover-doa">دُعَايَةٌ</p>
+        <p class="cover-label">Walimatulurus</p>
         <div class="cover-decoration"></div>
-        <p class="cover-title">Perkahwinan</p>
-        <p class="cover-names">حاذق & جاينينـا</p>
-        <p class="cover-amp">&</p>
         
-        <div class="cover-guest">
-            <p>Kepada Yth. Ayah/Ibu/Saudara/i</p>
-            <b>Nama Tamu Undangan</b>
+<div class="cover-names-container">
+            <p class="cover-names" style="font-family: 'Great Vibes', cursive;">Nazirul Haziq</p>
+            <p class="cover-amp" style="font-family: 'Great Vibes', cursive; color: #966737;">&</p>
+            <p class="cover-names" style="font-family: 'Great Vibes', cursive;">Jaynina</p>
         </div>
+        
+        
+        
+        <div class="cover-date-box">
+            <span class="cover-date-line"></span>
+            <p class="cover-date">Sabtu, 22 Mei 2027</p>
+            <span class="cover-date-line"></span>
+        </div>
+        <p class="cover-place">D'Village Hall, Kuantan</p>
+        
         <button class="open-btn" id="openBtn">
             BUKA <i class="fas fa-envelope-open"></i>
         </button>
@@ -826,22 +957,17 @@
     <!-- MAIN CONTENT -->
     <div class="main-content" id="mainContent">
 
-        <!-- Main Card -->
-        <section class="main-card animate-on-scroll">
+        <!-- Main Header - takes whole page -->
+        <section class="info-section" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
             <p class="label">Walimatulurus</p>
-            <p class="arabic-names">حاذق & جاينينـا</p>
-            <svg class="divider-svg" viewBox="0 0 835 48">
-                <g transform="translate(0,48) scale(0.1,-0.1)" fill="#7156b4">
-                    <path d="M4075 320 l-80 -80 81 -81 81 -81 82 83 82 82 -78 79 c-42 43 -80 78 -83 78 -3 0 -41 -36 -85 -80z m101 -71 c10 -17 -13 -36 -27 -22 -12 12 -4 33 11 33 5 0 12 -5 16 -11z"/>
-                    <path d="M3475 310 c-217 -41 -246 -44 -329 -31 -44 8 -113 16 -153 18 -63 4 -77 2 -109 -17 -35 -23 -40 -23 -193 -14 -161 9 -639 7 -701 -3 -19 -3 -468 -7 -997 -10 -774 -4 -963 -8 -963 -18 0 -10 64 -12 323 -8 302 5 1338 -10 1852 -26 152 -5 291 -3 410 5 198 13 237 10 277 -17 32 -23 94 -24 201 -4 105 20 166 19 283 -6 143 -29 228 -29 359 3 61 15 134 30 162 33 51 7 73 18 55 29 -5 3 -40 10 -78 16 -38 6 -114 22 -169 35 -101 25 -157 29 -230 15z"/>
-                </g>
-            </svg>
-            <p class="date"><strong>Sabtu, 22 Mei 2027</strong></p>
-            <p class="location">Kuantan, Pahang</p>
-<p class="verse">
-                "Dan Kami telah menciptakan kamu berpasang-pasang"<br>
-                Surah An-Naba (78:8)
-            </p>
+            <h2 class="section-title" style="display: block; text-align: center; font-family: 'Great Vibes', cursive;">
+                Nazirul Haziq<br>
+                <span style="color: #93723f;">&</span><br>
+                Jaynina
+            </h2>
+            <p class="date" style="margin-top: 20px;"><strong>Sabtu, 22 Mei 2027</strong></p>
+            <svg class="section-title-divider" viewBox="0 0 835 48"><use href="#divider-2"></use></svg>
+            <p class="location">D'Village Hall, Kuantan</p>
         </section>
 
         <section class="info-section animate-on-scroll">
@@ -850,8 +976,8 @@
             <p class="info-greeting" style="font-size: 0.85rem;">
                 Dengan penuh kesyukuran kehadrat Illahi, kami mempersilakan Dato'/Datin/Tuan/Puan ke walimatulurus anakanda kami
             </p>
-            <div class="info-couple">جاينينـا<br>&amp;<br>حاذق</div>
-            <div class="info-details">
+            <div class="info-couple">Nazirul Haziq<br>&amp;<br>Jaynina</div>
+            <div class="info-details" style="margin-top: 20px;">
                 <p><span class="label">Tarikh</span></p>
                 <p class="value">Sabtu, 22 Mei 2027</p><br>
                 <p><span class="label">Masa</span></p>
@@ -860,7 +986,7 @@
                 <p class="value">Tempat <br>Kuantan, Pahang</p>
             </div>
             <p style="color: var(--secondary); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">Aturcara Majlis</p>
-            <table class="schedule-table">
+            <table class="schedule-table" style="margin-bottom: 10px;">
                 <tr><td class="time">10:00 AM</td><td class="separator">•</td><td class="event">Akad Nikah</td></tr>
                 <tr><td class="time">12:00 PM</td><td class="separator">•</td><td class="event">Ketibaan Pengantin</td></tr>
                 <tr><td class="time">04:00 PM</td><td class="separator">•</td><td class="event">Majlis Berakhir</td></tr>
@@ -870,6 +996,7 @@
         <!-- Countdown Section -->
         <section class="countdown-section animate-on-scroll">
             <h3 class="section-title">Menanti Hari</h3>
+            <svg class="section-title-divider" viewBox="0 0 835 48"><use href="#divider-2"></use></svg>
             <div class="countdown-grid" id="countdown">
                 <div class="countdown-item"><div class="number" id="days">00</div><div class="label">Hari</div></div>
                 <div class="countdown-item"><div class="number" id="hours">00</div><div class="label">Jam</div></div>
@@ -881,6 +1008,7 @@
         <!-- Gallery Section -->
         <section class="gallery-section animate-on-scroll">
             <h3 class="section-title">Galeri</h3>
+            <svg class="section-title-divider" viewBox="0 0 835 48"><use href="#divider-2"></use></svg>
             <div class="gallery-wrapper">
                 <div class="gallery-container">
                     <div class="gallery-slides" id="galleryContainer">
@@ -899,7 +1027,8 @@
 
         <!-- Guestbook Section -->
         <section class="guestbook-section animate-on-scroll">
-            <h3 class="section-title">Buku Ucapan</h3>
+            <h3 class="section-title">Ucapan Tetamu</h3>
+            <svg class="section-title-divider" viewBox="0 0 835 48"><use href="#divider-2"></use></svg>
             
             <div class="guestbook-form">
                 <input type="text" id="guestName" placeholder="Nama Anda" required>
@@ -917,6 +1046,7 @@
         <!-- Prayer Section -->
         <section class="prayer-section animate-on-scroll">
             <h3 class="section-title">Doa</h3>
+            <svg class="section-title-divider" viewBox="0 0 835 48"><use href="#divider-2"></use></svg>
             <p class="prayer-text">
                 Ya Allah, berkatilah majlis perkahwinan ini, limpahkan baraqah dan rahmat kepada kedua mempelai ini, Kurniakanlah mereka zuriat yang soleh dan solehah. Kekalkanlah jodoh mereka di dunia dan di akhirat dan sampurnakanlah agama mereka dengan berkat ikatan ini.
             </p>
@@ -938,6 +1068,9 @@
 
     <!-- BOTTOM NAV -->
     <nav class="bottom-nav" id="bottomNav">
+        <button class="nav-item" data-modal="calendar">
+            <i class="fas fa-calendar-alt"></i> Calendar
+        </button>
         <button class="nav-item" data-modal="rsvp">
             <i class="fas fa-receipt"></i> RSVP
         </button>
@@ -966,6 +1099,19 @@
     </audio>
 
     <script>
+        // Clean up old stuck bokeh elements
+        (function cleanupBokeh() {
+            var cover = document.getElementById('cover');
+            if (!cover) return;
+            var children = cover.children;
+            for (var i = children.length - 1; i >= 0; i--) {
+                var child = children[i];
+                if (child.tagName === 'DIV' && child.style && child.style.background && child.style.background.indexOf('radial-gradient') > -1) {
+                    child.remove();
+                }
+            }
+        })();
+
         // === GALLERY CONFIG ===
         const galleryImages = [
             'images/pria.JPG',
@@ -983,8 +1129,77 @@
             // === INIT GUESTBOOK ===
             initGuestbook();
 
+            // === FLOATING SNOW ANIMATION ===
             const cover = document.getElementById('cover');
             const mainContent = document.getElementById('mainContent');
+            
+            function createSnow(targetElement) {
+                if (!targetElement) return;
+                
+                var el = document.createElement('div');
+                var isMain = targetElement.id === 'mainContent';
+                var size = Math.random() > 0.5 ? Math.random() * 10 + 14 : Math.random() * 6 + 4;
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.borderRadius = '50%';
+                el.style.position = 'absolute';
+                el.style.background = 'radial-gradient(circle, rgba(100, 180, 255, 0.7) 0%, rgba(100, 180, 255, 0.2) 50%, rgba(100, 180, 255, 0) 80%)';
+                el.style.zIndex = '0';
+                el.style.pointerEvents = 'none';
+                el.style.boxShadow = '0 0 8px 2px rgba(100, 180, 255, 0.2)';
+                el.style.transition = 'left 14s linear, top 14s linear, opacity 6s ease-in-out';
+                el.style.opacity = '0';
+                
+                // Full page width and height for both cover and main content
+                el.style.left = (Math.random() * 90 + 5) + '%';
+                el.style.top = isMain ? (Math.random() * 90 + 5) + '%' : (Math.random() * 50 + 10) + '%';
+                
+                targetElement.insertBefore(el, targetElement.firstChild);
+                
+                setTimeout(function() {
+                    if (!el.parentNode) return;
+                    el.style.opacity = size > 14 ? '0.6' : '0.4';
+                    // Spread across more area
+                    var newLeft = Math.max(5, parseFloat(el.style.left) - (Math.random() * 40 + 20));
+                    var newTop = Math.min(95, parseFloat(el.style.top) + (Math.random() * 40 + 30));
+                    el.style.left = newLeft + '%';
+                    el.style.top = newTop + '%';
+                }, 300);
+                
+                setTimeout(function() {
+                    if (!el.parentNode) return;
+                    el.style.opacity = '0';
+                }, 8000);
+                
+                setTimeout(function() {
+                    if (!el.parentNode) return;
+                    el.style.opacity = '0.08';
+                }, 10000);
+                
+                setTimeout(function() {
+                    if (!el.parentNode) return;
+                    el.style.opacity = '0';
+                }, 12000);
+                
+                setTimeout(function() { 
+                    if (el.parentNode) el.remove(); 
+                }, 13000);
+            }
+            
+            // Also create snow on main content after opening
+            var snowInterval;
+            function startMainContentSnow() {
+                if (snowInterval) return;
+                // More frequent and scattered across full page height
+                snowInterval = setInterval(function() { createSnow(mainContent); }, 150);
+            }
+            
+            // Start cover snow immediately
+            for (var i = 0; i < 8; i++) {
+                setTimeout(function() { createSnow(cover); }, i * 180);
+            }
+            var coverSnowInterval = setInterval(function() { createSnow(cover); }, 250);
+
             const openBtn = document.getElementById('openBtn');
             const musicBar = document.getElementById('musicBar');
             const musicBtn = document.getElementById('musicBtn');
@@ -1007,10 +1222,51 @@
 
             // OPEN INVITATION
             openBtn.addEventListener('click', function() {
+                // Stop cover snow animation
+                if (coverSnowInterval) {
+                    clearInterval(coverSnowInterval);
+                    coverSnowInterval = null;
+                }
+                
+                // Clean up ALL stuck bokeh elements from cover
+                var cover = document.getElementById('cover');
+                var toRemove = [];
+                for (var i = 0; i < cover.children.length; i++) {
+                    var child = cover.children[i];
+                    if (child.tagName === 'DIV' && child.style && child.style.background && child.style.background.indexOf('radial-gradient') > -1) {
+                        toRemove.push(child);
+                    }
+                }
+                toRemove.forEach(function(el) { el.remove(); });
+                
+                // Add hidden class for animation
                 cover.classList.add('hidden');
+                
+                // Clean up all bokeh elements completely
+                var bokehElements = cover.querySelectorAll('div');
+                bokehElements.forEach(function(el) {
+                    if (el.style && el.style.width) {
+                        el.remove();
+                    }
+                });
+                
+                // Completely hide cover after animation
+                setTimeout(function() {
+                    cover.style.display = 'none';
+                }, 600);
+                
+                // Show main content immediately
                 mainContent.classList.add('show');
+                
+                // Force scroll to top
+                setTimeout(function() {
+                    window.scrollTo(0, 0);
+                }, 100);
+                
+                // Show music bar and bottom nav
                 musicBar.classList.add('show');
                 bottomNav.classList.add('show');
+                startMainContentSnow();
                 
                 bgMusic.play().catch(() => {});
                 playMusic();
@@ -1083,19 +1339,37 @@
 
             // === MODAL CONTENT ===
             const modalData = {
+                calendar: `
+                    <h2 class="modal-title">Kalendar</h2>
+                    <p style="text-align:center; margin-bottom:15px; color:var(--text);">
+                        <strong>Sabtu, 22 Mei 2027</strong><br>
+                        10:00 Pagi - 4:00 Petang
+                    </p>
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Walimatulurus+Haziq+%26+Jaynina&dates=20270522T100000/20270522T160000&details=Walimatulurus+Haziq+%26+Jaynina%0A%0ATarikh:+22+Mei+2027%0AMasa:+10:00+Pagi+-+4:00+Petang%0ATempat:+D%27Village+Hall,+Kuantan,+Pahang&location=D%27Village+Hall,+Kuantan,+Pahang" target="_blank" style="text-align:center; padding:12px; background:var(--primary); color:white; border-radius:25px; text-decoration:none;">
+                            <i class="fab fa-google"></i> Google Calendar
+                        </a>
+                        <a href="https://outlook.live.com/calendar/0/deeplink/compose?subject=Walimatulurus+Haziq+%26+Jaynina&startdt=2027-05-22T10:00:00&enddt=2027-05-22T16:00:00&body=Walimatulurus+Haziq+%26+Jaynina%0A%0ATarikh:+22+Mei+2027%0AMasa:+10:00+Pagi+-+4:00+Petang%0ATempat:+D%27Village+Hall,+Kuantan,+Pahang&location=D%27Village+Hall,+Kuantan,+Pahang" target="_blank" style="text-align:center; padding:12px; background:#0078D4; color:white; border-radius:25px; text-decoration:none;">
+                            <i class="fab fa-microsoft"></i> Outlook
+                        </a>
+                        <a href="data:text/calendar;charset=utf-8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ASUMMARY:Walimatulurus+Haziq+%26+Jaynina%0ADTSTART:20270522T100000%0ADTEND:20270522T160000%0ADESCRIPTION:Walimatulurus+Haziq+%26+Jaynina%0ALOCATION:D%27Village+Hall,+Kuantan,+Pahang%0AEND:VEVENT%0AEND:VCALENDAR" download="walimatulurus.ics" style="text-align:center; padding:12px; background:var(--secondary); color:white; border-radius:25px; text-decoration:none;">
+                            <i class="fas fa-calendar-plus"></i> Download (.ics)
+                        </a>
+                    </div>
+                `,
                 rsvp: `
                     <h2 class="modal-title">RSVP</h2>
                     <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                        <button style="flex:1; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">
+                        <button onclick="setRsvpStatus('hadir')" id="btnHadir" style="flex:1; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">
                             <i class="fas fa-check"></i> Hadir
                         </button>
-                        <button style="flex:1; padding:12px; border-radius:25px; border:2px solid #ddd; background:white; color:#666; cursor:pointer;">
+                        <button onclick="setRsvpStatus('tidak')" id="btnTidak" style="flex:1; padding:12px; border-radius:25px; border:2px solid #ddd; background:white; color:#666; cursor:pointer;">
                             <i class="fas fa-times"></i> Tidak Hadir
                         </button>
                     </div>
-                    <input type="text" placeholder="Nama Anda" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
-                    <input type="tel" placeholder="Nombor Telefon" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:15px;">
-                    <button style="width:100%; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">Hantar</button>
+                    <input type="text" id="rsvpName" placeholder="Nama Anda" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px;">
+                    <input type="number" id="rsvpCount" placeholder="Bilangan Orang" min="1" max="10" style="width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; margin-bottom:15px;">
+                    <button onclick="submitRsvp()" style="width:100%; padding:12px; border-radius:25px; border:none; background:var(--primary); color:white; cursor:pointer;">Hantar</button>
                 `,
                 moneygift: `
                     <h2 class="modal-title">Money Gift</h2>
@@ -1342,6 +1616,60 @@
                 btn.innerHTML = originalHTML;
                 btn.style.background = '';
             }, 1500);
+        }
+
+        // === RSVP FUNCTIONS ===
+        let currentRsvpStatus = null;
+
+        function setRsvpStatus(status) {
+            currentRsvpStatus = status;
+            const btnHadir = document.getElementById('btnHadir');
+            const btnTidak = document.getElementById('btnTidak');
+            
+            if (status === 'hadir') {
+                btnHadir.style.background = 'var(--primary)';
+                btnHadir.style.color = 'white';
+                btnTidak.style.background = 'white';
+                btnTidak.style.color = '#666';
+            } else {
+                btnTidak.style.background = '#e74c3c';
+                btnTidak.style.color = 'white';
+                btnHadir.style.background = 'white';
+                btnHadir.style.color = 'var(--primary)';
+            }
+        }
+
+        function submitRsvp() {
+            const name = document.getElementById('rsvpName').value.trim();
+            const count = document.getElementById('rsvpCount').value.trim();
+            
+            if (!name) {
+                alert('Sila isi nama anda');
+                return;
+            }
+            
+            if (!currentRsvpStatus) {
+                alert('Sila pilih status kehadiran');
+                return;
+            }
+            
+            const statusText = currentRsvpStatus === 'hadir' ? 'AKAN HADIR' : 'TIDAK HADIR';
+            const countText = currentRsvpStatus === 'hadir' && count ? ` (${count} orang)` : '';
+            
+            // Show confirmation
+            alert(`Terima kasih!${countText}\n${name} - ${statusText}`);
+            
+            // Reset form
+            document.getElementById('rsvpName').value = '';
+            document.getElementById('rsvpCount').value = '';
+            currentRsvpStatus = null;
+            
+            const btnHadir = document.getElementById('btnHadir');
+            const btnTidak = document.getElementById('btnTidak');
+            btnHadir.style.background = '';
+            btnHadir.style.color = '';
+            btnTidak.style.background = '';
+            btnTidak.style.color = '';
         }
     </script>
 </body>
