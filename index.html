@@ -267,12 +267,14 @@
             width: 100%;
             background: url('./images/maincontent.jpg') no-repeat center center;
             background-size: cover;
+            overflow: visible;
         }
 .main-content.show { 
             display: block; 
             min-height: 100vh;
             position: relative;
             width: 100%;
+            overflow: visible;
             background: url('./images/maincontent.jpg') no-repeat center center;
             background-size: cover;
             padding-top: 0;
@@ -1133,12 +1135,12 @@
             const cover = document.getElementById('cover');
             const mainContent = document.getElementById('mainContent');
             
-            function createSnow(targetElement) {
+function createSnow(targetElement) {
                 if (!targetElement) return;
                 
                 var el = document.createElement('div');
                 var isMain = targetElement.id === 'mainContent';
-                var size = Math.random() > 0.5 ? Math.random() * 10 + 14 : Math.random() * 6 + 4;
+                var size = Math.random() > 0.5 ? Math.random() * 12 + 16 : Math.random() * 8 + 6;
                 el.style.width = size + 'px';
                 el.style.height = size + 'px';
                 el.style.borderRadius = '50%';
@@ -1147,21 +1149,21 @@
                 el.style.zIndex = '0';
                 el.style.pointerEvents = 'none';
                 el.style.boxShadow = '0 0 8px 2px rgba(100, 180, 255, 0.2)';
-                el.style.transition = 'left 14s linear, top 14s linear, opacity 6s ease-in-out';
+                el.style.transition = 'left 12s linear, top 12s linear, opacity 5s ease-in-out';
                 el.style.opacity = '0';
                 
-                // Full page width and height for both cover and main content
+                // Full page spread
                 el.style.left = (Math.random() * 90 + 5) + '%';
-                el.style.top = isMain ? (Math.random() * 90 + 5) + '%' : (Math.random() * 50 + 10) + '%';
+                el.style.top = (Math.random() * 90 + 5) + '%';
                 
                 targetElement.insertBefore(el, targetElement.firstChild);
                 
                 setTimeout(function() {
                     if (!el.parentNode) return;
-                    el.style.opacity = size > 14 ? '0.6' : '0.4';
-                    // Spread across more area
-                    var newLeft = Math.max(5, parseFloat(el.style.left) - (Math.random() * 40 + 20));
-                    var newTop = Math.min(95, parseFloat(el.style.top) + (Math.random() * 40 + 30));
+                    el.style.opacity = size > 18 ? '0.8' : '0.6';
+                    // Snow falls down with slight left drift
+                    var newLeft = Math.max(5, parseFloat(el.style.left) - (Math.random() * 30 + 15));
+                    var newTop = Math.min(100, parseFloat(el.style.top) + (Math.random() * 50 + 40));
                     el.style.left = newLeft + '%';
                     el.style.top = newTop + '%';
                 }, 300);
