@@ -1709,7 +1709,12 @@ let guestbookInterval;
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    alert(`Terima kasih!${currentRsvpStatus === 'hadir' && count ? ` (${count} orang)` : ''}\n${name} - ${currentRsvpStatus === 'hadir' ? 'AKAN HADIR' : 'TIDAK HADIR'}`);
+                    // Show success on button (like guestbook)
+                    const btn = document.getElementById('rsvpSubmitBtn');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Dihantar!';
+                    btn.style.background = '#4CAF50';
+                    
+                    // Reset form
                     document.getElementById('rsvpName').value = '';
                     document.getElementById('rsvpCount').value = '';
                     currentRsvpStatus = null;
