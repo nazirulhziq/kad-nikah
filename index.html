@@ -123,7 +123,8 @@ button{font:inherit;color:inherit}
 .cover-venue{font-size:12.5px;color:var(--muted);margin-top:2px}
 .guest-line{margin-top:18px;font-size:12.5px;color:var(--muted)}
 .guest-line b{color:var(--ink);font-weight:600}
-.open-btn{margin-top:26px;display:inline-flex;align-items:center;gap:10px;
+.open-btn{position:relative;
+  margin-top:26px;display:inline-flex;align-items:center;gap:10px;
   min-height:52px;padding:0 30px;border-radius:999px;border:0;cursor:pointer;
   background:linear-gradient(135deg,var(--plum),var(--plum-strong));color:#fff;
   font-weight:600;letter-spacing:.22em;font-size:11px;text-transform:uppercase;
@@ -345,18 +346,29 @@ body.ready .nav{opacity:1;pointer-events:auto;transform:translateX(-50%) transla
 .cal-ico svg{width:20px;height:20px}
 
 /* ══ music pill ══ */
-.music{position:fixed;right:14px;top:calc(14px + env(safe-area-inset-top,0px));z-index:95;
-  display:flex;align-items:center;justify-content:center;gap:0;padding:0;width:46px;height:46px;
-  border-radius:50%;
-  background:rgba(255,255,255,.96);border:1px solid var(--line);cursor:pointer;
-  box-shadow:0 8px 22px rgba(46,42,38,.14);min-height:44px;
-  opacity:0;pointer-events:none;transition:opacity .4s ease}
-body.ready .music{opacity:1;pointer-events:auto}
-.music .disc{width:22px;height:22px;border-radius:50%;border:2px solid var(--plum);
-  border-top-color:transparent;display:block}
-.music.playing .disc{animation:spin 2.4s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.music .lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.music-bar{position:fixed;left:50%;transform:translateX(-50%) translateY(10px);
+  bottom:calc(var(--nav-h) + 20px + env(safe-area-inset-bottom,0px));z-index:95;
+  display:flex;align-items:center;gap:9px;padding:5px 15px 5px 5px;
+  background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
+  box-shadow:0 10px 26px rgba(46,42,38,.16);opacity:0;pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease}
+body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.music-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--plum);background:#fff;
+  color:var(--plum);display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 38px}
+.music-btn svg{width:15px;height:15px;fill:currentColor}
+.music-btn .ic-pause{display:none}
+.music-bar.playing .ic-play{display:none}
+.music-bar.playing .ic-pause{display:block}
+.viz{display:flex;align-items:flex-end;gap:2.5px;height:16px}
+.viz i{width:3px;height:4px;border-radius:2px;background:var(--plum-soft);transition:height .25s ease}
+.music-bar.playing .viz i{animation:vizBar .85s ease-in-out infinite alternate}
+.music-bar.playing .viz i:nth-child(1){animation-delay:0s}
+.music-bar.playing .viz i:nth-child(2){animation-delay:.18s}
+.music-bar.playing .viz i:nth-child(3){animation-delay:.36s}
+.music-bar.playing .viz i:nth-child(4){animation-delay:.1s}
+@keyframes vizBar{from{height:4px;opacity:.55}to{height:15px;opacity:1}}
+.music-lbl{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding-right:2px}
+@media(prefers-reduced-motion:reduce){.music-bar.playing .viz i{animation:none;height:11px}}
 
 /* ══ toast ══ */
 .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 70px);transform:translateX(-50%) translateY(10px);
@@ -364,6 +376,15 @@ body.ready .music{opacity:1;pointer-events:auto}
   opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+
+/* butterfly resting on the BUKA button */
+.perch{position:absolute;top:-19px;right:-4px;width:36px;line-height:0;
+  transform-origin:50% 90%;
+  transition:transform 1.15s cubic-bezier(.2,.75,.25,1),opacity 1s ease}
+.perch svg{width:100%;height:auto;filter:drop-shadow(0 2px 4px rgba(46,42,38,.18))}
+.perch .pwings{transform-origin:50% 50%;animation:perchFlap 1.6s ease-in-out infinite alternate}
+@keyframes perchFlap{from{transform:scaleX(1)}to{transform:scaleX(.86)}}
+.open-btn.flyaway .perch{transform:translate(64px,-130px) rotate(26deg) scale(.62);opacity:0}
 
 /* ══ garden: butterfly + leaf burst on open ══ */
 #garden{position:fixed;inset:0;width:100%;height:100%;z-index:300;pointer-events:none;
@@ -467,6 +488,11 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
 </style>
 </head>
 <body>
+<script>
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, 0); });
+  window.addEventListener('load', function(){ window.scrollTo(0, 0); });
+</script>
 <script>document.body.classList.add("locked");</script>
 <a class="skip" href="#main">Langkau ke kandungan</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -484,6 +510,18 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
     <p class="cover-venue">CMi Hall &amp; Event Space, Kuantan</p>
     <p class="guest-line" id="guestLine" hidden>Kepada <b id="guestName"></b></p>
     <button class="open-btn" id="openBtn">
+      <span class="perch" aria-hidden="true">
+        <svg viewBox="0 0 64 52">
+          <g class="pwings">
+            <path d="M31 26C22 8 6 2 4 12c-3 12 12 19 27 17z" fill="#C9A8C0" stroke="#8E6F9E" stroke-width="1.6"/>
+            <path d="M31 27c-9 14-22 19-25 10-3-11 12-16 25-14z" fill="#B48FAE" stroke="#8E6F9E" stroke-width="1.6"/>
+            <path d="M33 26C42 8 58 2 60 12c3 12-12 19-27 17z" fill="#C9A8C0" stroke="#8E6F9E" stroke-width="1.6"/>
+            <path d="M33 27c9 14 22 19 25 10 3-11-12-16-25-14z" fill="#B48FAE" stroke="#8E6F9E" stroke-width="1.6"/>
+          </g>
+          <path d="M32 14c2 0 3 3 3 12s-1 12-3 12-3-3-3-12 1-12 3-12z" fill="#5B4A63"/>
+          <path d="M31 15c-3-4-7-6-9-5M33 15c3-4 7-6 9-5" fill="none" stroke="#5B4A63" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </span>
       Buka
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </button>
@@ -761,9 +799,14 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
 </nav>
 
 <!-- ══════════ MUSIC ══════════ -->
-<button class="music" id="musicBtn" aria-label="Main atau hentikan muzik" aria-pressed="false">
-  <span class="disc" id="musicDisc" aria-hidden="true"></span>
+<div class="music-bar" id="musicBar">
+  <button class="music-btn" id="musicBtn" aria-label="Main atau hentikan muzik" aria-pressed="false">
+    <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13l10-6.5z"/></svg>
+    <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg>
   </button>
+  <span class="viz" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  <span class="music-lbl">Muzik</span>
+</div>
 <audio id="bgm" loop preload="none" src="music/Christina Perri - A Thousand Years (PianoCello Cover).mp3"></audio>
 
 
@@ -926,6 +969,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
   /* ── open the card ── */
   var cover = $('cover');
   $('openBtn').addEventListener('click', function(){
+    $('openBtn').classList.add('flyaway');   // the resting butterfly leaves first
     cover.classList.add('gone');
     document.body.classList.remove('locked');
     document.body.classList.add('ready');
@@ -961,15 +1005,17 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
   /* ── calendar (.ics generated client-side) ── */
   $('icsBtn').addEventListener('click', function(){
     var ics = [
-      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kad Nikah//Haziq & Jaynina//MS',
+      'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kad Nikah//NinaHazMoments//MS','CALSCALE:GREGORIAN',
       'BEGIN:VEVENT',
-      'UID:haziq-jaynina-20270522@kadnikah',
+      'UID:ninahazmoments-20270522@kadnikah',
       'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z',
       'DTSTART:20270522T020000Z',
       'DTEND:20270522T080000Z',
       'SUMMARY:Walimatulurus Nazirul Haziq & Jaynina',
-      'LOCATION:D\'Village Hall, Kuantan',
-      'DESCRIPTION:Walimatulurus Nazirul Haziq & Jaynina',
+      'LOCATION:CMi Hall & Event Space\\, Kuantan\\, Pahang',
+      'DESCRIPTION:Walimatulurus Nazirul Haziq & Jaynina\\n\\nLokasi: CMi Hall & Event Space\\, Kuantan\\, Pahang\\nPeta: https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space+Kuantan',
+      'URL:https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space+Kuantan',
+      'STATUS:CONFIRMED',
       'END:VEVENT','END:VCALENDAR'
     ].join('\r\n');
     var blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
@@ -1119,6 +1165,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
     }
     var playing = !bgm.paused;
     musicBtn.classList.toggle('playing', playing);
+    $('musicBar').classList.toggle('playing', playing);
     musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
   }
   musicBtn.addEventListener('click', function(){
