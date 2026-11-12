@@ -280,8 +280,30 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.msgs{margin-top:16px;display:grid;gap:10px;max-height:320px;overflow-y:auto;scroll-behavior:auto}
-.msg{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.wall{margin-top:16px;max-height:300px;overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%);
+  mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%)}
+.wall-track{display:grid;gap:10px;will-change:transform;
+  animation:wallRoll 42s linear infinite}
+.wall:hover .wall-track,.wall:active .wall-track{animation-play-state:paused}
+@keyframes wallRoll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.msg{position:relative;padding-left:34px;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(250,244,236,.9));
+  border:1px solid rgba(169,134,63,.22);border-left:2px solid rgba(107,78,158,.35);
+  border-radius:12px;padding:12px 14px;backdrop-filter:blur(4px);
+  box-shadow:0 4px 14px rgba(46,42,38,.06);
+  transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+.msg:hover{transform:translateX(2px);box-shadow:0 8px 20px rgba(46,42,38,.12)}
+.wall.in .msg{animation:msgIn .62s var(--ease-out) both;animation-delay:calc(var(--i,0) * 55ms)}
+@keyframes msgIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .wall-track{animation:none}
+  .wall.in .msg{animation:none}
+}
+.msg::before{content:'\201C';position:absolute;left:11px;top:6px;font-family:var(--font-head);
+  font-size:30px;line-height:1;color:rgba(169,134,63,.38)}
+.msg:nth-child(odd){transform:rotate(-.35deg)}
+.msg:nth-child(even){transform:rotate(.3deg)}
 .msg .who{font-size:12.5px;font-weight:600;color:var(--plum)}
 .msg .what{font-size:13.5px;color:var(--ink);margin-top:2px;line-height:1.6}
 .msg .when{font-size:10.5px;color:var(--muted);margin-top:6px}
@@ -366,12 +388,13 @@ body.ready .nav{opacity:1;pointer-events:auto;transform:translateX(-50%) transla
 
 /* ══ music pill ══ */
 .music-bar{position:fixed;left:50%;transform:translateX(-50%) translateY(10px);
-  bottom:calc(var(--nav-h) + 20px + env(safe-area-inset-bottom,0px));z-index:95;
+  bottom:calc(var(--nav-h) + 7px + env(safe-area-inset-bottom,0px));z-index:95;
   display:flex;align-items:center;gap:9px;padding:5px 15px 5px 5px;
   background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
   box-shadow:0 10px 26px rgba(46,42,38,.16);opacity:0;pointer-events:none;
   transition:opacity .4s ease,transform .4s ease}
 body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.music-bar.tucked{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(14px)}
 .music-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--plum);background:#fff;
   color:var(--plum);display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 38px}
 .music-btn svg{width:15px;height:15px;fill:currentColor}
@@ -419,13 +442,14 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 
 /* butterfly resting on the BUKA button */
 .perch{position:absolute;top:-6px;left:calc(50% - 23px);width:46px;line-height:0;z-index:3;
-  transform-origin:50% 92%;animation:perchLand 2.1s cubic-bezier(.2,.8,.28,1) both}
+  transform-origin:50% 92%;animation:perchLand 2.7s cubic-bezier(.33,.9,.3,1) both}
 @keyframes perchLand{
-  0%  {transform:translate(-96px,-118px) rotate(-24deg) scale(.58);opacity:0}
-  35% {transform:translate(-34px,-40px) rotate(6deg) scale(.92);opacity:1}
-  62% {transform:translate(4px,-10px) rotate(-5deg) scale(1.04)}
-  78% {transform:translate(0,-24px) rotate(3deg) scale(.99)}
-  90% {transform:translate(0,-16px) rotate(-1.5deg) scale(1)}
+  0%  {transform:translate(-230px,26px) rotate(-20deg) scale(.5);opacity:0}
+  12% {opacity:1}
+  34% {transform:translate(-150px,-46px) rotate(12deg) scale(.74)}
+  58% {transform:translate(-74px,-14px) rotate(-8deg) scale(.9)}
+  78% {transform:translate(-22px,-38px) rotate(5deg) scale(1.02)}
+  91% {transform:translate(-2px,-18px) rotate(-1deg) scale(1)}
   100%{transform:translate(0,-22px) rotate(0deg) scale(1);opacity:1}
 }
 .perch.settled{animation:perchBreathe 5.4s ease-in-out infinite}
@@ -552,8 +576,9 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 .reveal.on{opacity:1;transform:none}
 
 /* ══ word-by-word write-up for headings ══ */
-.split .w{display:inline-block;opacity:0;transform:translateY(.34em);
-  transition:opacity .5s var(--ease-out),transform .5s var(--ease-out)}
+.split .w{display:inline-block;opacity:0;transform:translateY(.28em);
+  will-change:opacity,transform;
+  transition:opacity .62s cubic-bezier(.22,.61,.36,1),transform .62s cubic-bezier(.22,.61,.36,1)}
 .split.on .w{opacity:1;transform:none}
 
 /* ══ hero entrance, plays once when the card is opened ══ */
@@ -832,7 +857,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
         <textarea id="gMsg" placeholder="Tulis ucapan anda…"></textarea>
       </div>
       <button class="btn" id="gSend">Hantar Ucapan</button>
-      <div class="msgs" id="gList" aria-live="polite"></div>
+      <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
     </div>
   </section>
 
@@ -1268,26 +1293,35 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     if(localStorage.getItem(KEY + '.seeded')) return;
     try{ localStorage.setItem(KEY, JSON.stringify(SEED)); localStorage.setItem(KEY + '.seeded','1'); }catch(e){}
   }
+  function msgNode(m, i){
+    var div = document.createElement('div');
+    div.className = 'msg';
+    div.style.setProperty('--i', i);
+    var who = document.createElement('div'); who.className = 'who'; who.textContent = m.name;
+    var what = document.createElement('div'); what.className = 'what'; what.textContent = m.text;
+    var when = document.createElement('div'); when.className = 'when'; when.textContent = m.at;
+    div.appendChild(who); div.appendChild(what); div.appendChild(when);
+    return div;
+  }
   function renderMsgs(){
     var list = loadMsgs().slice().reverse();
-    var box = $('gList');
-    box.innerHTML = '';
+    var box = $('gList'), track = $('gTrack');
+    track.innerHTML = '';
     if(!list.length){
       var p = document.createElement('p');
       p.className = 'empty';
       p.textContent = 'Belum ada ucapan. Jadilah yang pertama.';
-      box.appendChild(p);
+      track.appendChild(p);
+      box.style.height = 'auto';
       return;
     }
-    list.forEach(function(m){
-      var div = document.createElement('div');
-      div.className = 'msg';
-      var who = document.createElement('div'); who.className = 'who'; who.textContent = m.name;
-      var what = document.createElement('div'); what.className = 'what'; what.textContent = m.text;
-      var when = document.createElement('div'); when.className = 'when'; when.textContent = m.at;
-      div.appendChild(who); div.appendChild(what); div.appendChild(when);
-      box.appendChild(div);
-    });
+    list.forEach(function(m, i){ track.appendChild(msgNode(m, i)); });
+    // duplicate once so the -50% loop is seamless
+    list.forEach(function(m, i){ track.appendChild(msgNode(m, i + list.length)); });
+    box.style.height = '';
+    // constant reading speed: ~3.4s per message
+    track.style.animationDuration = Math.max(18, list.length * 3.4) + 's';
+    setTimeout(function(){ box.classList.add('in'); }, 120);
   }
   seedOnce();
   $('gSend').addEventListener('click', function(){
@@ -1304,37 +1338,16 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   });
   renderMsgs();
 
-  /* ── ucapan wall drifts slowly, loops both ways ── */
+  /* ── ucapan wall: reveal when it enters the viewport ── */
   (function(){
-    var box = $('gList'), dir = 1, paused = false, resumeT, pos = 0, raf;
-    if(!box) return;
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    box.style.scrollBehavior = 'auto';
-    function loop(){
-      var max = box.scrollHeight - box.clientHeight;
-      if(!paused && max > 4){
-        pos += 0.42 * dir;                    // float accumulator — scrollTop rounds to int
-        if(pos >= max){ pos = max; dir = -1; }
-        if(pos <= 0){ pos = 0; dir = 1; }
-        box.scrollTop = pos;
-      } else {
-        pos = box.scrollTop;
-      }
-      raf = requestAnimationFrame(loop);
-    }
-    function hold(){ paused = true; pos = box.scrollTop; clearTimeout(resumeT); }
-    function release(){ clearTimeout(resumeT); resumeT = setTimeout(function(){ paused = false; pos = box.scrollTop; }, 2200); }
-    ['pointerenter','touchstart','focusin','wheel'].forEach(function(ev){
-      box.addEventListener(ev, hold, {passive:true});
-    });
-    ['pointerleave','touchend','focusout'].forEach(function(ev){
-      box.addEventListener(ev, release, {passive:true});
-    });
-    document.addEventListener('visibilitychange', function(){
-      if(document.hidden){ cancelAnimationFrame(raf); }
-      else { cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); }
-    });
-    raf = requestAnimationFrame(loop);
+    var box = $('gList');
+    if(!box || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ box.classList.add('in'); io.unobserve(box); }
+      });
+    }, {threshold: 0.18});
+    io.observe(box);
   })();
 
   /* ── RSVP ── */
@@ -1380,6 +1393,17 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   });
   bgm.addEventListener('play', function(){ playMusic(false); });
   bgm.addEventListener('pause', function(){ playMusic(false); });
+
+  /* ── tuck the music pill away while scrolling ── */
+  (function(){
+    var bar = $('musicBar'); if(!bar) return;
+    var t;
+    window.addEventListener('scroll', function(){
+      bar.classList.add('tucked');
+      clearTimeout(t);
+      t = setTimeout(function(){ bar.classList.remove('tucked'); }, 900);
+    }, {passive:true});
+  })();
 
   /* ── share ── */
   var shareBtnEl = $('shareBtn'); if (shareBtnEl) shareBtnEl.addEventListener('click', function(){
