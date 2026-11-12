@@ -453,6 +453,23 @@ body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateY(0)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 
+/* ══ after the majlis starts: kami dah kahwin ══ */
+.count.married{position:relative;overflow:visible;display:block;text-align:center;
+  padding:24px 16px;border-radius:18px;
+  background:linear-gradient(135deg,rgba(251,235,241,.95),rgba(238,224,246,.9));
+  border:1px solid rgba(180,124,140,.35);box-shadow:0 14px 34px rgba(184,124,140,.18);
+  animation:marriedIn .9s var(--ease-out) both}
+@keyframes marriedIn{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.married-title{position:relative;z-index:2;font-family:var(--font-script);font-size:32px;line-height:1.2;color:#8E4A66}
+.married-sub{position:relative;z-index:2;font-size:11.5px;letter-spacing:.04em;color:#8a6a76;margin-top:6px;max-width:250px;margin-left:auto;margin-right:auto;line-height:1.6}
+.heart{position:absolute;bottom:8px;z-index:1;pointer-events:none;animation:heartRise ease-out forwards;opacity:0}
+@keyframes heartRise{
+  0%{opacity:0;transform:translateY(0) scale(.6) rotate(0deg)}
+  15%{opacity:1}
+  100%{opacity:0;transform:translateY(-120px) scale(1.15) rotate(22deg)}
+}
+@media(prefers-reduced-motion:reduce){.heart{display:none}}
+
 /* ══ day mode — the card changes on 22 May 2027 ══ */
 .day-badge[hidden]{display:none}
 .day-badge{display:inline-block;margin:0 0 10px;padding:7px 18px;border-radius:999px;
@@ -1211,9 +1228,48 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
 
   /* ── countdown ── */
   var TARGET = new Date('2027-05-22T20:00:00+08:00').getTime();
+  if(/[?&]married=1/.test(location.search)) TARGET = Date.now() - 1000;   // preview the after state
   function pad(n){ return String(Math.max(0,n)).padStart(2,'0'); }
+  var marriedShown = false;
+  function celebrate(){
+    var host = document.querySelector('.count');
+    if(!host) return;
+    for(var i = 0; i < 26; i++){
+      var h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = ['💕','💖','🤍','💗','🩷'][i % 5];
+      h.style.left = (6 + Math.random() * 88) + '%';
+      h.style.fontSize = (11 + Math.random() * 15) + 'px';
+      h.style.animationDelay = (Math.random() * 1.2) + 's';
+      h.style.animationDuration = (2.4 + Math.random() * 2.2) + 's';
+      host.appendChild(h);
+      setTimeout(function(el){ return function(){ el.remove(); }; }(h), 5200);
+    }
+    if(typeof window.gardenBurst === 'function') setTimeout(window.gardenBurst, 120);
+  }
+  function showMarried(){
+    if(marriedShown) return;
+    marriedShown = true;
+    var c = document.querySelector('.count');
+    if(!c) return;
+    c.classList.remove('daydone');
+    c.classList.add('married');
+    c.innerHTML = '<div class="married-title">Kami dah kahwin 💕</div>' +
+                  '<div class="married-sub">Terima kasih kerana meraikan hari bahagia kami</div>';
+    // burst when the guest actually sees it, not while it is off-screen
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){ celebrate(); io.disconnect(); }
+        });
+      }, {threshold: 0.35});
+      io.observe(c);
+    } else { celebrate(); }
+  }
   function tick(){
-    var d = Math.max(0, TARGET - Date.now()), s = Math.floor(d/1000);
+    var d = TARGET - Date.now();
+    if(d <= 0){ showMarried(); return; }
+    var s = Math.floor(d/1000);
     $('cd').textContent = pad(Math.floor(s/86400));
     $('ch').textContent = pad(Math.floor(s%86400/3600));
     $('cm').textContent = pad(Math.floor(s%3600/60));
