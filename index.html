@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FBF8F3">
 <title>Walimatulurus | Haziq & Jaynina</title>
-<meta name="description" content="Walimatulurus Nazirul Haziq & Jaynina — Sabtu, 22 Mei 2027, CMi Hall &amp; Event Space, Kuantan.">
+<meta name="description" content="Walimatulurus Nazirul Haziq & Jaynina — Sabtu, 22 Mei 2027, CMi Hall &amp; Event Space, Berjaya Megamall, Kuantan.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,7 +124,7 @@ button{font:inherit;color:inherit}
 .guest-line{margin-top:18px;font-size:12.5px;color:var(--muted)}
 .guest-line b{color:var(--ink);font-weight:600}
 .open-btn{position:relative;
-  margin-top:26px;display:inline-flex;align-items:center;gap:10px;
+  margin-top:66px;display:inline-flex;align-items:center;gap:10px;
   min-height:52px;padding:0 30px;border-radius:999px;border:0;cursor:pointer;
   background:linear-gradient(135deg,var(--plum),var(--plum-strong));color:#fff;
   font-weight:600;letter-spacing:.22em;font-size:11px;text-transform:uppercase;
@@ -211,18 +211,34 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .tl-what{font-size:14.5px;color:var(--ink);font-weight:500}
 
 /* ══ gallery ══ */
-.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}
-.gal button{padding:0;border:0;background:none;cursor:pointer;border-radius:10px;overflow:hidden;
-  aspect-ratio:1;position:relative}
-.gal img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease-out)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.gal button{padding:5px 5px 20px;border:0;background:#fff;cursor:pointer;border-radius:2px;
+  aspect-ratio:1;position:relative;box-shadow:0 8px 18px rgba(46,42,38,.18);
+  transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+.gal button:nth-child(1){transform:rotate(-2.4deg)}
+.gal button:nth-child(2){transform:rotate(1.6deg)}
+.gal button:nth-child(3){transform:rotate(-1.2deg)}
+.gal button:hover,.gal button:focus-visible{transform:rotate(0deg) translateY(-3px) scale(1.03);
+  box-shadow:0 14px 26px rgba(46,42,38,.26);z-index:2}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease-out);border-radius:1px}
 .gal button:hover img{transform:scale(1.05)}
 .gal button:focus-visible{outline-offset:-3px}
 
 /* lightbox */
+.poly-stage{perspective:1400px;display:grid;place-items:center;width:min(84vw,360px);perspective-origin:50% 45%}
+.polaroid{margin:0;background:#fff;padding:13px 13px 56px;border-radius:3px;position:relative;
+  box-shadow:0 34px 70px rgba(0,0,0,.5),0 4px 12px rgba(0,0,0,.35);
+  transform:rotate(-2deg);transform-style:preserve-3d;backface-visibility:hidden}
+.polaroid::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-1.5deg);
+  width:74px;height:20px;background:rgba(240,230,205,.62);border-left:1px solid rgba(200,185,150,.5);
+  border-right:1px solid rgba(200,185,150,.5);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.polaroid img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee;border-radius:1px}
+.polaroid figcaption{position:absolute;left:0;right:0;bottom:14px;text-align:center;
+  font-family:var(--font-script);font-size:21px;color:#6b6156}
 .lb{position:fixed;inset:0;z-index:300;background:rgba(20,16,12,.94);display:none;
   align-items:center;justify-content:center;touch-action:pan-y}
 .lb.open{display:flex}
-.lb img{max-width:94vw;max-height:82vh;border-radius:10px;object-fit:contain}
+.lb img{max-width:none}
 .lb-close{position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:50%;
   border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);color:#fff;
   font-size:20px;cursor:pointer}
@@ -264,7 +280,7 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.msgs{margin-top:16px;display:grid;gap:10px;max-height:320px;overflow-y:auto}
+.msgs{margin-top:16px;display:grid;gap:10px;max-height:320px;overflow-y:auto;scroll-behavior:auto}
 .msg{background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .msg .who{font-size:12.5px;font-weight:600;color:var(--plum)}
 .msg .what{font-size:13.5px;color:var(--ink);margin-top:2px;line-height:1.6}
@@ -402,33 +418,44 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 .count.daydone .l{display:none}
 
 /* butterfly resting on the BUKA button */
-.perch{position:absolute;top:-20px;right:-5px;width:38px;line-height:0;
-  transform-origin:50% 92%;animation:perchBreathe 5.2s ease-in-out infinite}
+.perch{position:absolute;top:-6px;left:calc(50% - 23px);width:46px;line-height:0;z-index:3;
+  transform-origin:50% 92%;animation:perchLand 2.1s cubic-bezier(.2,.8,.28,1) both}
+@keyframes perchLand{
+  0%  {transform:translate(-96px,-118px) rotate(-24deg) scale(.58);opacity:0}
+  35% {transform:translate(-34px,-40px) rotate(6deg) scale(.92);opacity:1}
+  62% {transform:translate(4px,-10px) rotate(-5deg) scale(1.04)}
+  78% {transform:translate(0,-24px) rotate(3deg) scale(.99)}
+  90% {transform:translate(0,-16px) rotate(-1.5deg) scale(1)}
+  100%{transform:translate(0,-22px) rotate(0deg) scale(1);opacity:1}
+}
+.perch.settled{animation:perchBreathe 5.4s ease-in-out infinite}
 @keyframes perchBreathe{
-  0%,100%{transform:translateY(0) rotate(0deg)}
-  50%{transform:translateY(-1.6px) rotate(-1.8deg)}
+  0%,100%{transform:translate(0,-22px) rotate(0deg)}
+  50%{transform:translate(0,-25px) rotate(-1.8deg)}
 }
 .perch svg{width:100%;height:auto;filter:drop-shadow(0 2px 4px rgba(46,42,38,.18))}
 .perch .pwings{transform-origin:50% 50%;animation:perchFlap 4.2s cubic-bezier(.45,0,.55,1) infinite}
 @keyframes perchFlap{
   0%,100%{transform:scaleX(1)}
-  38%{transform:scaleX(.74)}
-  50%{transform:scaleX(.70)}
-  62%{transform:scaleX(.76)}
+  38%{transform:scaleX(.82)}
+  50%{transform:scaleX(.78)}
+  62%{transform:scaleX(.84)}
 }
 /* it notices you */
 .open-btn:hover .perch .pwings,.open-btn:focus-visible .perch .pwings{animation-duration:1.1s}
 .open-btn:hover .perch{animation-play-state:paused}
 
 /* and then it leaves */
-.open-btn.flyaway .perch{animation:takeoff 1.55s cubic-bezier(.25,.8,.35,1) forwards}
+.open-btn.flyaway .perch{animation:takeoff 2.05s cubic-bezier(.3,.7,.2,1) forwards}
 .open-btn.flyaway .perch .pwings{animation-duration:.15s}
 @keyframes takeoff{
-  0%  {transform:translate(0,0) rotate(0deg) scale(1);opacity:1}
-  22% {transform:translate(8px,-24px) rotate(-13deg) scale(1.03)}
-  52% {transform:translate(38px,-76px) rotate(9deg) scale(.9)}
-  78% {transform:translate(70px,-124px) rotate(-7deg) scale(.72);opacity:.72}
-  100%{transform:translate(98px,-172px) rotate(22deg) scale(.52);opacity:0}
+  0%  {transform:translate(0,-22px) rotate(0deg) scale(1);opacity:1}
+  12% {transform:translate(-6px,-44px) rotate(-16deg) scale(1.06)}   /* crouch and spring */
+  32% {transform:translate(22px,-104px) rotate(14deg) scale(.98)}    /* first arc */
+  52% {transform:translate(-16px,-168px) rotate(-12deg) scale(.9)}   /* bank left */
+  72% {transform:translate(58px,-236px) rotate(18deg) scale(.78);opacity:.92}
+  88% {transform:translate(24px,-300px) rotate(-8deg) scale(.66);opacity:.55}
+  100%{transform:translate(96px,-372px) rotate(26deg) scale(.5);opacity:0}
 }
 /* dust left behind by the wings */
 .dust{position:absolute;width:5px;height:5px;border-radius:50%;pointer-events:none;z-index:0;
@@ -561,7 +588,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
     <p class="eyebrow">Walimatulurus</p>
     <h1 class="cover-names"><span class="nm">Nazirul Haziq</span><span class="cover-amp">&amp;</span><span class="nm">Jaynina</span></h1>
     <p class="cover-date">Sabtu, 22 Mei 2027</p>
-    <p class="cover-venue">CMi Hall &amp; Event Space, Berjaya Megamall</p>
+    <p class="cover-venue">CMi Hall &amp; Event Space, Berjaya Megamall, Jalan Tun Ismail, 25000 Kuantan, Pahang</p>
     <p class="guest-line" id="guestLine" hidden>Kepada <b id="guestName"></b></p>
     <button class="open-btn" id="openBtn">
       <span class="perch" aria-hidden="true">
@@ -788,6 +815,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
       <button data-i="1" aria-label="Lihat gambar 2"><img src="images/cewek.JPG" alt="Pengantin perempuan" loading="lazy"></button>
       <button data-i="2" aria-label="Lihat gambar 3"><img src="images/maincontent.jpg" alt="Detik indah" loading="lazy"></button>
     </div>
+    <p class="hashtag">#NinaHazMoments</p>
   </section>
 
   <!-- ══════════ UCAPAN ══════════ -->
@@ -827,10 +855,8 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
 
   <!-- ══════════ RSVP ══════════ -->
 
-  <!-- ══════════ SHARE ══════════ -->
+  <!-- ══════════ TERIMA KASIH ══════════ -->
   <section id="kongsi" class="reveal">
-    <button class="btn" id="shareBtn">Kongsi Kad Ini</button>
-    <p class="hashtag">#NinaHazMoments</p>
     <p class="thanks">Terima kasih atas doa anda semua ❤️</p>
   </section>
 
@@ -894,21 +920,21 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
         </button>
 
         <a class="btn ghost cal-btn" target="_blank" rel="noopener"
-           href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&dates=20270522T120000Z/20270522T143000Z&details=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&location=CMi%20Hall%20%26%20Event%20Space%2C%20Kuantan">
+           href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&dates=20270522T120000Z/20270522T143000Z&details=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&location=CMi%20Hall%20%26%20Event%20Space%2C%20Berjaya%20Megamall%2C%20Jalan%20Tun%20Ismail%2C%2025000%20Kuantan%2C%20Pahang">
           <span class="cal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
           Google Calendar
         </a>
 
         <a class="btn ghost cal-btn" target="_blank" rel="noopener"
-           href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&startdt=2027-05-22T20%3A00%3A00&enddt=2027-05-22T22%3A30%3A00&location=CMi%20Hall%20%26%20Event%20Space%2C%20Kuantan&body=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina">
+           href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&startdt=2027-05-22T20%3A00%3A00&enddt=2027-05-22T22%3A30%3A00&location=CMi%20Hall%20%26%20Event%20Space%2C%20Berjaya%20Megamall%2C%20Jalan%20Tun%20Ismail%2C%2025000%20Kuantan%2C%20Pahang&body=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina">
           <span class="cal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3 8.5h18"/></svg></span>
           Outlook Calendar
         </a>
 
         <a class="btn ghost cal-btn" target="_blank" rel="noopener"
-           href="https://calendar.yahoo.com/?v=60&view=d&type=20&title=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&st=20270522T200000&dur=0230&in_loc=CMi%20Hall%20%26%20Event%20Space%2C%20Kuantan">
+           href="https://calendar.yahoo.com/?v=60&view=d&type=20&title=Walimatulurus%20Nazirul%20Haziq%20%26%20Jaynina&st=20270522T200000&dur=0230&in_loc=CMi%20Hall%20%26%20Event%20Space%2C%20Berjaya%20Megamall%2C%20Jalan%20Tun%20Ismail%2C%2025000%20Kuantan%2C%20Pahang">
           <span class="cal-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
             stroke-linecap="round"><path d="M4 6h16v12H4z"/><path d="M8 10h8M8 14h5"/></svg></span>
           Yahoo Calendar
@@ -949,18 +975,18 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       </div>
       <div class="pane hidden" id="pane-lokasi" data-title="Lokasi">
 <div class="map">
-      <iframe title="Peta lokasi CMi Hall &amp; Event Space, Kuantan" referrerpolicy="no-referrer-when-downgrade"
+      <iframe title="Peta lokasi CMi Hall &amp; Event Space, Berjaya Megamall, Kuantan" referrerpolicy="no-referrer-when-downgrade"
         src="https://www.openstreetmap.org/export/embed.html?bbox=103.2850%2C3.7850%2C103.3750%2C3.8350&amp;layer=mapnik&amp;marker=3.8077%2C103.3304"></iframe>
     </div>
     <div class="map-cap">
       <strong>CMi Hall &amp; Event Space</strong>
-      <span>Kuantan, Pahang</span>
+      <span>Berjaya Megamall, Jalan Tun Ismail, 25000 Kuantan</span>
     </div>
     <div class="btn-row">
-      <a class="btn ghost" href="https://waze.com/ul?q=CMi%20Hall%20%26%20Event%20Space%20Kuantan&navigate=yes" target="_blank" rel="noopener">Waze</a>
-      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space+Kuantan" target="_blank" rel="noopener">Google Maps</a>
+      <a class="btn ghost" href="https://waze.com/ul?q=CMi%20Hall%20%26%20Event%20Space%2C%20Berjaya%20Megamall%2C%20Jalan%20Tun%20Ismail%2C%2025000%20Kuantan%2C%20Pahang&navigate=yes" target="_blank" rel="noopener">Waze</a>
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space%2C+Berjaya+Megamall%2C+Jalan+Tun+Ismail%2C+25000+Kuantan%2C+Pahang" target="_blank" rel="noopener">Google Maps</a>
     </div>
-    <a class="btn ghost" style="margin-top:8px" href="https://maps.apple.com/?q=CMi%20Hall%20%26%20Event%20Space%20Kuantan" target="_blank" rel="noopener">Apple Maps</a>
+    <a class="btn ghost" style="margin-top:8px" href="https://maps.apple.com/?q=CMi%20Hall%20%26%20Event%20Space%2C%20Berjaya%20Megamall%2C%20Jalan%20Tun%20Ismail%2C%2025000%20Kuantan%2C%20Pahang" target="_blank" rel="noopener">Apple Maps</a>
       </div>
       <div class="pane hidden" id="pane-rsvp" data-title="RSVP">
 <div class="panel">
@@ -997,8 +1023,13 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
 <!-- ══════════ LIGHTBOX ══════════ -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Galeri gambar">
   <button class="lb-close" id="lbClose" aria-label="Tutup">✕</button>
+  <div class="poly-stage" id="polyStage">
+    <figure class="polaroid" id="polaroid">
+      <img id="lbImg" src="" alt="">
+      <figcaption id="lbCap"></figcaption>
+    </figure>
+  </div>
   <button class="lb-nav lb-prev" id="lbPrev" aria-label="Gambar sebelum">‹</button>
-  <img id="lbImg" src="" alt="">
   <button class="lb-nav lb-next" id="lbNext" aria-label="Gambar seterusnya">›</button>
   <div class="lb-count" id="lbCount"></div>
 </div>
@@ -1030,6 +1061,10 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
 
   /* ── open the card ── */
   var cover = $('cover');
+  var perchEl = document.querySelector('.perch');
+  if(perchEl) perchEl.addEventListener('animationend', function(e){
+    if(e.animationName === 'perchLand') perchEl.classList.add('settled');
+  });
   $('openBtn').addEventListener('click', function(){
     var btn = $('openBtn');
     btn.classList.add('flyaway');            // the resting butterfly leaves first
@@ -1116,8 +1151,8 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       'DTEND:20270522T143000Z',
       'SUMMARY:Walimatulurus Nazirul Haziq & Jaynina',
       'LOCATION:CMi Hall & Event Space, Berjaya Megamall\\, Kuantan\\, Pahang',
-      'DESCRIPTION:Walimatulurus Nazirul Haziq & Jaynina\\n\\nLokasi: CMi Hall & Event Space, Berjaya Megamall\\, Kuantan\\, Pahang\\nPeta: https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space+Kuantan',
-      'URL:https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space+Kuantan',
+      'DESCRIPTION:Walimatulurus Nazirul Haziq & Jaynina\\n\\nLokasi: CMi Hall & Event Space, Berjaya Megamall\\, Kuantan\\, Pahang\\nPeta: https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space%2C+Berjaya+Megamall%2C+Jalan+Tun+Ismail%2C+25000+Kuantan%2C+Pahang',
+      'URL:https://www.google.com/maps/search/?api=1&query=CMi+Hall+%26+Event+Space%2C+Berjaya+Megamall%2C+Jalan+Tun+Ismail%2C+25000+Kuantan%2C+Pahang',
       'STATUS:CONFIRMED',
       'END:VEVENT','END:VCALENDAR'
     ].join('\r\n');
@@ -1130,44 +1165,62 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     toast('Fail kalendar dimuat turun');
   });
 
-  /* ── gallery + lightbox ── */
+  /* ── gallery + polaroid lightbox (3D flip + swipe) ── */
   var imgs = Array.prototype.slice.call(document.querySelectorAll('#gal img')).map(function(i){
     return {src:i.getAttribute('src'), alt:i.getAttribute('alt')};
   });
-  var lb = $('lb'), lbImg = $('lbImg'), lbCount = $('lbCount'), idx = 0;
+  var lb = $('lb'), lbImg = $('lbImg'), lbCount = $('lbCount'), lbCap = $('lbCap');
+  var poly = $('polaroid'), stage = $('polyStage'), idx = 0, flipping = false;
 
-  function showLb(i){
-    idx = (i + imgs.length) % imgs.length;
+  function paint(){
     lbImg.src = imgs[idx].src;
     lbImg.alt = imgs[idx].alt;
+    lbCap.textContent = imgs[idx].alt || '';
     lbCount.textContent = (idx+1) + ' / ' + imgs.length;
-    lb.classList.add('open');
-    $('lbClose').focus();
+  }
+
+  function showLb(i, dir){
+    idx = (i + imgs.length) % imgs.length;
+    if(!lb.classList.contains('open')){
+      paint(); lb.classList.add('open'); $('lbClose').focus(); return;
+    }
+    if(dir === 0 || flipping){ paint(); return; }
+    flipping = true;
+    var out = [{transform:'rotateY(0deg) translateX(0) rotate(-2deg)', opacity:1},
+               {transform:'rotateY(' + (dir>0? -78 : 78) + 'deg) translateX(' + (dir>0? -34:34) + 'px) rotate(' + (dir>0? 3:-5) + 'deg)', opacity:.15}];
+    var inn = [{transform:'rotateY(' + (dir>0? 78 : -78) + 'deg) translateX(' + (dir>0? 34:-34) + 'px) rotate(' + (dir>0? -5:3) + 'deg)', opacity:.15},
+               {transform:'rotateY(0deg) translateX(0) rotate(-2deg)', opacity:1}];
+    var anim = poly.animate(out, {duration:300, easing:'cubic-bezier(.5,0,.75,0)', fill:'forwards'});
+    anim.onfinish = function(){
+      paint();
+      poly.animate(inn, {duration:430, easing:'cubic-bezier(.2,.8,.25,1)', fill:'forwards'});
+      setTimeout(function(){ flipping = false; }, 430);
+    };
   }
   function closeLb(){ lb.classList.remove('open'); }
   document.querySelectorAll('#gal button').forEach(function(b){
-    b.addEventListener('click', function(){ showLb(Number(b.dataset.i)); });
+    b.addEventListener('click', function(){ showLb(Number(b.dataset.i), 0); });
   });
   $('lbClose').addEventListener('click', closeLb);
-  $('lbPrev').addEventListener('click', function(){ showLb(idx-1); });
-  $('lbNext').addEventListener('click', function(){ showLb(idx+1); });
+  $('lbPrev').addEventListener('click', function(){ showLb(idx-1, -1); });
+  $('lbNext').addEventListener('click', function(){ showLb(idx+1, 1); });
   lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
   document.addEventListener('keydown', function(e){
     if(!lb.classList.contains('open')) return;
     if(e.key === 'Escape') closeLb();
-    if(e.key === 'ArrowLeft') showLb(idx-1);
-    if(e.key === 'ArrowRight') showLb(idx+1);
+    if(e.key === 'ArrowLeft') showLb(idx-1, -1);
+    if(e.key === 'ArrowRight') showLb(idx+1, 1);
   });
-  var tx = null;
-  lb.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+  var tx = null, ty = null;
+  lb.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, {passive:true});
   lb.addEventListener('touchend', function(e){
     if(tx === null) return;
-    var dx = e.changedTouches[0].clientX - tx;
-    if(Math.abs(dx) > 45) showLb(dx > 0 ? idx-1 : idx+1);
-    tx = null;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) showLb(dx > 0 ? idx-1 : idx+1, dx > 0 ? -1 : 1);
+    tx = ty = null;
   }, {passive:true});
 
-  /* ── toast ── */
+/* ── toast ── */
   var toastEl = $('toast'), toastTimer;
   function toast(msg){
     toastEl.textContent = msg;
@@ -1193,11 +1246,27 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
 
   /* ── guestbook (local, works offline; Code.gs remains optional) ── */
   var KEY = 'kadnikah.messages.v2';
+  var SEED = [
+    {name:'Aminah & keluarga', text:'Barakallahu lakuma wa baraka alaikuma. Semoga bahagia hingga ke syurga.', at:'Kuantan'},
+    {name:'Firdaus Rahman', text:'Tahniah Haziq! Akhirnya sampai juga ke gerbang pelamin. Semoga kekal abadi.', at:'Temerloh'},
+    {name:'Nurul Ain', text:'Selamat pengantin baru Jaynina! Cantik sangat. Semoga rumah tangga dilimpahi berkat.', at:'Kuantan'},
+    {name:'Pak Cik Zainal', text:'Alhamdulillah, majlis yang indah. Moga cucu-cucu soleh menyusul.', at:'Mentakab'},
+    {name:'Syafiqah', text:'Tahniah korang berdua. Ingat pesan mak ayah tau. Bahagia sampai tua.', at:'Kuala Lumpur'},
+    {name:'Hakim & Izzah', text:'Doa kami untuk kalian — mawaddah, warahmah, dan rezeki yang melimpah.', at:'Kuantan'},
+    {name:'Siti Khadijah', text:'Semoga menjadi pasangan contoh, sakinah mawaddah warahmah. Amin.', at:'Gambang'},
+    {name:'Alif Danial', text:'Gembira tengok berita ni. Jumpa kat majlis nanti ya!', at:'Kuantan'},
+    {name:'Keluarga Ahmad', text:'Selamat pengantin baru. Semoga setiap langkah diberkati Nya.', at:'Pekan'},
+    {name:'Umi Kalthum', text:'Bersyukur sangat. Moga Allah satukan kalian di dunia dan akhirat.', at:'Kuantan'}
+  ];
   function loadMsgs(){
     try{ return JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ return []; }
   }
   function saveMsgs(list){
     try{ localStorage.setItem(KEY, JSON.stringify(list.slice(-60))); }catch(e){}
+  }
+  function seedOnce(){
+    if(localStorage.getItem(KEY + '.seeded')) return;
+    try{ localStorage.setItem(KEY, JSON.stringify(SEED)); localStorage.setItem(KEY + '.seeded','1'); }catch(e){}
   }
   function renderMsgs(){
     var list = loadMsgs().slice().reverse();
@@ -1220,6 +1289,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       box.appendChild(div);
     });
   }
+  seedOnce();
   $('gSend').addEventListener('click', function(){
     var name = $('gName').value.trim();
     var text = $('gMsg').value.trim();
@@ -1233,6 +1303,39 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     toast('Terima kasih atas ucapan anda');
   });
   renderMsgs();
+
+  /* ── ucapan wall drifts slowly, loops both ways ── */
+  (function(){
+    var box = $('gList'), dir = 1, paused = false, resumeT, pos = 0, raf;
+    if(!box) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    box.style.scrollBehavior = 'auto';
+    function loop(){
+      var max = box.scrollHeight - box.clientHeight;
+      if(!paused && max > 4){
+        pos += 0.42 * dir;                    // float accumulator — scrollTop rounds to int
+        if(pos >= max){ pos = max; dir = -1; }
+        if(pos <= 0){ pos = 0; dir = 1; }
+        box.scrollTop = pos;
+      } else {
+        pos = box.scrollTop;
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    function hold(){ paused = true; pos = box.scrollTop; clearTimeout(resumeT); }
+    function release(){ clearTimeout(resumeT); resumeT = setTimeout(function(){ paused = false; pos = box.scrollTop; }, 2200); }
+    ['pointerenter','touchstart','focusin','wheel'].forEach(function(ev){
+      box.addEventListener(ev, hold, {passive:true});
+    });
+    ['pointerleave','touchend','focusout'].forEach(function(ev){
+      box.addEventListener(ev, release, {passive:true});
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden){ cancelAnimationFrame(raf); }
+      else { cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); }
+    });
+    raf = requestAnimationFrame(loop);
+  })();
 
   /* ── RSVP ── */
   var RKEY = 'kadnikah.rsvp.v2';
@@ -1279,7 +1382,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   bgm.addEventListener('pause', function(){ playMusic(false); });
 
   /* ── share ── */
-  $('shareBtn').addEventListener('click', function(){
+  var shareBtnEl = $('shareBtn'); if (shareBtnEl) shareBtnEl.addEventListener('click', function(){
     var data = {title:'Walimatulurus Nazirul Haziq & Jaynina', text:'Jemput hadir ke majlis kami', url:location.href};
     if(navigator.share){ navigator.share(data).catch(function(){}); }
     else {
