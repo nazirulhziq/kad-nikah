@@ -280,26 +280,11 @@ section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.wall-head{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
-.wall-cap{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
-.wall-toggle{font:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--plum);
-  background:rgba(107,78,158,.08);border:1px solid var(--line);border-radius:999px;
-  padding:7px 14px;cursor:pointer;transition:background .25s,color .25s}
-.wall-toggle[aria-pressed="true"]{background:var(--plum);color:#fff;border-color:transparent}
-.wall.manual{overflow-y:auto;-webkit-mask-image:none;mask-image:none;scroll-behavior:auto;
-  padding-right:6px}
-.wall.manual .wall-track{animation:none !important;transform:none !important}
-.wall.manual .clone{display:none}
-.wall::-webkit-scrollbar{width:4px}
-.wall::-webkit-scrollbar-thumb{background:rgba(107,78,158,.32);border-radius:9px}
-.wall::-webkit-scrollbar-track{background:transparent}
-.wall{margin-top:12px;max-height:300px;overflow:hidden;position:relative;
+.wall{margin-top:12px;max-height:300px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;overflow:hidden;position:relative;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%)}
-.wall-track{display:grid;gap:10px;will-change:transform;
-  animation:wallRoll 42s linear infinite}
-.wall:hover .wall-track,.wall:active .wall-track{animation-play-state:paused}
-@keyframes wallRoll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.wall::-webkit-scrollbar{display:none}
+.wall-track{display:grid;gap:10px;will-change:transform}
 .msg{position:relative;padding-left:34px;
   background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(250,244,236,.9));
   border:1px solid rgba(169,134,63,.22);border-left:2px solid rgba(107,78,158,.35);
@@ -346,8 +331,8 @@ section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index
 .map-cap span{font-size:12.5px;color:var(--muted)}
 
 /* ══ share / footer ══ */
-.hashtag{font-family:var(--font-script);font-size:27px;color:var(--plum);text-align:center;
-  margin-top:22px;position:relative;z-index:3;line-height:1.2}
+.hashtag{font-family:var(--font-head);font-size:19px;color:var(--plum);text-align:center;
+  margin-top:22px;position:relative;z-index:3;line-height:1.3;letter-spacing:.01em}
 .thanks{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
 footer{text-align:center;padding:34px 24px calc(var(--nav-h) + 24px);font-size:11.5px;color:var(--muted)}
 
@@ -402,7 +387,7 @@ body.ready .nav{opacity:1;pointer-events:auto;transform:translateX(-50%) transla
 
 /* ══ music pill ══ */
 .music-bar{position:fixed;right:14px;left:auto;transform:translateY(12px);padding:5px 10px 5px 5px;
-  bottom:calc(var(--nav-h) + 7px + env(safe-area-inset-bottom,0px));z-index:95;
+  bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom,0px));z-index:95;
   display:flex;align-items:center;gap:9px;padding:5px 15px 5px 5px;
   background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
   box-shadow:0 10px 26px rgba(46,42,38,.16);opacity:0;pointer-events:none;
@@ -463,13 +448,13 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
   34% {transform:translate(-150px,-46px) rotate(12deg) scale(.74)}
   58% {transform:translate(-74px,-14px) rotate(-8deg) scale(.9)}
   78% {transform:translate(-22px,-38px) rotate(5deg) scale(1.02)}
-  91% {transform:translate(-2px,-18px) rotate(-1deg) scale(1)}
-  100%{transform:translate(0,-22px) rotate(0deg) scale(1);opacity:1}
+  91% {transform:translate(-2px,-18px) rotate(26deg) scale(1)}
+  100%{transform:translate(0,-22px) rotate(30deg) scale(1);opacity:1}
 }
 .perch.settled{animation:perchBreathe 5.4s ease-in-out infinite}
 @keyframes perchBreathe{
-  0%,100%{transform:translate(0,-22px) rotate(0deg)}
-  50%{transform:translate(0,-25px) rotate(-1.8deg)}
+  0%,100%{transform:translate(0,-22px) rotate(30deg)}
+  50%{transform:translate(0,-25px) rotate(33.5deg)}
 }
 .perch svg{width:100%;height:auto;filter:drop-shadow(0 2px 4px rgba(46,42,38,.18))}
 .perch .pwings{transform-origin:50% 50%;animation:perchFlap 4.2s cubic-bezier(.45,0,.55,1) infinite}
@@ -487,7 +472,7 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 .open-btn.flyaway .perch{animation:takeoff 2.05s cubic-bezier(.3,.7,.2,1) forwards}
 .open-btn.flyaway .perch .pwings{animation-duration:.15s}
 @keyframes takeoff{
-  0%  {transform:translate(0,-22px) rotate(0deg) scale(1);opacity:1}
+  0%  {transform:translate(0,-22px) rotate(30deg) scale(1);opacity:1}
   12% {transform:translate(-6px,-44px) rotate(-16deg) scale(1.06)}   /* crouch and spring */
   32% {transform:translate(22px,-104px) rotate(14deg) scale(.98)}    /* first arc */
   52% {transform:translate(-16px,-168px) rotate(-12deg) scale(.9)}   /* bank left */
@@ -535,6 +520,35 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
   100%{transform:translate3d(0,-18px,0) rotate(-14deg);opacity:.28}
 }
 @media(prefers-reduced-motion:reduce){.leaf{animation:none;opacity:.3}}
+
+/* ══ little flowers floating through the card ══ */
+.flowers{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.fl{position:absolute;color:rgba(233,185,198,.55);animation:flowerDrift ease-in-out infinite;will-change:transform}
+.fl svg{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 3px rgba(46,42,38,.07))}
+.fl:nth-child(3n+1){color:rgba(199,179,224,.5)}
+.fl:nth-child(3n+2){color:rgba(242,220,192,.62)}
+.fl:nth-child(4n){color:rgba(231,160,176,.48)}
+.fl.F1{animation-duration:17s;animation-delay:-3s}
+.fl.F2{animation-duration:21s;animation-delay:-8s}
+.fl.F3{animation-duration:19s;animation-delay:-13s}
+.fl.F4{animation-duration:24s;animation-delay:-5s}
+.fl.F5{animation-duration:16s;animation-delay:-11s}
+.fl.F6{animation-duration:22s;animation-delay:-17s}
+.fl.F7{animation-duration:18s;animation-delay:-2s}
+.fl.F8{animation-duration:26s;animation-delay:-9s}
+.fl.F9{animation-duration:20s;animation-delay:-15s}
+.fl.F10{animation-duration:23s;animation-delay:-6s}
+.fl.F11{animation-duration:17.5s;animation-delay:-12s}
+.fl.F12{animation-duration:25s;animation-delay:-19s}
+.fl.F13{animation-duration:18.5s;animation-delay:-7s}
+.fl.F14{animation-duration:27s;animation-delay:-21s}
+@keyframes flowerDrift{
+  0%  {transform:translate3d(0,-16px,0) rotate(-10deg) scale(.96);opacity:.35}
+  30% {transform:translate3d(14px,14px,0) rotate(16deg) scale(1.04);opacity:.72}
+  65% {transform:translate3d(-12px,30px,0) rotate(-14deg) scale(1);opacity:.55}
+  100%{transform:translate3d(0,-16px,0) rotate(-10deg) scale(.96);opacity:.35}
+}
+@media(prefers-reduced-motion:reduce){.fl{animation:none;opacity:.4}}
 
 /* ══ butterflies living in every section of the card ══ */
 .flutter{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
@@ -733,6 +747,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
 </svg></span>
   </div>
   <div class="leaves" aria-hidden="true"><span class="leaf L1" style="top:7%;left:6%;width:17px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L2" style="top:19%;left:84%;width:22px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L3" style="top:31%;left:14%;width:19px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L4" style="top:44%;left:78%;width:24px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L5" style="top:56%;left:9%;width:18px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L6" style="top:68%;left:86%;width:21px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L7" style="top:79%;left:22%;width:23px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L8" style="top:90%;left:70%;width:17px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span></div>
+  <div class="flowers" aria-hidden="true"><span class="fl F1" style="top:3%;left:72%;width:17px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F2" style="top:9%;left:26%;width:14px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F3" style="top:15%;left:88%;width:19px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F4" style="top:22%;left:10%;width:16px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F5" style="top:29%;left:64%;width:13px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F6" style="top:36%;left:90%;width:18px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F7" style="top:43%;left:18%;width:15px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F8" style="top:50%;left:74%;width:20px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F9" style="top:57%;left:8%;width:14px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F10" style="top:63%;left:84%;width:17px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F11" style="top:70%;left:30%;width:13px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F12" style="top:77%;left:68%;width:19px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F13" style="top:84%;left:12%;width:15px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span><span class="fl F14" style="top:91%;left:80%;width:16px"><svg viewBox="0 0 32 32"><g fill="currentColor"><circle cx="16" cy="7.5" r="5.2"/><circle cx="24.4" cy="13.6" r="5.2"/><circle cx="21.2" cy="23.2" r="5.2"/><circle cx="10.8" cy="23.2" r="5.2"/><circle cx="7.6" cy="13.6" r="5.2"/></g><circle cx="16" cy="16" r="4.1" fill="#EFCE86"/></svg></span></div>
   <div class="flutter" aria-hidden="true">
     <span class="fslot" style="top:5%;left:3.5%;width:46px"><span class="bfly"><svg viewBox="0 0 64 52"><g class="wings">
         <path d="M31 26C22 8 6 2 4 12c-3 12 12 19 27 17z" fill="#C9A8C0" stroke="#8E6F9E" stroke-width="1.6"/>
@@ -894,11 +909,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
         <textarea id="gMsg" placeholder="Tulis ucapan anda…"></textarea>
       </div>
       <button class="btn" id="gSend">Hantar Ucapan</button>
-      <div class="wall-head">
-      <span class="wall-cap">Ucapan terkini</span>
-      <button type="button" class="wall-toggle" id="wallToggle" aria-pressed="false">Auto</button>
-    </div>
-    <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
+      <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
     </div>
   </section>
 
@@ -1339,8 +1350,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     div.style.setProperty('--i', i);
     var who = document.createElement('div'); who.className = 'who'; who.textContent = m.name;
     var what = document.createElement('div'); what.className = 'what'; what.textContent = m.text;
-    var when = document.createElement('div'); when.className = 'when'; when.textContent = m.at;
-    div.appendChild(who); div.appendChild(what); div.appendChild(when);
+    div.appendChild(who); div.appendChild(what);
     return div;
   }
   function renderMsgs(){
@@ -1378,17 +1388,39 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   });
   renderMsgs();
 
-  /* ── auto / manual switch for the wall ── */
+  /* ── ucapan wall: drifts on its own, and you can grab it any time ── */
   (function(){
-    var wall = $('gList'), track = $('gTrack'), btn = $('wallToggle');
-    if(!wall || !btn) return;
-    btn.addEventListener('click', function(){
-      var manual = !wall.classList.contains('manual');
-      wall.classList.toggle('manual', manual);
-      btn.setAttribute('aria-pressed', String(manual));
-      btn.textContent = manual ? 'Manual' : 'Auto';
-      if(manual) wall.scrollTop = 0;
+    var wall = $('gList'); if(!wall) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    wall.style.scrollBehavior = 'auto';
+    var pos = 0, paused = false, resumeT, last = null;
+    function tick(ts){
+      if(last === null) last = ts;
+      var dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+      var half = wall.scrollHeight / 2;
+      if(!paused && half > 20){
+        pos += 22 * dt;                    // slow drift, px per second
+        if(pos >= half) pos -= half;       // seamless: the list is duplicated
+        wall.scrollTop = pos;
+      } else {
+        pos = wall.scrollTop;
+        if(pos >= half){ pos -= half; wall.scrollTop = pos; }
+      }
+      requestAnimationFrame(tick);
+    }
+    function hold(){ paused = true; clearTimeout(resumeT); }
+    function release(){
+      clearTimeout(resumeT);
+      resumeT = setTimeout(function(){ pos = wall.scrollTop; paused = false; }, 2400);
+    }
+    ['wheel','touchstart','pointerdown','focusin'].forEach(function(ev){
+      wall.addEventListener(ev, hold, {passive:true});
     });
+    ['touchend','touchcancel','mouseup','pointerleave','focusout'].forEach(function(ev){
+      wall.addEventListener(ev, release, {passive:true});
+    });
+    requestAnimationFrame(tick);
   })();
 
   /* ── ucapan wall: reveal when it enters the viewport ── */
