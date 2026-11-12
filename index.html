@@ -285,15 +285,14 @@ section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.wall{margin-top:12px;max-height:300px;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none;overflow:hidden;position:relative;
+.wall{margin-top:14px;max-height:326px;overflow:hidden;overflow:hidden;position:relative;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%)}
-.wall::-webkit-scrollbar{display:none}
-.wall-track{display:grid;gap:10px;will-change:transform}
-.msg{position:relative;padding-left:34px;
+.wall-track{display:grid;gap:14px;will-change:transform}
+.msg{position:relative;padding-left:38px;
   background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(250,244,236,.9));
   border:1px solid rgba(169,134,63,.22);border-left:2px solid rgba(107,78,158,.35);
-  border-radius:12px;padding:12px 14px;backdrop-filter:blur(4px);
+  border-radius:14px;padding:15px 16px;backdrop-filter:blur(4px);
   box-shadow:0 4px 14px rgba(46,42,38,.06);
   transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
 .msg:hover{transform:translateX(2px);box-shadow:0 8px 20px rgba(46,42,38,.12)}
@@ -307,8 +306,8 @@ section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index
   font-size:30px;line-height:1;color:rgba(169,134,63,.38)}
 .msg:nth-child(odd){transform:rotate(-.35deg)}
 .msg:nth-child(even){transform:rotate(.3deg)}
-.msg .who{font-size:12.5px;font-weight:600;color:var(--plum)}
-.msg .what{font-size:13.5px;color:var(--ink);margin-top:2px;line-height:1.6}
+.msg .who{font-size:12.5px;font-weight:600;color:var(--plum);letter-spacing:.01em}
+.msg .what{font-size:13.5px;color:var(--ink);margin-top:5px;line-height:1.7}
 .msg .when{font-size:10.5px;color:var(--muted);margin-top:6px}
 .empty{font-size:13px;color:var(--muted);text-align:center;padding:14px 0}
 
@@ -1393,38 +1392,24 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   });
   renderMsgs();
 
-  /* ── ucapan wall: drifts on its own, and you can grab it any time ── */
+  /* ── ucapan wall: drifts on its own; swipes fall through to the page ── */
   (function(){
-    var wall = $('gList'); if(!wall) return;
+    var wall = $('gList'), track = $('gTrack');
+    if(!wall || !track) return;
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    wall.style.scrollBehavior = 'auto';
-    var pos = 0, paused = false, resumeT, last = null;
+    var pos = 0, last = null, running = false;
     function tick(ts){
       if(last === null) last = ts;
       var dt = Math.min((ts - last) / 1000, 0.05);
       last = ts;
-      var half = wall.scrollHeight / 2;
-      if(!paused && half > 20){
-        pos += 22 * dt;                    // slow drift, px per second
-        if(pos >= half) pos -= half;       // seamless: the list is duplicated
-        wall.scrollTop = pos;
-      } else {
-        pos = wall.scrollTop;
-        if(pos >= half){ pos -= half; wall.scrollTop = pos; }
+      var half = track.scrollHeight / 2;
+      if(half > 20){
+        pos += 20 * dt;                 // ~20px per second
+        if(pos >= half) pos -= half;    // seamless: list is duplicated
+        track.style.transform = 'translate3d(0,' + (-pos).toFixed(2) + 'px,0)';
       }
       requestAnimationFrame(tick);
     }
-    function hold(){ paused = true; clearTimeout(resumeT); }
-    function release(){
-      clearTimeout(resumeT);
-      resumeT = setTimeout(function(){ pos = wall.scrollTop; paused = false; }, 2400);
-    }
-    ['wheel','touchstart','pointerdown','focusin'].forEach(function(ev){
-      wall.addEventListener(ev, hold, {passive:true});
-    });
-    ['touchend','touchcancel','mouseup','pointerleave','focusout'].forEach(function(ev){
-      wall.addEventListener(ev, release, {passive:true});
-    });
     requestAnimationFrame(tick);
   })();
 
@@ -1487,7 +1472,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   /* ── the card drifts down slowly by itself, stops the moment you touch it ── */
   (function(){
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var SPEED = 34, started = false, paused = false, resumeT = null, openAt = null, last = null, pos = 0;
+    var SPEED = 34, started = false, paused = false, resumeT = null, openAt = null, last = null, pos = 0, set = 0;
     function tick(ts){
       if(last === null) last = ts;
       var dt = Math.min((ts - last) / 1000, 0.05);
@@ -1496,7 +1481,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       if(!started){
         if(document.body.classList.contains('opened')){
           if(openAt === null) openAt = ts;
-          if(ts - openAt > 2400){ started = true; paused = false; pos = window.scrollY; }
+          if(ts - openAt > 2400){ started = true; paused = false; pos = window.scrollY; set = pos; }
         }
         requestAnimationFrame(tick);
         return;
@@ -1507,8 +1492,11 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       var lbOpen = document.getElementById('lb').classList.contains('open');
       if(!paused && !sheetOpen && !lbOpen && !document.hidden){
         var max = document.documentElement.scrollHeight - window.innerHeight;
+        // if something else moved the page (anchor tap, user scroll, programmatic), follow it
+        if(Math.abs(window.scrollY - set) > 2) pos = window.scrollY;
         pos += SPEED * dt;                       // accumulate: scrollTo rounds to whole px
         if(pos >= max - 2){ pos = max; paused = true; }
+        set = pos;
         window.scrollTo({top: pos, behavior: 'instant'});
       }
       requestAnimationFrame(tick);
