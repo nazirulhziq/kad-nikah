@@ -297,10 +297,17 @@ section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.wall{margin-top:14px;max-height:326px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;overflow:hidden;position:relative;
+.wall-wrap{position:relative;margin-top:14px}
+.wall{max-height:326px;overflow-y:auto;overscroll-behavior:contain;padding-right:14px;
+  scrollbar-width:none;-ms-overflow-style:none;overflow:hidden;position:relative;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%)}
 .wall::-webkit-scrollbar{display:none}
+.wall-scroll{position:absolute;top:6px;bottom:6px;right:0;width:5px;border-radius:99px;
+  background:rgba(107,78,158,.12)}
+.wall-scroll span{position:absolute;left:0;width:5px;border-radius:99px;background:rgba(107,78,158,.55);
+  min-height:28px;transition:background .2s,opacity .2s}
+.wall-scroll.dragging span,.wall-scroll:hover span{background:rgba(107,78,158,.8)}
 .wall-track{display:grid;gap:14px;will-change:transform}
 .msg{position:relative;padding-left:38px;
   background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(250,244,236,.9));
@@ -926,7 +933,10 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
         <textarea id="gMsg" placeholder="Tulis ucapan anda…"></textarea>
       </div>
       <button class="btn" id="gSend">Hantar Ucapan</button>
+      <div class="wall-wrap">
       <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
+      <div class="wall-scroll" id="wallScroll" aria-hidden="true"><span id="wallThumb"></span></div>
+    </div>
     </div>
   </section>
 
@@ -1359,6 +1369,19 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   });
 
   /* ── guestbook (local, works offline; Code.gs remains optional) ── */
+  var GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZgwF8ZvOCAmrw93UH8xrX42aeZa0VWwqT_KlbEUkU7wxddRIeLUqQevdDfGaxI8hO/exec';
+  var wallSource = null;   // messages pulled from the Google Sheet
+  function sendToSheet(payload){
+    try{
+      return fetch(GOOGLE_SCRIPT_URL, {
+        method:'POST',
+        body: JSON.stringify(payload)          // text/plain → no CORS preflight
+      }).then(function(r){ return r.json(); }).catch(function(){
+        try{ fetch(GOOGLE_SCRIPT_URL, {method:'POST', mode:'no-cors', body: JSON.stringify(payload)}); }catch(e){}
+        return {success:true, offline:true};
+      });
+    }catch(e){ return Promise.resolve({success:false}); }
+  }
   var KEY = 'kadnikah.messages.v2';
   var SEED = [
     {name:'Aminah & keluarga', text:'Barakallahu lakuma wa baraka alaikuma. Semoga bahagia hingga ke syurga.', at:'Kuantan'},
@@ -1392,7 +1415,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     return div;
   }
   function renderMsgs(){
-    var list = loadMsgs().slice().reverse();
+    var list = (wallSource && wallSource.length) ? wallSource : loadMsgs().slice().reverse();
     var box = $('gList'), track = $('gTrack');
     track.innerHTML = '';
     if(!list.length){
@@ -1412,6 +1435,21 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     setTimeout(function(){ box.classList.add('in'); }, 120);
   }
   seedOnce();
+  fetch(GOOGLE_SCRIPT_URL, {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(list){
+    if(Array.isArray(list) && list.length){
+      var real = list.map(function(m){ return {name:m.name || 'Tetamu', text:m.comment || '', at:''}; });
+      // keep the wall full while the sheet is still filling up
+      if(real.length < 6){
+        var seen = {};
+        real.forEach(function(m){ seen[m.text] = 1; });
+        SEED.forEach(function(m){
+          if(real.length < 10 && !seen[m.text]) real.push({name:m.name, text:m.text, at:''});
+        });
+      }
+      wallSource = real;
+      renderMsgs();
+    }
+  }).catch(function(){});
   $('gSend').addEventListener('click', function(){
     var name = $('gName').value.trim();
     var text = $('gMsg').value.trim();
@@ -1421,8 +1459,12 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     list.push({name:name, text:text, at:new Date().toLocaleString('ms-MY')});
     saveMsgs(list);
     $('gMsg').value = '';
+    if(wallSource) wallSource.unshift({name:name, text:text, at:''});
     renderMsgs();
-    toast('Terima kasih atas ucapan anda');
+    toast('Menghantar ucapan…');
+    sendToSheet({type:'guestbook', name:name, comment:text}).then(function(res){
+      toast(res && res.success ? 'Terima kasih atas ucapan anda' : 'Ucapan disimpan — talian perlahan');
+    });
   });
   renderMsgs();
 
@@ -1458,6 +1500,42 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     ['touchend','touchcancel','pointerup','pointerleave','focusout','mouseup','wheel'].forEach(function(ev){
       wall.addEventListener(ev, release, {passive:true});
     });
+
+    /* always-visible scrollbar (phones hide native ones) */
+    var bar = $('wallScroll'), thumb = $('wallThumb'), drag = null;
+    function paintBar(){
+      if(!bar || !thumb) return;
+      var h = wall.clientHeight, sh = wall.scrollHeight;
+      if(sh <= h + 4){ bar.style.opacity = '0'; return; }
+      bar.style.opacity = '1';
+      var trackH = bar.clientHeight, th = Math.max(28, trackH * (h / sh));
+      thumb.style.height = th + 'px';
+      thumb.style.top = ((wall.scrollTop / (sh - h)) * (trackH - th)) + 'px';
+    }
+    setInterval(paintBar, 120);
+    wall.addEventListener('scroll', paintBar, {passive:true});
+
+    function seek(e){
+      var r = bar.getBoundingClientRect();
+      var y = (e.touches ? e.touches[0].clientY : e.clientY) - r.top;
+      var ratio = Math.max(0, Math.min(1, (y - thumb.offsetHeight / 2) / (r.height - thumb.offsetHeight)));
+      wall.scrollTop = ratio * (wall.scrollHeight - wall.clientHeight);
+      paintBar();
+    }
+    ['mousedown','touchstart'].forEach(function(ev){
+      bar.addEventListener(ev, function(e){
+        e.preventDefault(); hold(); bar.classList.add('dragging');
+        seek(e);
+        drag = true;
+      }, {passive:false});
+    });
+    ['mousemove','touchmove'].forEach(function(ev){
+      window.addEventListener(ev, function(e){ if(drag){ e.preventDefault(); seek(e); } }, {passive:false});
+    });
+    ['mouseup','touchend','touchcancel'].forEach(function(ev){
+      window.addEventListener(ev, function(){ if(drag){ drag = false; bar.classList.remove('dragging'); release(); } });
+    });
+    setTimeout(paintBar, 300);
     requestAnimationFrame(tick);
   })();
 
@@ -1480,6 +1558,8 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     if(!name){ toast('Sila isi nama anda'); $('rsvpName').focus(); return; }
     var rec = {name:name, choice:choice, count:$('rsvpCount').value, at:new Date().toISOString()};
     try{ localStorage.setItem(RKEY, JSON.stringify(rec)); }catch(e){}
+    sendToSheet({type:'rsvp', name:name, count:rec.count, status: choice === 'hadir' ? 'HADIR' : 'TIDAK HADIR'})
+      .then(function(res){ if(!(res && res.success)) toast('RSVP disimpan di peranti sahaja'); });
     $('btnHadir').classList.toggle('on', choice === 'hadir');
     $('btnTidak').classList.toggle('on', choice === 'tidak');
     $('rsvpState').textContent = 'Terima kasih, ' + name + ' — ' +
