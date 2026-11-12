@@ -124,7 +124,7 @@ button{font:inherit;color:inherit}
 .guest-line{margin-top:18px;font-size:12.5px;color:var(--muted)}
 .guest-line b{color:var(--ink);font-weight:600}
 .open-btn{position:relative;
-  margin-top:66px;display:inline-flex;align-items:center;gap:10px;
+  margin-top:30px;display:inline-flex;align-items:center;gap:10px;
   min-height:52px;padding:0 30px;border-radius:999px;border:0;cursor:pointer;
   background:linear-gradient(135deg,var(--plum),var(--plum-strong));color:#fff;
   font-weight:600;letter-spacing:.22em;font-size:11px;text-transform:uppercase;
@@ -135,8 +135,8 @@ button{font:inherit;color:inherit}
 .open-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
 /* ══ HERO ══ */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;padding:64px 28px 96px;overflow:hidden}
+.hero{position:relative;min-height:74svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:44px 26px 60px;overflow:hidden}
 .hero-img{position:absolute;inset:0;background:url('images/maincontent.jpg') center/cover no-repeat;opacity:.14}
 .hero::after{content:"";position:absolute;inset:0;
   background:radial-gradient(120% 80% at 50% 30%,transparent 40%,rgba(251,248,243,.85) 100%)}
@@ -159,7 +159,7 @@ button{font:inherit;color:inherit}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
 /* ══ shared section bits ══ */
-section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index:2}
+section{padding:34px 22px;max-width:100%;margin:0 auto;position:relative;z-index:2}
 .sec-label{font-size:10px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);
   font-weight:600;text-align:center;margin-bottom:10px}
 .sec-title{font-family:var(--font-head);font-size:26px;text-align:center;color:var(--ink);margin-bottom:18px}
@@ -170,8 +170,8 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 
 /* ══ invitation ══ */
 .salam{font-family:var(--font-arabic);font-size:19px;color:var(--plum-strong);text-align:center;margin-bottom:14px}
-.parents{font-family:var(--font-head);font-size:19px;line-height:1.8;text-align:center;color:var(--ink)}
-.parents .pn{display:block;font-size:17.5px;line-height:1.55;letter-spacing:.01em}
+.parents{font-family:var(--font-script);font-size:19px;line-height:1.6;text-align:center;color:var(--ink)}
+.parents .pn{display:block;font-size:clamp(23px,6.4vw,27px);line-height:1.35;letter-spacing:.01em}
 .parents .amp{display:block;font-family:var(--font-script);font-size:22px;color:var(--gold);
   font-style:normal;line-height:1;margin:2px 0 4px}
 .copy{font-size:14px;color:var(--muted);text-align:center;line-height:1.9;margin-top:18px}
@@ -211,7 +211,7 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .tl-what{font-size:14.5px;color:var(--ink);font-weight:500}
 
 /* ══ gallery ══ */
-.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;padding-bottom:8px;position:relative;z-index:1}
 .gal button{padding:5px 5px 20px;border:0;background:#fff;cursor:pointer;border-radius:2px;
   aspect-ratio:1;position:relative;box-shadow:0 8px 18px rgba(46,42,38,.18);
   transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
@@ -280,7 +280,20 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .btn.tidak.on{background:linear-gradient(135deg,#B4574E,#96443C);color:#fff;border-color:transparent}
 
 /* ══ messages ══ */
-.wall{margin-top:16px;max-height:300px;overflow:hidden;position:relative;
+.wall-head{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.wall-cap{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.wall-toggle{font:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--plum);
+  background:rgba(107,78,158,.08);border:1px solid var(--line);border-radius:999px;
+  padding:7px 14px;cursor:pointer;transition:background .25s,color .25s}
+.wall-toggle[aria-pressed="true"]{background:var(--plum);color:#fff;border-color:transparent}
+.wall.manual{overflow-y:auto;-webkit-mask-image:none;mask-image:none;scroll-behavior:auto;
+  padding-right:6px}
+.wall.manual .wall-track{animation:none !important;transform:none !important}
+.wall.manual .clone{display:none}
+.wall::-webkit-scrollbar{width:4px}
+.wall::-webkit-scrollbar-thumb{background:rgba(107,78,158,.32);border-radius:9px}
+.wall::-webkit-scrollbar-track{background:transparent}
+.wall{margin-top:12px;max-height:300px;overflow:hidden;position:relative;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%);
   mask-image:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 30px),transparent 100%)}
 .wall-track{display:grid;gap:10px;will-change:transform;
@@ -333,7 +346,8 @@ section{padding:46px 24px;max-width:100%;margin:0 auto;position:relative;z-index
 .map-cap span{font-size:12.5px;color:var(--muted)}
 
 /* ══ share / footer ══ */
-.hashtag{font-family:var(--font-head);font-size:19px;color:var(--plum);text-align:center;margin-top:10px}
+.hashtag{font-family:var(--font-script);font-size:27px;color:var(--plum);text-align:center;
+  margin-top:22px;position:relative;z-index:3;line-height:1.2}
 .thanks{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
 footer{text-align:center;padding:34px 24px calc(var(--nav-h) + 24px);font-size:11.5px;color:var(--muted)}
 
@@ -387,14 +401,14 @@ body.ready .nav{opacity:1;pointer-events:auto;transform:translateX(-50%) transla
 .cal-ico svg{width:20px;height:20px}
 
 /* ══ music pill ══ */
-.music-bar{position:fixed;left:50%;transform:translateX(-50%) translateY(10px);
+.music-bar{position:fixed;right:14px;left:auto;transform:translateY(12px);padding:5px 10px 5px 5px;
   bottom:calc(var(--nav-h) + 7px + env(safe-area-inset-bottom,0px));z-index:95;
   display:flex;align-items:center;gap:9px;padding:5px 15px 5px 5px;
   background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
   box-shadow:0 10px 26px rgba(46,42,38,.16);opacity:0;pointer-events:none;
   transition:opacity .4s ease,transform .4s ease}
-body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-.music-bar.tucked{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(14px)}
+body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateY(0)}
+.music-bar.tucked{opacity:0;pointer-events:none;transform:translateY(16px)}
 .music-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--plum);background:#fff;
   color:var(--plum);display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 38px}
 .music-btn svg{width:15px;height:15px;fill:currentColor}
@@ -441,8 +455,8 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 .count.daydone .l{display:none}
 
 /* butterfly resting on the BUKA button */
-.perch{position:absolute;top:-6px;left:calc(50% - 23px);width:46px;line-height:0;z-index:3;
-  transform-origin:50% 92%;animation:perchLand 2.7s cubic-bezier(.33,.9,.3,1) both}
+.perch{position:absolute;top:-9px;right:-8px;left:auto;width:44px;line-height:0;z-index:3;
+  transform-origin:50% 92%;animation:perchLand 1.35s cubic-bezier(.3,.9,.3,1) both}
 @keyframes perchLand{
   0%  {transform:translate(-230px,26px) rotate(-20deg) scale(.5);opacity:0}
   12% {opacity:1}
@@ -499,6 +513,28 @@ body.day-mode .cover-inner{animation:dayBloom 1.2s var(--ease-out) both}
 .florals{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .sprig{position:absolute;width:132px;height:132px;opacity:.5}
 .sprig svg{width:100%;height:100%}
+
+/* ══ fallen leaves drifting through the card ══ */
+.leaves{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.leaf{position:absolute;color:rgba(176,138,74,.42);animation:leafDrift ease-in-out infinite;will-change:transform}
+.leaf svg{display:block;width:100%;height:auto}
+.leaf.L2,.leaf.L5,.leaf.L7{color:rgba(140,112,150,.34)}
+.leaf.L3,.leaf.L6{color:rgba(198,150,120,.36)}
+.leaf.L1{animation-duration:19s;animation-delay:-3s}
+.leaf.L2{animation-duration:24s;animation-delay:-9s}
+.leaf.L3{animation-duration:21s;animation-delay:-14s}
+.leaf.L4{animation-duration:27s;animation-delay:-5s}
+.leaf.L5{animation-duration:18s;animation-delay:-11s}
+.leaf.L6{animation-duration:25s;animation-delay:-17s}
+.leaf.L7{animation-duration:22s;animation-delay:-7s}
+.leaf.L8{animation-duration:29s;animation-delay:-20s}
+@keyframes leafDrift{
+  0%  {transform:translate3d(0,-18px,0) rotate(-14deg);opacity:.28}
+  35% {transform:translate3d(16px,16px,0) rotate(22deg);opacity:.7}
+  70% {transform:translate3d(-10px,34px,0) rotate(-6deg);opacity:.55}
+  100%{transform:translate3d(0,-18px,0) rotate(-14deg);opacity:.28}
+}
+@media(prefers-reduced-motion:reduce){.leaf{animation:none;opacity:.3}}
 
 /* ══ butterflies living in every section of the card ══ */
 .flutter{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
@@ -696,6 +732,7 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
   <circle cx="74" cy="38" r="5" fill="#C9A24A" opacity=".5"/>
 </svg></span>
   </div>
+  <div class="leaves" aria-hidden="true"><span class="leaf L1" style="top:7%;left:6%;width:17px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L2" style="top:19%;left:84%;width:22px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L3" style="top:31%;left:14%;width:19px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L4" style="top:44%;left:78%;width:24px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L5" style="top:56%;left:9%;width:18px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L6" style="top:68%;left:86%;width:21px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L7" style="top:79%;left:22%;width:23px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span><span class="leaf L8" style="top:90%;left:70%;width:17px"><svg viewBox="0 0 32 32"><path d="M16 2C9 8 4 14 4 20a12 12 0 0 0 24 0c0-6-5-12-12-18z" fill="currentColor"/><path d="M16 5v22" stroke="rgba(255,255,255,.35)" stroke-width="1"/></svg></span></div>
   <div class="flutter" aria-hidden="true">
     <span class="fslot" style="top:5%;left:3.5%;width:46px"><span class="bfly"><svg viewBox="0 0 64 52"><g class="wings">
         <path d="M31 26C22 8 6 2 4 12c-3 12 12 19 27 17z" fill="#C9A8C0" stroke="#8E6F9E" stroke-width="1.6"/>
@@ -857,7 +894,11 @@ body.opened .hero-seq > *:nth-child(5){transition-delay:.78s}
         <textarea id="gMsg" placeholder="Tulis ucapan anda…"></textarea>
       </div>
       <button class="btn" id="gSend">Hantar Ucapan</button>
-      <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
+      <div class="wall-head">
+      <span class="wall-cap">Ucapan terkini</span>
+      <button type="button" class="wall-toggle" id="wallToggle" aria-pressed="false">Auto</button>
+    </div>
+    <div class="wall" id="gList" aria-live="polite"><div class="wall-track" id="gTrack"></div></div>
     </div>
   </section>
 
@@ -913,7 +954,6 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1"/></svg>
   </button>
   <span class="viz" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-  <span class="music-lbl">Muzik</span>
 </div>
 <audio id="bgm" loop preload="none" src="music/Christina Perri - A Thousand Years (PianoCello Cover).mp3"></audio>
 
@@ -1317,7 +1357,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     }
     list.forEach(function(m, i){ track.appendChild(msgNode(m, i)); });
     // duplicate once so the -50% loop is seamless
-    list.forEach(function(m, i){ track.appendChild(msgNode(m, i + list.length)); });
+    list.forEach(function(m, i){ var n = msgNode(m, i + list.length); n.classList.add('clone'); track.appendChild(n); });
     box.style.height = '';
     // constant reading speed: ~3.4s per message
     track.style.animationDuration = Math.max(18, list.length * 3.4) + 's';
@@ -1337,6 +1377,19 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     toast('Terima kasih atas ucapan anda');
   });
   renderMsgs();
+
+  /* ── auto / manual switch for the wall ── */
+  (function(){
+    var wall = $('gList'), track = $('gTrack'), btn = $('wallToggle');
+    if(!wall || !btn) return;
+    btn.addEventListener('click', function(){
+      var manual = !wall.classList.contains('manual');
+      wall.classList.toggle('manual', manual);
+      btn.setAttribute('aria-pressed', String(manual));
+      btn.textContent = manual ? 'Manual' : 'Auto';
+      if(manual) wall.scrollTop = 0;
+    });
+  })();
 
   /* ── ucapan wall: reveal when it enters the viewport ── */
   (function(){
@@ -1397,7 +1450,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   /* ── the card drifts down slowly by itself, stops the moment you touch it ── */
   (function(){
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var SPEED = 13, started = false, paused = false, resumeT = null, openAt = null, last = null, pos = 0;
+    var SPEED = 34, started = false, paused = false, resumeT = null, openAt = null, last = null, pos = 0;
     function tick(ts){
       if(last === null) last = ts;
       var dt = Math.min((ts - last) / 1000, 0.05);
