@@ -1394,6 +1394,47 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
   bgm.addEventListener('play', function(){ playMusic(false); });
   bgm.addEventListener('pause', function(){ playMusic(false); });
 
+  /* ── the card drifts down slowly by itself, stops the moment you touch it ── */
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var SPEED = 13, started = false, paused = false, resumeT = null, openAt = null, last = null, pos = 0;
+    function tick(ts){
+      if(last === null) last = ts;
+      var dt = Math.min((ts - last) / 1000, 0.05);
+      last = ts;
+
+      if(!started){
+        if(document.body.classList.contains('opened')){
+          if(openAt === null) openAt = ts;
+          if(ts - openAt > 2400){ started = true; paused = false; pos = window.scrollY; }
+        }
+        requestAnimationFrame(tick);
+        return;
+      }
+
+      var sheet = document.getElementById('sheetWrap');
+      var sheetOpen = sheet && !sheet.hasAttribute('hidden');
+      var lbOpen = document.getElementById('lb').classList.contains('open');
+      if(!paused && !sheetOpen && !lbOpen && !document.hidden){
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        pos += SPEED * dt;                       // accumulate: scrollTo rounds to whole px
+        if(pos >= max - 2){ pos = max; paused = true; }
+        window.scrollTo({top: pos, behavior: 'instant'});
+      }
+      requestAnimationFrame(tick);
+    }
+    function hold(){
+      if(!started) return;
+      paused = true; pos = window.scrollY; clearTimeout(resumeT);
+      resumeT = setTimeout(function(){ if(!document.hidden){ pos = window.scrollY; paused = false; } }, 9000);
+    }
+    ['wheel','touchstart','pointerdown','keydown'].forEach(function(ev){
+      window.addEventListener(ev, hold, {passive:true});
+    });
+    document.addEventListener('visibilitychange', function(){ if(document.hidden) paused = true; });
+    requestAnimationFrame(tick);
+  })();
+
   /* ── tuck the music pill away while scrolling ── */
   (function(){
     var bar = $('musicBar'); if(!bar) return;
