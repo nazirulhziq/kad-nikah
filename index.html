@@ -1392,6 +1392,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     }catch(e){ return Promise.resolve({success:false}); }
   }
   var KEY = 'kadnikah.messages.v2';
+  try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY + '.seeded'); }catch(e){}
 
   function loadMsgs(){
     try{ return JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ return []; }
@@ -1409,17 +1410,14 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     return div;
   }
   function renderMsgs(){
-    var list = (wallSource && wallSource.length) ? wallSource : loadMsgs().slice().reverse();
+    var list = (wallSource || []).slice();
     var box = $('gList'), track = $('gTrack');
     track.innerHTML = '';
     if(!list.length){
-      var p = document.createElement('p');
-      p.className = 'empty';
-      p.textContent = 'Belum ada ucapan. Jadilah yang pertama.';
-      track.appendChild(p);
-      box.style.height = 'auto';
+      box.hidden = true;
       return;
     }
+    box.hidden = false;
     list.forEach(function(m, i){ track.appendChild(msgNode(m, i)); });
     // loop only when there is enough content — otherwise it just repeats
     var looping = list.length >= 4;
@@ -1433,7 +1431,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     setTimeout(function(){ box.classList.add('in'); }, 120);
   }
   fetch(GOOGLE_SCRIPT_URL, {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(list){
-    if(Array.isArray(list) && list.length){
+    if(Array.isArray(list)){
       wallSource = list.map(function(m){ return {name:m.name || 'Tetamu', text:m.comment || '', at:''}; });
       renderMsgs();
     }
@@ -1447,9 +1445,6 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     if(!text){ toast('Sila tulis ucapan anda'); $('gMsg').focus(); return; }
     gBusy = true;
 
-    var list = loadMsgs();
-    list.push({name:name, text:text, at:new Date().toLocaleString('ms-MY')});
-    saveMsgs(list);
     if(wallSource) wallSource.unshift({name:name, text:text, at:''});
 
     // instant feedback, then send quietly
