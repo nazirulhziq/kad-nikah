@@ -1375,6 +1375,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     try{
       return fetch(GOOGLE_SCRIPT_URL, {
         method:'POST',
+        keepalive: true,                       // survives navigation / closing
         body: JSON.stringify(payload)          // text/plain → no CORS preflight
       }).then(function(r){ return r.json(); }).catch(function(){
         try{ fetch(GOOGLE_SCRIPT_URL, {method:'POST', mode:'no-cors', body: JSON.stringify(payload)}); }catch(e){}
@@ -1436,25 +1437,23 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     var text = $('gMsg').value.trim();
     if(!name){ toast('Sila isi nama anda'); $('gName').focus(); return; }
     if(!text){ toast('Sila tulis ucapan anda'); $('gMsg').focus(); return; }
-    var btn = $('gSend');
-    gBusy = true; btn.disabled = true; btn.textContent = 'Menghantar…';
+    gBusy = true;
 
     var list = loadMsgs();
     list.push({name:name, text:text, at:new Date().toLocaleString('ms-MY')});
     saveMsgs(list);
     if(wallSource) wallSource.unshift({name:name, text:text, at:''});
-    renderMsgs();
 
-    sendToSheet({type:'guestbook', name:name, comment:text}).then(function(res){
-      $('gName').value = '';
-      $('gMsg').value = '';
-      toast(res && res.success ? 'Terima kasih atas ucapan ' + name : 'Ucapan dihantar');
-    }).catch(function(){
-      $('gName').value = ''; $('gMsg').value = '';
-      toast('Ucapan disimpan di peranti');
-    }).then(function(){
-      gBusy = false; btn.disabled = false; btn.textContent = 'Hantar Ucapan';
-    });
+    // instant feedback, then send quietly
+    $('gName').value = '';
+    $('gMsg').value = '';
+    renderMsgs();
+    toast('Terima kasih atas ucapan ' + name);
+
+    sendToSheet({type:'guestbook', name:name, comment:text})
+      .then(function(res){ if(!(res && res.success)) console.warn('ucapan tidak sampai ke sheet'); })
+      .catch(function(){})
+      .then(function(){ gBusy = false; });
   });
   renderMsgs();
 
@@ -1557,23 +1556,18 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     if(!name){ toast('Sila isi nama anda'); $('rsvpName').focus(); return; }
     var rec = {name:name, choice:choice, count:$('rsvpCount').value, at:new Date().toISOString()};
     rsvpBusy = true;
-    var b1 = $('btnHadir'), b2 = $('btnTidak');
-    b1.disabled = b2.disabled = true;
-    b1.classList.toggle('on', choice === 'hadir');
-    b2.classList.toggle('on', choice === 'tidak');
 
+    // respond instantly — the sheet closes before the network is even touched
     try{ localStorage.setItem(RKEY, JSON.stringify(rec)); }catch(e){}
+    toast('RSVP dihantar — terima kasih ' + name);
+    resetRsvpForm();
+    closeSheet();
+
+    // then send quietly in the background
     sendToSheet({type:'rsvp', name:name, count:rec.count, status: choice === 'hadir' ? 'HADIR' : 'TIDAK HADIR'})
-      .then(function(res){
-        toast(res && res.success ? 'RSVP dihantar — terima kasih ' + name : 'RSVP dihantar');
-        resetRsvpForm();
-        closeSheet();
-      })
-      .catch(function(){ toast('RSVP disimpan di peranti sahaja'); resetRsvpForm(); closeSheet(); })
-      .then(function(){
-        rsvpBusy = false;
-        b1.disabled = b2.disabled = false;
-      });
+      .then(function(res){ if(!(res && res.success)) console.warn('RSVP tidak sampai ke sheet'); })
+      .catch(function(){})
+      .then(function(){ rsvpBusy = false; });
   }
   $('btnHadir').addEventListener('click', function(){ setRsvp('hadir'); });
   $('btnTidak').addEventListener('click', function(){ setRsvp('tidak'); });
