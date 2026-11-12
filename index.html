@@ -1383,27 +1383,12 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
     }catch(e){ return Promise.resolve({success:false}); }
   }
   var KEY = 'kadnikah.messages.v2';
-  var SEED = [
-    {name:'Aminah & keluarga', text:'Barakallahu lakuma wa baraka alaikuma. Semoga bahagia hingga ke syurga.', at:'Kuantan'},
-    {name:'Firdaus Rahman', text:'Tahniah Haziq! Akhirnya sampai juga ke gerbang pelamin. Semoga kekal abadi.', at:'Temerloh'},
-    {name:'Nurul Ain', text:'Selamat pengantin baru Jaynina! Cantik sangat. Semoga rumah tangga dilimpahi berkat.', at:'Kuantan'},
-    {name:'Pak Cik Zainal', text:'Alhamdulillah, majlis yang indah. Moga cucu-cucu soleh menyusul.', at:'Mentakab'},
-    {name:'Syafiqah', text:'Tahniah korang berdua. Ingat pesan mak ayah tau. Bahagia sampai tua.', at:'Kuala Lumpur'},
-    {name:'Hakim & Izzah', text:'Doa kami untuk kalian — mawaddah, warahmah, dan rezeki yang melimpah.', at:'Kuantan'},
-    {name:'Siti Khadijah', text:'Semoga menjadi pasangan contoh, sakinah mawaddah warahmah. Amin.', at:'Gambang'},
-    {name:'Alif Danial', text:'Gembira tengok berita ni. Jumpa kat majlis nanti ya!', at:'Kuantan'},
-    {name:'Keluarga Ahmad', text:'Selamat pengantin baru. Semoga setiap langkah diberkati Nya.', at:'Pekan'},
-    {name:'Umi Kalthum', text:'Bersyukur sangat. Moga Allah satukan kalian di dunia dan akhirat.', at:'Kuantan'}
-  ];
+
   function loadMsgs(){
     try{ return JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ return []; }
   }
   function saveMsgs(list){
     try{ localStorage.setItem(KEY, JSON.stringify(list.slice(-60))); }catch(e){}
-  }
-  function seedOnce(){
-    if(localStorage.getItem(KEY + '.seeded')) return;
-    try{ localStorage.setItem(KEY, JSON.stringify(SEED)); localStorage.setItem(KEY + '.seeded','1'); }catch(e){}
   }
   function msgNode(m, i){
     var div = document.createElement('div');
@@ -1427,26 +1412,20 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       return;
     }
     list.forEach(function(m, i){ track.appendChild(msgNode(m, i)); });
-    // duplicate once so the -50% loop is seamless
-    list.forEach(function(m, i){ var n = msgNode(m, i + list.length); n.classList.add('clone'); track.appendChild(n); });
+    // loop only when there is enough content — otherwise it just repeats
+    var looping = list.length >= 4;
+    box.dataset.loop = looping ? '1' : '0';
+    if(looping){
+      list.forEach(function(m, i){ var n = msgNode(m, i + list.length); n.classList.add('clone'); track.appendChild(n); });
+    }
     box.style.height = '';
     // constant reading speed: ~3.4s per message
     track.style.animationDuration = Math.max(18, list.length * 3.4) + 's';
     setTimeout(function(){ box.classList.add('in'); }, 120);
   }
-  seedOnce();
   fetch(GOOGLE_SCRIPT_URL, {cache:'no-store'}).then(function(r){ return r.json(); }).then(function(list){
     if(Array.isArray(list) && list.length){
-      var real = list.map(function(m){ return {name:m.name || 'Tetamu', text:m.comment || '', at:''}; });
-      // keep the wall full while the sheet is still filling up
-      if(real.length < 6){
-        var seen = {};
-        real.forEach(function(m){ seen[m.text] = 1; });
-        SEED.forEach(function(m){
-          if(real.length < 10 && !seen[m.text]) real.push({name:m.name, text:m.text, at:''});
-        });
-      }
-      wallSource = real;
+      wallSource = list.map(function(m){ return {name:m.name || 'Tetamu', text:m.comment || '', at:''}; });
       renderMsgs();
     }
   }).catch(function(){});
@@ -1478,7 +1457,7 @@ Sempurnakanlah agama mereka melalui ikatan perkahwinan ini dan jadikanlah rumah 
       if(last === null) last = ts;
       var dt = Math.min((ts - last) / 1000, 0.05);
       last = ts;
-      var half = wall.scrollHeight / 2;
+      var half = wall.dataset.loop === '1' ? wall.scrollHeight / 2 : 0;
       if(!paused && half > 20){
         pos += 20 * dt;
         if(pos >= half) pos -= half;          // seamless: list is duplicated
