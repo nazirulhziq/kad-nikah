@@ -50,7 +50,12 @@ body{
   background:#EDE6DA url('images/maincontent.jpg') center top / cover fixed no-repeat;
 }
 /* soften the photo so the card always reads */
-body.locked{overflow:hidden}
+body.locked{overflow:hidden;background:#F3EBDF url('images/maincontent.jpg') center top / cover fixed no-repeat}
+/* before BUKA: nothing of the card shows — just a quiet backdrop */
+body.locked::before{content:"";position:fixed;inset:0;z-index:190;pointer-events:none;
+  background:radial-gradient(ellipse 62% 58% at 50% 46%, #FBF6EC 0%, #F6EEE1 52%, #EFE4D3 100%)}
+body.locked main{visibility:hidden}
+body.locked .progress{opacity:0}
 body::before{content:"";position:fixed;inset:0;z-index:-1;
   background:linear-gradient(180deg,rgba(251,248,243,.55),rgba(244,238,228,.62) 45%,rgba(237,230,218,.72));}
 
@@ -135,7 +140,7 @@ button{font:inherit;color:inherit}
 .open-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
 
 /* ══ HERO ══ */
-.hero{position:relative;min-height:74svh;display:flex;flex-direction:column;
+.hero{position:relative;min-height:66svh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;padding:44px 26px 60px;overflow:hidden}
 .hero-img{position:absolute;inset:0;background:url('images/maincontent.jpg') center/cover no-repeat;opacity:.14}
 .hero::after{content:"";position:absolute;inset:0;
@@ -386,14 +391,14 @@ body.ready .nav{opacity:1;pointer-events:auto;transform:translateX(-50%) transla
 .cal-ico svg{width:20px;height:20px}
 
 /* ══ music pill ══ */
-.music-bar{position:fixed;right:14px;left:auto;transform:translateY(12px);padding:5px 10px 5px 5px;
-  bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom,0px));z-index:95;
+.music-bar{position:fixed;right:14px;top:calc(14px + env(safe-area-inset-top,0px));left:auto;
+  transform:translateY(-10px);bottom:auto;padding:5px 10px 5px 5px;z-index:95;
   display:flex;align-items:center;gap:9px;padding:5px 15px 5px 5px;
   background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
   box-shadow:0 10px 26px rgba(46,42,38,.16);opacity:0;pointer-events:none;
   transition:opacity .4s ease,transform .4s ease}
 body.ready .music-bar{opacity:1;pointer-events:auto;transform:translateY(0)}
-.music-bar.tucked{opacity:0;pointer-events:none;transform:translateY(16px)}
+.music-bar.tucked{opacity:0;pointer-events:none;transform:translateY(-14px)}
 .music-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--plum);background:#fff;
   color:var(--plum);display:grid;place-items:center;cursor:pointer;padding:0;flex:0 0 38px}
 .music-btn svg{width:15px;height:15px;fill:currentColor}
